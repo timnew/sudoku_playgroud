@@ -43,7 +43,7 @@ void main() {
     group("Block", () {
       test("it should generate for 1st block", () {
         expect(
-            SudokuArea.block(1, 1).toList(),
+            SudokuArea.block(BlockIndex(1, 1)).toList(),
             containsAllInOrder([
               SudokuIndex(1, 1),
               SudokuIndex(1, 2),
@@ -59,7 +59,7 @@ void main() {
 
       test("it should generate for 2nd block in 1st row", () {
         expect(
-            SudokuArea.block(1, 2).toList(),
+            SudokuArea.block(BlockIndex(1, 2)).toList(),
             containsAllInOrder([
               SudokuIndex(1, 4),
               SudokuIndex(1, 5),
@@ -75,7 +75,7 @@ void main() {
 
       test("it should generate for 2nd block in 1st column", () {
         expect(
-            SudokuArea.block(2, 1).toList(),
+            SudokuArea.block(BlockIndex(2, 1)).toList(),
             containsAllInOrder([
               SudokuIndex(4, 1),
               SudokuIndex(4, 2),
@@ -91,7 +91,7 @@ void main() {
 
       test("it should generate all index", () {
         expect(
-            SudokuArea.block(2, 3).toList(),
+            SudokuArea.block(BlockIndex(2, 3)).toList(),
             containsAllInOrder([
               SudokuIndex(4, 7),
               SudokuIndex(4, 8),
@@ -109,7 +109,7 @@ void main() {
     group("Board", () {
       test("it should generate all index", () {
         expect(
-          SudokuArea.whole().toList(),
+          SudokuArea.board().toList(),
           containsAllInOrder([
             SudokuIndex(1, 1),
             SudokuIndex(1, 2),

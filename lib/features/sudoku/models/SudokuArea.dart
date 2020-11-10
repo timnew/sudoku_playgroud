@@ -4,33 +4,50 @@ import 'SudokuIndex.dart';
 
 class SudokuArea extends Iterable<SudokuIndex> {
   final int count;
-  final Iterable<SudokuIndex> _iterable;
-
-  SudokuArea._(this.count, SudokuIndex generator(int index)) : _iterable = Iterable.generate(count, generator);
+  final List<SudokuIndex> children;
+  final String name;
 
   @override
-  Iterator<SudokuIndex> get iterator => _iterable.iterator;
+  Iterator<SudokuIndex> get iterator => children.iterator;
 
-  factory SudokuArea.row(int row) {
-    assert(1 <= row && row <= 9);
-    return SudokuArea._(9, (i) => SudokuIndex(row, i + 1));
-  }
+  SudokuIndex operator [](int index) => children[index];
 
-  factory SudokuArea.column(int col) {
-    assert(1 <= col && col <= 9);
-    return SudokuArea._(9, (i) => SudokuIndex(i + 1, col));
-  }
+  SudokuArea._(this.name, this.count, SudokuIndex generator(int index))
+      : children = Iterable.generate(count, generator).toList(growable: false);
 
-  factory SudokuArea.block(int row, int col) {
-    assert(row >= 1 && row <= 3);
-    assert(col >= 1 && row <= 3);
+  static List<SudokuRow> rows = List.generate(9, (index) => SudokuRow(index + 1), growable: false);
+  static List<SudokuColumn> columns = List.generate(9, (index) => SudokuColumn(index + 1), growable: false);
+  static List<SudokuBlock> blocks = List.generate(9, (index) => SudokuBlock(BlockIndex.index(index)), growable: false);
 
-    final _rowMin = (row - 1) * 3 + 1;
-    final _colMin = (col - 1) * 3 + 1;
+  factory SudokuArea.row(int row) => rows[row - 1];
 
-    return SudokuArea._(9, (i) => SudokuIndex(_rowMin + i ~/ 3, _colMin + i % 3));
-  }
+  factory SudokuArea.column(int col) => columns[col - 1];
 
-  factory SudokuArea.whole() =>
-      Singleton.lazy(() => SudokuArea._(81, (i) => SudokuIndex(i ~/ 9 + 1, i % 9 + 1))).instance;
+  factory SudokuArea.block(BlockIndex blockIndex) => blocks[blockIndex.index];
+
+  factory SudokuArea.board() => Singleton.lazy(
+        () => SudokuArea._("board", 81, (i) => SudokuIndex(i ~/ 9 + 1, i % 9 + 1)),
+      ).instance;
+}
+
+class SudokuRow extends SudokuArea {
+  final int row;
+
+  SudokuRow(this.row)
+      : assert(1 <= row && row <= 9),
+        super._("Row[$row]", 9, (i) => SudokuIndex(row, i + 1));
+}
+
+class SudokuColumn extends SudokuArea {
+  final int col;
+
+  SudokuColumn(this.col)
+      : assert(1 <= col && col <= 9),
+        super._("Column[$col]", 9, (i) => SudokuIndex(i + 1, col));
+}
+
+class SudokuBlock extends SudokuArea {
+  final BlockIndex index;
+
+  SudokuBlock(this.index) : super._(index.toString(), 9, index.childByIndex);
 }
