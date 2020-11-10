@@ -1,3 +1,5 @@
+import 'package:singleton/singleton.dart';
+
 import 'SudokuIndex.dart';
 
 class SudokuArea extends Iterable<SudokuIndex> {
@@ -29,5 +31,6 @@ class SudokuArea extends Iterable<SudokuIndex> {
     return SudokuArea._(9, (i) => SudokuIndex(_rowMin + i ~/ 3, _colMin + i % 3));
   }
 
-  static Iterable whole() => SudokuArea._(81, (i) => SudokuIndex(i ~/ 9 + 1, i % 9 + 1));
+  factory SudokuArea.whole() =>
+      Singleton.lazy(() => SudokuArea._(81, (i) => SudokuIndex(i ~/ 9 + 1, i % 9 + 1))).instance;
 }

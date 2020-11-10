@@ -1,6 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:response_builder/response_builder.dart';
-import 'package:sudoku_playground/features/sudoku/models/SudokuAreas.dart';
+import 'package:sudoku_playground/features/sudoku/models/SudokuArea.dart';
 
 import 'SudokuValue.dart';
 import 'SudokuIndex.dart';
