@@ -1,13 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sudoku_playground/features/sudoku/models/SudokuIndex.dart';
-import 'package:sudoku_playground/features/sudoku/models/SudokuIndexSet.dart';
+import 'package:sudoku_playground/features/sudoku/models/SudokuAreas.dart';
 
 void main() {
   group("SudokuIndexSet", () {
     group("Row", () {
       test("it should generate all index", () {
         expect(
-            SudokuIndexSet.rowCells(2).toList(),
+            SudokuArea.row(2).toList(),
             containsAllInOrder([
               SudokuIndex(2, 1),
               SudokuIndex(2, 2),
@@ -25,7 +25,7 @@ void main() {
     group("Column", () {
       test("it should generate all index", () {
         expect(
-            SudokuIndexSet.columnCells(2).toList(),
+            SudokuArea.column(2).toList(),
             containsAllInOrder([
               SudokuIndex(1, 2),
               SudokuIndex(2, 2),
@@ -43,7 +43,7 @@ void main() {
     group("Block", () {
       test("it should generate for 1st block", () {
         expect(
-            SudokuIndexSet.blockCells(1, 1).toList(),
+            SudokuArea.block(1, 1).toList(),
             containsAllInOrder([
               SudokuIndex(1, 1),
               SudokuIndex(1, 2),
@@ -59,7 +59,7 @@ void main() {
 
       test("it should generate for 2nd block in 1st row", () {
         expect(
-            SudokuIndexSet.blockCells(1, 2).toList(),
+            SudokuArea.block(1, 2).toList(),
             containsAllInOrder([
               SudokuIndex(1, 4),
               SudokuIndex(1, 5),
@@ -75,7 +75,7 @@ void main() {
 
       test("it should generate for 2nd block in 1st column", () {
         expect(
-            SudokuIndexSet.blockCells(2, 1).toList(),
+            SudokuArea.block(2, 1).toList(),
             containsAllInOrder([
               SudokuIndex(4, 1),
               SudokuIndex(4, 2),
@@ -91,7 +91,7 @@ void main() {
 
       test("it should generate all index", () {
         expect(
-            SudokuIndexSet.blockCells(2, 3).toList(),
+            SudokuArea.block(2, 3).toList(),
             containsAllInOrder([
               SudokuIndex(4, 7),
               SudokuIndex(4, 8),
@@ -109,7 +109,7 @@ void main() {
     group("Board", () {
       test("it should generate all index", () {
         expect(
-          SudokuIndexSet.allCells().toList(),
+          SudokuArea.whole().toList(),
           containsAllInOrder([
             SudokuIndex(1, 1),
             SudokuIndex(1, 2),
