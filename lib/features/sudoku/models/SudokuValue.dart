@@ -11,17 +11,15 @@ abstract class SudokuValue implements _$SudokuValue {
 
   BuiltList<bool> get marks => null;
 
-  bool get isConflict => false;
-
   SudokuValue._();
 
   factory SudokuValue.blank() = BlankValue;
 
-  factory SudokuValue.given(int number, {@Default(false) bool isConflict}) = GivenValue;
+  factory SudokuValue.given(int number) = GivenValue;
 
-  factory SudokuValue.filled(int number, {@Default(false) bool isConflict}) = FilledValue;
+  factory SudokuValue.filled(int number) = FilledValue;
 
-  factory SudokuValue.guessing(int number, BuiltList<bool> marks, {@Default(false) bool isConflict}) = GuessingValue;
+  factory SudokuValue.guessing(int number, BuiltList<bool> marks) = GuessingValue;
 
   SudokuValueType get type => map(
         blank: (_) => SudokuValueType.Blank,
@@ -65,17 +63,6 @@ abstract class SudokuValue implements _$SudokuValue {
         filled: (_) => SudokuValue.blank(),
         orElse: () => this,
       );
-
-  SudokuValue updateIsConflict(bool value) {
-    if (value == isConflict) return this;
-
-    return maybeMap(
-      given: (v) => v.copyWith(isConflict: value),
-      filled: (v) => v.copyWith(isConflict: value),
-      guessing: (v) => v.copyWith(isConflict: value),
-      orElse: () => this,
-    );
-  }
 
   static BuiltList<bool> EMPTY_MARKS = BuiltList<bool>.of(Iterable.generate(9, (_) => false));
   static BuiltList<bool> FULL_MARKS = BuiltList<bool>.of(Iterable.generate(9, (_) => true));

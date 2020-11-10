@@ -19,28 +19,24 @@ class _$SudokuValueTearOff {
   }
 
 // ignore: unused_element
-  GivenValue given(int number, {bool isConflict = false}) {
+  GivenValue given(int number) {
     return GivenValue(
       number,
-      isConflict: isConflict,
     );
   }
 
 // ignore: unused_element
-  FilledValue filled(int number, {bool isConflict = false}) {
+  FilledValue filled(int number) {
     return FilledValue(
       number,
-      isConflict: isConflict,
     );
   }
 
 // ignore: unused_element
-  GuessingValue guessing(int number, BuiltList<bool> marks,
-      {bool isConflict = false}) {
+  GuessingValue guessing(int number, BuiltList<bool> marks) {
     return GuessingValue(
       number,
       marks,
-      isConflict: isConflict,
     );
   }
 }
@@ -54,17 +50,16 @@ mixin _$SudokuValue {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result blank(),
-    @required Result given(int number, bool isConflict),
-    @required Result filled(int number, bool isConflict),
-    @required
-        Result guessing(int number, BuiltList<bool> marks, bool isConflict),
+    @required Result given(int number),
+    @required Result filled(int number),
+    @required Result guessing(int number, BuiltList<bool> marks),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result blank(),
-    Result given(int number, bool isConflict),
-    Result filled(int number, bool isConflict),
-    Result guessing(int number, BuiltList<bool> marks, bool isConflict),
+    Result given(int number),
+    Result filled(int number),
+    Result guessing(int number, BuiltList<bool> marks),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -138,10 +133,9 @@ class _$BlankValue extends BlankValue {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result blank(),
-    @required Result given(int number, bool isConflict),
-    @required Result filled(int number, bool isConflict),
-    @required
-        Result guessing(int number, BuiltList<bool> marks, bool isConflict),
+    @required Result given(int number),
+    @required Result filled(int number),
+    @required Result guessing(int number, BuiltList<bool> marks),
   }) {
     assert(blank != null);
     assert(given != null);
@@ -154,9 +148,9 @@ class _$BlankValue extends BlankValue {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result blank(),
-    Result given(int number, bool isConflict),
-    Result filled(int number, bool isConflict),
-    Result guessing(int number, BuiltList<bool> marks, bool isConflict),
+    Result given(int number),
+    Result filled(int number),
+    Result guessing(int number, BuiltList<bool> marks),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -208,7 +202,7 @@ abstract class $GivenValueCopyWith<$Res> {
   factory $GivenValueCopyWith(
           GivenValue value, $Res Function(GivenValue) then) =
       _$GivenValueCopyWithImpl<$Res>;
-  $Res call({int number, bool isConflict});
+  $Res call({int number});
 }
 
 /// @nodoc
@@ -223,32 +217,25 @@ class _$GivenValueCopyWithImpl<$Res> extends _$SudokuValueCopyWithImpl<$Res>
   @override
   $Res call({
     Object number = freezed,
-    Object isConflict = freezed,
   }) {
     return _then(GivenValue(
       number == freezed ? _value.number : number as int,
-      isConflict:
-          isConflict == freezed ? _value.isConflict : isConflict as bool,
     ));
   }
 }
 
 /// @nodoc
 class _$GivenValue extends GivenValue {
-  _$GivenValue(this.number, {this.isConflict = false})
+  _$GivenValue(this.number)
       : assert(number != null),
-        assert(isConflict != null),
         super._();
 
   @override
   final int number;
-  @JsonKey(defaultValue: false)
-  @override
-  final bool isConflict;
 
   @override
   String toString() {
-    return 'SudokuValue.given(number: $number, isConflict: $isConflict)';
+    return 'SudokuValue.given(number: $number)';
   }
 
   @override
@@ -256,17 +243,12 @@ class _$GivenValue extends GivenValue {
     return identical(this, other) ||
         (other is GivenValue &&
             (identical(other.number, number) ||
-                const DeepCollectionEquality().equals(other.number, number)) &&
-            (identical(other.isConflict, isConflict) ||
-                const DeepCollectionEquality()
-                    .equals(other.isConflict, isConflict)));
+                const DeepCollectionEquality().equals(other.number, number)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(number) ^
-      const DeepCollectionEquality().hash(isConflict);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(number);
 
   @override
   $GivenValueCopyWith<GivenValue> get copyWith =>
@@ -276,30 +258,29 @@ class _$GivenValue extends GivenValue {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result blank(),
-    @required Result given(int number, bool isConflict),
-    @required Result filled(int number, bool isConflict),
-    @required
-        Result guessing(int number, BuiltList<bool> marks, bool isConflict),
+    @required Result given(int number),
+    @required Result filled(int number),
+    @required Result guessing(int number, BuiltList<bool> marks),
   }) {
     assert(blank != null);
     assert(given != null);
     assert(filled != null);
     assert(guessing != null);
-    return given(number, isConflict);
+    return given(number);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result blank(),
-    Result given(int number, bool isConflict),
-    Result filled(int number, bool isConflict),
-    Result guessing(int number, BuiltList<bool> marks, bool isConflict),
+    Result given(int number),
+    Result filled(int number),
+    Result guessing(int number, BuiltList<bool> marks),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (given != null) {
-      return given(number, isConflict);
+      return given(number);
     }
     return orElse();
   }
@@ -338,10 +319,9 @@ class _$GivenValue extends GivenValue {
 
 abstract class GivenValue extends SudokuValue {
   GivenValue._() : super._();
-  factory GivenValue(int number, {bool isConflict}) = _$GivenValue;
+  factory GivenValue(int number) = _$GivenValue;
 
   int get number;
-  bool get isConflict;
   $GivenValueCopyWith<GivenValue> get copyWith;
 }
 
@@ -350,7 +330,7 @@ abstract class $FilledValueCopyWith<$Res> {
   factory $FilledValueCopyWith(
           FilledValue value, $Res Function(FilledValue) then) =
       _$FilledValueCopyWithImpl<$Res>;
-  $Res call({int number, bool isConflict});
+  $Res call({int number});
 }
 
 /// @nodoc
@@ -366,32 +346,25 @@ class _$FilledValueCopyWithImpl<$Res> extends _$SudokuValueCopyWithImpl<$Res>
   @override
   $Res call({
     Object number = freezed,
-    Object isConflict = freezed,
   }) {
     return _then(FilledValue(
       number == freezed ? _value.number : number as int,
-      isConflict:
-          isConflict == freezed ? _value.isConflict : isConflict as bool,
     ));
   }
 }
 
 /// @nodoc
 class _$FilledValue extends FilledValue {
-  _$FilledValue(this.number, {this.isConflict = false})
+  _$FilledValue(this.number)
       : assert(number != null),
-        assert(isConflict != null),
         super._();
 
   @override
   final int number;
-  @JsonKey(defaultValue: false)
-  @override
-  final bool isConflict;
 
   @override
   String toString() {
-    return 'SudokuValue.filled(number: $number, isConflict: $isConflict)';
+    return 'SudokuValue.filled(number: $number)';
   }
 
   @override
@@ -399,17 +372,12 @@ class _$FilledValue extends FilledValue {
     return identical(this, other) ||
         (other is FilledValue &&
             (identical(other.number, number) ||
-                const DeepCollectionEquality().equals(other.number, number)) &&
-            (identical(other.isConflict, isConflict) ||
-                const DeepCollectionEquality()
-                    .equals(other.isConflict, isConflict)));
+                const DeepCollectionEquality().equals(other.number, number)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(number) ^
-      const DeepCollectionEquality().hash(isConflict);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(number);
 
   @override
   $FilledValueCopyWith<FilledValue> get copyWith =>
@@ -419,30 +387,29 @@ class _$FilledValue extends FilledValue {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result blank(),
-    @required Result given(int number, bool isConflict),
-    @required Result filled(int number, bool isConflict),
-    @required
-        Result guessing(int number, BuiltList<bool> marks, bool isConflict),
+    @required Result given(int number),
+    @required Result filled(int number),
+    @required Result guessing(int number, BuiltList<bool> marks),
   }) {
     assert(blank != null);
     assert(given != null);
     assert(filled != null);
     assert(guessing != null);
-    return filled(number, isConflict);
+    return filled(number);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result blank(),
-    Result given(int number, bool isConflict),
-    Result filled(int number, bool isConflict),
-    Result guessing(int number, BuiltList<bool> marks, bool isConflict),
+    Result given(int number),
+    Result filled(int number),
+    Result guessing(int number, BuiltList<bool> marks),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (filled != null) {
-      return filled(number, isConflict);
+      return filled(number);
     }
     return orElse();
   }
@@ -481,10 +448,9 @@ class _$FilledValue extends FilledValue {
 
 abstract class FilledValue extends SudokuValue {
   FilledValue._() : super._();
-  factory FilledValue(int number, {bool isConflict}) = _$FilledValue;
+  factory FilledValue(int number) = _$FilledValue;
 
   int get number;
-  bool get isConflict;
   $FilledValueCopyWith<FilledValue> get copyWith;
 }
 
@@ -493,7 +459,7 @@ abstract class $GuessingValueCopyWith<$Res> {
   factory $GuessingValueCopyWith(
           GuessingValue value, $Res Function(GuessingValue) then) =
       _$GuessingValueCopyWithImpl<$Res>;
-  $Res call({int number, BuiltList<bool> marks, bool isConflict});
+  $Res call({int number, BuiltList<bool> marks});
 }
 
 /// @nodoc
@@ -510,36 +476,29 @@ class _$GuessingValueCopyWithImpl<$Res> extends _$SudokuValueCopyWithImpl<$Res>
   $Res call({
     Object number = freezed,
     Object marks = freezed,
-    Object isConflict = freezed,
   }) {
     return _then(GuessingValue(
       number == freezed ? _value.number : number as int,
       marks == freezed ? _value.marks : marks as BuiltList<bool>,
-      isConflict:
-          isConflict == freezed ? _value.isConflict : isConflict as bool,
     ));
   }
 }
 
 /// @nodoc
 class _$GuessingValue extends GuessingValue {
-  _$GuessingValue(this.number, this.marks, {this.isConflict = false})
+  _$GuessingValue(this.number, this.marks)
       : assert(number != null),
         assert(marks != null),
-        assert(isConflict != null),
         super._();
 
   @override
   final int number;
   @override
   final BuiltList<bool> marks;
-  @JsonKey(defaultValue: false)
-  @override
-  final bool isConflict;
 
   @override
   String toString() {
-    return 'SudokuValue.guessing(number: $number, marks: $marks, isConflict: $isConflict)';
+    return 'SudokuValue.guessing(number: $number, marks: $marks)';
   }
 
   @override
@@ -549,18 +508,14 @@ class _$GuessingValue extends GuessingValue {
             (identical(other.number, number) ||
                 const DeepCollectionEquality().equals(other.number, number)) &&
             (identical(other.marks, marks) ||
-                const DeepCollectionEquality().equals(other.marks, marks)) &&
-            (identical(other.isConflict, isConflict) ||
-                const DeepCollectionEquality()
-                    .equals(other.isConflict, isConflict)));
+                const DeepCollectionEquality().equals(other.marks, marks)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(number) ^
-      const DeepCollectionEquality().hash(marks) ^
-      const DeepCollectionEquality().hash(isConflict);
+      const DeepCollectionEquality().hash(marks);
 
   @override
   $GuessingValueCopyWith<GuessingValue> get copyWith =>
@@ -570,30 +525,29 @@ class _$GuessingValue extends GuessingValue {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result blank(),
-    @required Result given(int number, bool isConflict),
-    @required Result filled(int number, bool isConflict),
-    @required
-        Result guessing(int number, BuiltList<bool> marks, bool isConflict),
+    @required Result given(int number),
+    @required Result filled(int number),
+    @required Result guessing(int number, BuiltList<bool> marks),
   }) {
     assert(blank != null);
     assert(given != null);
     assert(filled != null);
     assert(guessing != null);
-    return guessing(number, marks, isConflict);
+    return guessing(number, marks);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result blank(),
-    Result given(int number, bool isConflict),
-    Result filled(int number, bool isConflict),
-    Result guessing(int number, BuiltList<bool> marks, bool isConflict),
+    Result given(int number),
+    Result filled(int number),
+    Result guessing(int number, BuiltList<bool> marks),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (guessing != null) {
-      return guessing(number, marks, isConflict);
+      return guessing(number, marks);
     }
     return orElse();
   }
@@ -632,11 +586,9 @@ class _$GuessingValue extends GuessingValue {
 
 abstract class GuessingValue extends SudokuValue {
   GuessingValue._() : super._();
-  factory GuessingValue(int number, BuiltList<bool> marks, {bool isConflict}) =
-      _$GuessingValue;
+  factory GuessingValue(int number, BuiltList<bool> marks) = _$GuessingValue;
 
   int get number;
   BuiltList<bool> get marks;
-  bool get isConflict;
   $GuessingValueCopyWith<GuessingValue> get copyWith;
 }
