@@ -15,11 +15,16 @@ abstract class SudokuValue implements _$SudokuValue {
 
   factory SudokuValue.blank() = BlankValue;
 
+  @Assert("0 < number && number <= 9")
   factory SudokuValue.given(int number) = GivenValue;
 
+  @Assert("0 < number && number <= 9")
   factory SudokuValue.filled(int number) = FilledValue;
 
-  factory SudokuValue.guessing(int number, BuiltList<bool> marks) = GuessingValue;
+  @Assert("number == null || (0 < number && number <= 9)")
+  @Assert("marks != null")
+  @Assert("marks.length == 9")
+  factory SudokuValue.guessing(@nullable int number, BuiltList<bool> marks) = GuessingValue;
 
   SudokuValueType get type => map(
         blank: (_) => SudokuValueType.Blank,

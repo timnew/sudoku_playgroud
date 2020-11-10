@@ -30,13 +30,22 @@ class SudokuGrid<T> extends StatelessWidget {
         ),
       );
 
-  Widget _buildCell(BuildContext context, Widget child) => Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: borderColor,
-            width: borderWidth,
-          ),
+  Widget _buildCell(BuildContext context, Widget child) => AspectRatio(
+        aspectRatio: 1,
+        child: Container(
+          decoration: _buildDecoration(),
+          child: child,
         ),
-        child: child,
       );
+
+  Decoration _buildDecoration() {
+    if (borderWidth == 0) return null;
+
+    return BoxDecoration(
+      border: Border.all(
+        color: borderColor,
+        width: borderWidth,
+      ),
+    );
+  }
 }

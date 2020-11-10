@@ -24,14 +24,18 @@ class SudokuBoardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SudokuGrid<SudokuBlock>(
-      builder: (BuildContext context, SudokuBlock block) => SudokuBlockView(
-        sudoku: sudoku,
-        conflicts: conflicts,
-        block: block,
-        theme: theme,
+    return Container(
+      decoration: BoxDecoration(border: Border.all(width: 3)),
+      child: SudokuGrid<SudokuBlock>(
+        borderWidth: 0.5,
+        builder: (BuildContext context, SudokuBlock block) => SudokuBlockView(
+          sudoku: sudoku,
+          conflicts: conflicts,
+          block: block,
+          theme: theme,
+        ),
+        selector: (int index) => SudokuArea.blocks[index],
       ),
-      selector: (int index) => SudokuArea.blocks[index],
     );
   }
 }
@@ -56,6 +60,7 @@ class SudokuBlockView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SudokuGrid<SudokuIndex>(
+      borderWidth: 0.2,
       selector: (int index) => block[index],
       builder: (BuildContext context, SudokuIndex index) => SudokuCellView(
         index: index,
@@ -94,8 +99,8 @@ class SudokuCellView extends StatelessWidget {
       decoration: BoxDecoration(border: Border.all(color: theme.cellBorderColor(hasConflict))),
       child: value.map(
         blank: (_) => null,
-        given: (c) => Text(c.number.toString(), style: theme.givenTextStyle),
-        filled: (c) => Text(c.number.toString(), style: theme.filledTextStyle),
+        given: (c) => Center(child: Text(c.number.toString(), style: theme.givenTextStyle)),
+        filled: (c) => Center(child: Text(c.number.toString(), style: theme.filledTextStyle)),
         guessing: (c) => GuessingViewView(c, theme),
       ),
     );
@@ -111,8 +116,7 @@ class GuessingViewView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SudokuGrid<int>(
-      borderColor: theme.markBorderColor,
-      borderWidth: theme.markBorderWidth,
+      borderWidth: 0,
       selector: (int index) => index,
       builder: (context, index) => _buildMark(context, index),
     );
@@ -120,7 +124,10 @@ class GuessingViewView extends StatelessWidget {
 
   Widget _buildMark(BuildContext context, int index) {
     if (value.marks[index]) {
-      return Text("${index + 1}", style: theme.markTextStyle);
+      final mark = index + 1;
+      return Center(
+        child: Text("$mark", style: mark == value.number ? theme.guessingTextStyle : theme.markTextStyle),
+      );
     } else {
       return null;
     }

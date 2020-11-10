@@ -33,7 +33,7 @@ class _$SudokuValueTearOff {
   }
 
 // ignore: unused_element
-  GuessingValue guessing(int number, BuiltList<bool> marks) {
+  GuessingValue guessing(@nullable int number, BuiltList<bool> marks) {
     return GuessingValue(
       number,
       marks,
@@ -52,14 +52,14 @@ mixin _$SudokuValue {
     @required Result blank(),
     @required Result given(int number),
     @required Result filled(int number),
-    @required Result guessing(int number, BuiltList<bool> marks),
+    @required Result guessing(@nullable int number, BuiltList<bool> marks),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result blank(),
     Result given(int number),
     Result filled(int number),
-    Result guessing(int number, BuiltList<bool> marks),
+    Result guessing(@nullable int number, BuiltList<bool> marks),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -135,7 +135,7 @@ class _$BlankValue extends BlankValue {
     @required Result blank(),
     @required Result given(int number),
     @required Result filled(int number),
-    @required Result guessing(int number, BuiltList<bool> marks),
+    @required Result guessing(@nullable int number, BuiltList<bool> marks),
   }) {
     assert(blank != null);
     assert(given != null);
@@ -150,7 +150,7 @@ class _$BlankValue extends BlankValue {
     Result blank(),
     Result given(int number),
     Result filled(int number),
-    Result guessing(int number, BuiltList<bool> marks),
+    Result guessing(@nullable int number, BuiltList<bool> marks),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -228,6 +228,7 @@ class _$GivenValueCopyWithImpl<$Res> extends _$SudokuValueCopyWithImpl<$Res>
 class _$GivenValue extends GivenValue {
   _$GivenValue(this.number)
       : assert(number != null),
+        assert(0 < number && number <= 9),
         super._();
 
   @override
@@ -260,7 +261,7 @@ class _$GivenValue extends GivenValue {
     @required Result blank(),
     @required Result given(int number),
     @required Result filled(int number),
-    @required Result guessing(int number, BuiltList<bool> marks),
+    @required Result guessing(@nullable int number, BuiltList<bool> marks),
   }) {
     assert(blank != null);
     assert(given != null);
@@ -275,7 +276,7 @@ class _$GivenValue extends GivenValue {
     Result blank(),
     Result given(int number),
     Result filled(int number),
-    Result guessing(int number, BuiltList<bool> marks),
+    Result guessing(@nullable int number, BuiltList<bool> marks),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -357,6 +358,7 @@ class _$FilledValueCopyWithImpl<$Res> extends _$SudokuValueCopyWithImpl<$Res>
 class _$FilledValue extends FilledValue {
   _$FilledValue(this.number)
       : assert(number != null),
+        assert(0 < number && number <= 9),
         super._();
 
   @override
@@ -389,7 +391,7 @@ class _$FilledValue extends FilledValue {
     @required Result blank(),
     @required Result given(int number),
     @required Result filled(int number),
-    @required Result guessing(int number, BuiltList<bool> marks),
+    @required Result guessing(@nullable int number, BuiltList<bool> marks),
   }) {
     assert(blank != null);
     assert(given != null);
@@ -404,7 +406,7 @@ class _$FilledValue extends FilledValue {
     Result blank(),
     Result given(int number),
     Result filled(int number),
-    Result guessing(int number, BuiltList<bool> marks),
+    Result guessing(@nullable int number, BuiltList<bool> marks),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -459,7 +461,7 @@ abstract class $GuessingValueCopyWith<$Res> {
   factory $GuessingValueCopyWith(
           GuessingValue value, $Res Function(GuessingValue) then) =
       _$GuessingValueCopyWithImpl<$Res>;
-  $Res call({int number, BuiltList<bool> marks});
+  $Res call({@nullable int number, BuiltList<bool> marks});
 }
 
 /// @nodoc
@@ -486,12 +488,15 @@ class _$GuessingValueCopyWithImpl<$Res> extends _$SudokuValueCopyWithImpl<$Res>
 
 /// @nodoc
 class _$GuessingValue extends GuessingValue {
-  _$GuessingValue(this.number, this.marks)
-      : assert(number != null),
+  _$GuessingValue(@nullable this.number, this.marks)
+      : assert(marks != null),
+        assert(number == null || (0 < number && number <= 9)),
         assert(marks != null),
+        assert(marks.length == 9),
         super._();
 
   @override
+  @nullable
   final int number;
   @override
   final BuiltList<bool> marks;
@@ -527,7 +532,7 @@ class _$GuessingValue extends GuessingValue {
     @required Result blank(),
     @required Result given(int number),
     @required Result filled(int number),
-    @required Result guessing(int number, BuiltList<bool> marks),
+    @required Result guessing(@nullable int number, BuiltList<bool> marks),
   }) {
     assert(blank != null);
     assert(given != null);
@@ -542,7 +547,7 @@ class _$GuessingValue extends GuessingValue {
     Result blank(),
     Result given(int number),
     Result filled(int number),
-    Result guessing(int number, BuiltList<bool> marks),
+    Result guessing(@nullable int number, BuiltList<bool> marks),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -586,8 +591,10 @@ class _$GuessingValue extends GuessingValue {
 
 abstract class GuessingValue extends SudokuValue {
   GuessingValue._() : super._();
-  factory GuessingValue(int number, BuiltList<bool> marks) = _$GuessingValue;
+  factory GuessingValue(@nullable int number, BuiltList<bool> marks) =
+      _$GuessingValue;
 
+  @nullable
   int get number;
   BuiltList<bool> get marks;
   $GuessingValueCopyWith<GuessingValue> get copyWith;

@@ -9,11 +9,21 @@ class SudokuTheme {
 
   Color cellBorderColor(bool hasConflict) => hasConflict ? conflictedCellBorderColor : normalCellBorderColor;
 
-  TextStyle get givenTextStyle => TextStyle(fontSize: 10, fontWeight: FontWeight.bold);
+  Color get givenTextColor => Colors.black;
 
-  TextStyle get filledTextStyle => TextStyle(fontSize: 10);
+  TextStyle get givenTextStyle => TextStyle(fontSize: 32, color: givenTextColor, fontWeight: FontWeight.bold);
 
-  TextStyle get markTextStyle => TextStyle(fontSize: 5);
+  Color get filledTextColor => Colors.blue;
+
+  TextStyle get filledTextStyle => TextStyle(fontSize: 32, color: filledTextColor);
+
+  Color get markTextColor => Colors.black45;
+
+  TextStyle get markTextStyle => TextStyle(fontSize: 10, color: markTextColor);
+
+  Color get guessingTextColor => Colors.blue;
+
+  TextStyle get guessingTextStyle => TextStyle(fontSize: 12, color: guessingTextColor, fontWeight: FontWeight.bold);
 
   Color get markBorderColor => Colors.white10;
 

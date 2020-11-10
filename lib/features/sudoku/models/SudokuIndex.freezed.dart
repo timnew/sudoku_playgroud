@@ -109,11 +109,6 @@ class _$_SudokuIndex extends _SudokuIndex {
   final int col;
 
   @override
-  String toString() {
-    return 'SudokuIndex(row: $row, col: $col)';
-  }
-
-  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _SudokuIndex &&
@@ -243,11 +238,6 @@ class _$_BlockIndex extends _BlockIndex {
   final int row;
   @override
   final int col;
-
-  @override
-  String toString() {
-    return 'BlockIndex(row: $row, col: $col)';
-  }
 
   @override
   bool operator ==(dynamic other) {

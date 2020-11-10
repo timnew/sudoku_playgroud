@@ -24,23 +24,28 @@ class _SudokuScreenState extends State<SudokuScreen> with BuildResult<BuiltMap<S
       appBar: AppBar(
         title: Text("Sudoku"),
       ),
-      body: buildResultListenable(sudoku),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: buildResultListenable(sudoku),
+        ),
+      ),
     );
   }
 
   static SudokuValue randomBuilder(SudokuIndex index) {
-    switch (SudokuValueType.values[random.nextInt(3)]) {
+    switch (SudokuValueType.values[random.nextInt(4)]) {
       case SudokuValueType.Blank:
         return SudokuValue.blank();
       case SudokuValueType.Given:
-        return SudokuValue.given(random.nextInt(9));
+        return SudokuValue.given(random.nextInt(8) + 1);
       case SudokuValueType.Filled:
-        return SudokuValue.filled(random.nextInt(9));
+        return SudokuValue.filled(random.nextInt(8) + 1);
       case SudokuValueType.Guessing:
-        final number = random.nextInt(10);
+        final number = random.nextInt(9);
         final hasMarks = random.nextBool();
         return SudokuValue.guessing(
-          number == 10 ? null : number,
+          number == 0 ? null : number,
           hasMarks ? SudokuValue.FULL_MARKS : SudokuValue.EMPTY_MARKS,
         );
     }
