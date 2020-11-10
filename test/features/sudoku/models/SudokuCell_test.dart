@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sudoku_playground/features/sudoku/models/SudokuCell.dart';
+import 'package:sudoku_playground/features/sudoku/models/SudokuValue.dart';
 
 void main() {
   group("SudokuCell", () {});
@@ -7,7 +7,7 @@ void main() {
   group("Marks", () {
     group("addMark", () {
       test("add mark", () {
-        final marks = SudokuCell.EMPTY_MARKS.addMark(2);
+        final marks = SudokuValue.EMPTY_MARKS.addMark(2);
 
         expect(marks.isMarked(1), false);
         expect(marks.isMarked(2), true);
@@ -21,7 +21,7 @@ void main() {
       });
 
       test("override mark", () {
-        final marks = SudokuCell.FULL_MARKS.addMark(2);
+        final marks = SudokuValue.FULL_MARKS.addMark(2);
 
         expect(marks.isMarked(1), true);
         expect(marks.isMarked(2), true);
@@ -35,13 +35,13 @@ void main() {
       });
 
       test("check index", () {
-        expect(() => SudokuCell.EMPTY_MARKS.addMark(0), throwsRangeError);
+        expect(() => SudokuValue.EMPTY_MARKS.addMark(0), throwsRangeError);
       });
     });
 
     group("removeMark", () {
       test("remove mark", () {
-        final marks = SudokuCell.FULL_MARKS.removeMark(2);
+        final marks = SudokuValue.FULL_MARKS.removeMark(2);
 
         expect(marks.isMarked(1), true);
         expect(marks.isMarked(2), false);
@@ -55,7 +55,7 @@ void main() {
       });
 
       test("override mark", () {
-        final marks = SudokuCell.EMPTY_MARKS.removeMark(2);
+        final marks = SudokuValue.EMPTY_MARKS.removeMark(2);
 
         expect(marks.isMarked(1), false);
         expect(marks.isMarked(2), false);
@@ -69,7 +69,7 @@ void main() {
       });
 
       test("check index", () {
-        expect(() => SudokuCell.FULL_MARKS.removeMark(0), throwsRangeError);
+        expect(() => SudokuValue.FULL_MARKS.removeMark(0), throwsRangeError);
       });
     });
   });

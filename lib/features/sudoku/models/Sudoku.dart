@@ -1,19 +1,31 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:response_builder/response_builder.dart';
+import 'package:sudoku_playground/features/sudoku/models/SudokuCell.dart';
 import 'package:sudoku_playground/features/sudoku/models/SudokuIndexSet.dart';
 
-import 'SudokuCell.dart';
+import 'SudokuValue.dart';
 import 'SudokuIndex.dart';
 
-typedef SudokuCell CellBuilder(SudokuIndex index);
+typedef SudokuValue ValueBuilder(SudokuIndex index);
 
 class Sudoku extends ResultNotifier<BuiltMap<SudokuIndex, SudokuCell>> {
-  factory Sudoku.of(Iterable<MapEntry<SudokuIndex, SudokuCell>> entries) =>
-      Sudoku._(BuiltMap.of(Map.fromEntries(entries)));
+  factory Sudoku.fromCells(Iterable<SudokuCell> cells) => Sudoku._(
+        BuiltMap.of(
+          Map.fromIterables(SudokuIndexSet.allCells(), cells),
+        ),
+      );
 
-  factory Sudoku.build(CellBuilder builder) => Sudoku.of(SudokuBoard().children().map((e) => MapEntry(e, builder(e))));
+  factory Sudoku.fromValues(Iterable<SudokuValue> values) => Sudoku.fromCells(
+        values.map((e) => SudokuCell(e)),
+      );
 
-  factory Sudoku.blank() => Sudoku.build((index) => SudokuCell.blank());
+  factory Sudoku.build(ValueBuilder builder) => Sudoku.fromValues(
+        SudokuIndexSet.allCells().map((e) => builder(e)),
+      );
+
+  factory Sudoku.blank() => Sudoku.build(
+        (index) => SudokuValue.blank(),
+      );
 
   Sudoku._(BuiltMap<SudokuIndex, SudokuCell> cells) : super(verifyBoard(cells));
 
@@ -26,5 +38,3 @@ class Sudoku extends ResultNotifier<BuiltMap<SudokuIndex, SudokuCell>> {
     return cells;
   }
 }
-
-class SudokuView {}

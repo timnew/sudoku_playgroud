@@ -5,15 +5,9 @@ import 'package:sudoku_playground/features/sudoku/models/SudokuIndexSet.dart';
 void main() {
   group("SudokuIndexSet", () {
     group("Row", () {
-      final row = SudokuRow(2);
-
-      test("it should have count 9", () {
-        expect(row.count, 9);
-      });
-
       test("it should generate all index", () {
         expect(
-            row.children().toList(),
+            SudokuIndexSet.rowCells(2).toList(),
             containsAllInOrder([
               SudokuIndex(2, 1),
               SudokuIndex(2, 2),
@@ -29,15 +23,9 @@ void main() {
     });
 
     group("Column", () {
-      final column = SudokuColumn(2);
-
-      test("it should have count 9", () {
-        expect(column.count, 9);
-      });
-
       test("it should generate all index", () {
         expect(
-            column.children().toList(),
+            SudokuIndexSet.columnCells(2).toList(),
             containsAllInOrder([
               SudokuIndex(1, 2),
               SudokuIndex(2, 2),
@@ -53,13 +41,9 @@ void main() {
     });
 
     group("Block", () {
-      test("it should have count 9", () {
-        expect(SudokuBlock(1, 2).count, 9);
-      });
-
       test("it should generate for 1st block", () {
         expect(
-            SudokuBlock(1, 1).children().toList(),
+            SudokuIndexSet.blockCells(1, 1).toList(),
             containsAllInOrder([
               SudokuIndex(1, 1),
               SudokuIndex(1, 2),
@@ -75,7 +59,7 @@ void main() {
 
       test("it should generate for 2nd block in 1st row", () {
         expect(
-            SudokuBlock(1, 2).children().toList(),
+            SudokuIndexSet.blockCells(1, 2).toList(),
             containsAllInOrder([
               SudokuIndex(1, 4),
               SudokuIndex(1, 5),
@@ -91,7 +75,7 @@ void main() {
 
       test("it should generate for 2nd block in 1st column", () {
         expect(
-            SudokuBlock(2, 1).children().toList(),
+            SudokuIndexSet.blockCells(2, 1).toList(),
             containsAllInOrder([
               SudokuIndex(4, 1),
               SudokuIndex(4, 2),
@@ -107,7 +91,7 @@ void main() {
 
       test("it should generate all index", () {
         expect(
-            SudokuBlock(2, 3).children().toList(),
+            SudokuIndexSet.blockCells(2, 3).toList(),
             containsAllInOrder([
               SudokuIndex(4, 7),
               SudokuIndex(4, 8),
@@ -123,14 +107,9 @@ void main() {
     });
 
     group("Board", () {
-      final board = SudokuBoard();
-      test("it should have count 81", () {
-        expect(board.count, 9 * 9);
-      });
-
       test("it should generate all index", () {
         expect(
-          board.children().toList(),
+          SudokuIndexSet.allCells().toList(),
           containsAllInOrder([
             SudokuIndex(1, 1),
             SudokuIndex(1, 2),
