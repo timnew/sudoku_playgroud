@@ -6,5 +6,3 @@ class SudokuScreen extends StatelessWidget {
     return Container();
   }
 }
-
-
