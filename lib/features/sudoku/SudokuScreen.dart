@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
-class SudokuBoardScreen extends StatelessWidget {
+class SudokuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container();
   }
 }
+
+

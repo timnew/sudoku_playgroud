@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sudoku_playground/features/sudoku_board/SudokuBoardScreen.dart';
+import 'package:sudoku_playground/features/sudoku/SudokuScreen.dart';
 
 class App extends StatelessWidget {
   // This widget is the root of your application.
@@ -11,7 +11,7 @@ class App extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: SudokuBoardScreen(),
+      home: SudokuScreen(),
     );
   }
 }
