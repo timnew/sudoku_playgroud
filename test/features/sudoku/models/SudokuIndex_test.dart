@@ -13,10 +13,16 @@ void main() {
       expect(() => SudokuIndex(1, 10), throwsAssertionError);
     });
 
-    test("it convert to index", () {
+    test("it has index", () {
       expect(SudokuIndex(1, 1).index, 0);
       expect(SudokuIndex(9, 9).index, 80);
       expect(SudokuIndex(2, 2).index, 10);
+    });
+
+    test("it has block index", () {
+      expect(SudokuIndex(1, 1).blockIndex, 0);
+      expect(SudokuIndex(9, 9).blockIndex, 8);
+      expect(SudokuIndex(4, 2).blockIndex, 3);
     });
   });
 }

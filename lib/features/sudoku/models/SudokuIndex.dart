@@ -1,39 +1,58 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'SudokuArea.dart';
 
-part 'SudokuIndex.freezed.dart';
+class SudokuIndex {
+  final int row;
 
-@freezed
-abstract class SudokuIndex implements _$SudokuIndex {
-  SudokuIndex._();
+  final int col;
 
-  @Assert('row > 0 && row <= 9')
-  @Assert('col > 0 && col <= 9')
-  factory SudokuIndex(int row, int col) = _SudokuIndex;
+  final int index;
+  final int blockIndex;
 
-  int get index => (row - 1) * 9 + col - 1;
+  SudokuIndex(this.row, this.col)
+      : assert(row > 0 && row <= 9),
+        assert(col > 0 && col <= 9),
+        index = (row - 1) * 9 + col - 1,
+        blockIndex = (row - 1) ~/ 3 * 3 + (col - 1) ~/ 3;
+
+  SudokuRow get parentRow => SudokuArea.row(row);
+
+  SudokuColumn get parentColumn => SudokuArea.column(col);
+
+  SudokuBlock get parentBlock => SudokuArea.blocks[blockIndex];
 
   @override
   String toString() => "[$row,$col]";
+
+  @override
+  bool operator ==(Object other) => other is SudokuIndex ? index == other.index : false;
+
+  @override
+  int get hashCode => runtimeType.hashCode ^ index.hashCode;
 }
 
-@freezed
-abstract class BlockIndex implements _$BlockIndex {
-  BlockIndex._();
+class BlockIndex {
+  final int row;
+  final int col;
+  final int index;
 
-  @Assert('row > 0 && row <= 3')
-  @Assert('col > 0 && col <= 3')
-  factory BlockIndex(int row, int col) = _BlockIndex;
+  BlockIndex(this.row, this.col)
+      : assert(row > 0 && row <= 3),
+        assert(col > 0 && col <= 3),
+        index = (row - 1) * 3 + col - 1;
 
-  factory BlockIndex.index(int index) => BlockIndex(index ~/ 3 + 1, index % 3 + 1);
+  BlockIndex.index(this.index)
+      : assert(0 <= index && index < 9),
+        row = index ~/ 3 + 1,
+        col = index % 3 + 1;
 
-  int get index => (row - 1) * 3 + col - 1;
-
-  int get minCellRow => (row - 1) * 3 + 1;
-
-  int get minCellCol => (col - 1) * 3 + 1;
-
-  SudokuIndex childByIndex(int index) => SudokuIndex(minCellRow + index ~/ 3, minCellCol + index % 3);
+  SudokuIndex childByIndex(int index) => SudokuIndex((row - 1) * 3 + 1 + index ~/ 3, (col - 1) * 3 + 1 + index % 3);
 
   @override
   String toString() => "Block[$row,$col]";
+
+  @override
+  bool operator ==(Object other) => other is BlockIndex ? index == other.index : false;
+
+  @override
+  int get hashCode => runtimeType.hashCode ^ index.hashCode;
 }
