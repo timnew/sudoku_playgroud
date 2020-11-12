@@ -1,67 +1,104 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:response_builder/response_builder.dart';
-import 'package:sudoku_playground/features/sudoku/models/SudokuArea.dart';
 
-import 'SudokuValue.dart';
+import 'SudokuArea.dart';
 import 'SudokuIndex.dart';
+import 'SudokuValue.dart';
 
-typedef SudokuValue ValueBuilder(SudokuIndex index);
+part 'Sudoku.freezed.dart';
 
-class Sudoku extends ResultNotifier<BuiltMap<SudokuIndex, SudokuValue>> {
-  factory Sudoku.fromValues(Iterable<SudokuValue> values) => Sudoku._(
-        BuiltMap.of(
+typedef SudokuValue CellBuilder(SudokuIndex index);
+
+@freezed
+abstract class Sudoku implements _$Sudoku {
+  Sudoku._();
+
+  @Assert("cells.length == 81")
+  factory Sudoku({
+    BuiltMap<SudokuIndex, SudokuValue> cells,
+    BuiltSet<SudokuIndex> conflicts,
+    SudokuIndex selected,
+    BuiltSet<SudokuIndex> highlighted,
+  }) = _Sudoku;
+
+  factory Sudoku.fromCellValues(Iterable<SudokuValue> values) => Sudoku(
+        cells: BuiltMap.of(
           Map.fromIterables(SudokuArea.whole(), values),
         ),
+        conflicts: BuiltSet(),
       );
 
-  factory Sudoku.build(ValueBuilder builder) => Sudoku.fromValues(
+  factory Sudoku.build(CellBuilder builder) => Sudoku.fromCellValues(
         SudokuArea.whole().map((e) => builder(e)),
       );
 
-  factory Sudoku.blank() => Sudoku.build(
-        (index) => SudokuValue.blank(),
+  factory Sudoku.blank() => Sudoku.build((index) => SudokuValue.blank());
+
+  BuiltMap<SudokuIndex, SudokuValue> _updateCell(SudokuIndex index, ValueUpdater<SudokuValue> valueUpdater) =>
+      cells.rebuild(
+        (builder) => builder[index] = valueUpdater(builder[index]),
       );
 
-  Sudoku._(BuiltMap<SudokuIndex, SudokuValue> values) : super(verifyBoard(values));
-
-  static BuiltMap<SudokuIndex, SudokuValue> verifyBoard(BuiltMap<SudokuIndex, SudokuValue> values) {
-    // Check cell count should be sufficient, because:
-    // SudokuIndex ensures the index should be valid, the maximum non-duplicated combinations is 81
-    // BuiltMap ensures all the index are unique
-    assert(values.length == 81);
-
-    return values;
-  }
-
-  SudokuValue updateCell(SudokuIndex index, ValueUpdater<SudokuValue> valueUpdater) {
-    final newValue = valueUpdater(value[index]);
-
-    updateValue((current) => current.rebuild((b) => b[index] = newValue));
-
-    return newValue;
-  }
-
-  void updateArea(SudokuArea area, ValueUpdater<SudokuValue> valueUpdater) {
-    final builder = value.toBuilder();
+  BuiltMap<SudokuIndex, SudokuValue> _updateArea(SudokuArea area, ValueUpdater<SudokuValue> valueUpdater) {
+    final builder = cells.toBuilder();
 
     area.forEach((index) {
       builder[index] = valueUpdater(builder[index]);
     });
 
-    putValue(builder.build());
+    return builder.build();
   }
 
-  void fullMarkBoard() => updateArea(SudokuArea.whole(), (current) => current.fullMark());
+  BuiltSet<SudokuIndex> _highlighted(SudokuIndex index) {
+    return null;
+  }
 
-  SudokuValue fullMark(SudokuIndex index) => updateCell(index, (current) => current.fullMark());
+  BuiltSet<SudokuIndex> _checkConflict(
+    SudokuIndex changedIndex,
+    BuiltSet<SudokuIndex> highlighted,
+    BuiltMap<SudokuIndex, SudokuValue> cells,
+  ) {
+    return BuiltSet(); //  TODO: Implement this
+  }
 
-  SudokuValue addMark(SudokuIndex index, int mark) => updateCell(index, (current) => current.addMark(mark));
+  Sudoku checkConflict(SudokuIndex index, ValueUpdater<SudokuValue> valueUpdater) {
+    final newCells = _updateCell(index, valueUpdater);
+    final highlighted = _highlighted(index);
+    final newConflicts = _checkConflict(index, highlighted, newCells);
 
-  SudokuValue removeMark(SudokuIndex index, int mark) => updateCell(index, (current) => current.removeMark(mark));
+    return copyWith(
+      cells: newCells,
+      conflicts: newConflicts,
+      selected: index,
+      highlighted: highlighted,
+    );
+  }
 
-  SudokuValue guess(SudokuIndex index, int number) => updateCell(index, (current) => current.guess(number));
+  Sudoku select(SudokuIndex index) => copyWith(
+        selected: index,
+        highlighted: _highlighted(index),
+      );
 
-  SudokuValue fill(SudokuIndex index, int number) => updateCell(index, (current) => current.fill(number));
+  Sudoku updateCell(SudokuIndex index, ValueUpdater<SudokuValue> valueUpdater) => copyWith(
+        cells: _updateCell(index, valueUpdater),
+        selected: index,
+        highlighted: _highlighted(index),
+      );
 
-  SudokuValue erase(SudokuIndex index) => updateCell(index, (current) => current.erase());
+  Sudoku fullMarkBoard() => copyWith(
+        cells: _updateArea(SudokuArea.whole(), (current) => current.fullMark()),
+      );
+
+  Sudoku fullMark(SudokuIndex index) => updateCell(index, (current) => current.fullMark());
+
+  Sudoku addMark(SudokuIndex index, int mark) => checkConflict(index, (current) => current.addMark(mark));
+
+  Sudoku removeMark(SudokuIndex index, int mark) => updateCell(index, (current) => current.removeMark(mark));
+
+  Sudoku guess(SudokuIndex index, int number) => checkConflict(index, (current) => current.guess(number));
+
+  Sudoku fill(SudokuIndex index, int number) => checkConflict(index, (current) => current.fill(number));
+
+  Sudoku erase(SudokuIndex index) => checkConflict(index, (current) => current.erase());
 }

@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:response_builder/response_builder.dart';
 import 'package:sudoku_playground/features/sudoku/models/Sudoku.dart';
@@ -14,24 +13,12 @@ class SudokuScreen extends StatefulWidget {
   _SudokuScreenState createState() => _SudokuScreenState();
 }
 
-class _SudokuScreenState extends State<SudokuScreen> with BuildResult<BuiltMap<SudokuIndex, SudokuValue>> {
+class _SudokuScreenState extends State<SudokuScreen> with BuildValue<Sudoku> {
   static Random random = Random();
-  final Sudoku sudoku = Sudoku.build(randomBuilder);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Sudoku"),
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: buildResultListenable(sudoku),
-        ),
-      ),
-    );
-  }
+  final HistoryValueNotifier<Sudoku> sudokuNotifier = HistoryValueNotifier<Sudoku>(
+    31,
+    initialValue: Sudoku.build(randomBuilder),
+  );
 
   static SudokuValue randomBuilder(SudokuIndex index) {
     switch (SudokuValueType.values[random.nextInt(4)]) {
@@ -54,10 +41,22 @@ class _SudokuScreenState extends State<SudokuScreen> with BuildResult<BuiltMap<S
   }
 
   @override
-  Widget buildValue(BuildContext context, BuiltMap<SudokuIndex, SudokuValue> sudoku) {
-    return SudokuBoardView(
-      sudoku: sudoku,
-      conflicts: BuiltMap(),
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Sudoku"),
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: buildValueListenable(sudokuNotifier),
+        ),
+      ),
     );
   }
+
+  @override
+  Widget buildValue(BuildContext context, Sudoku sudoku) => SudokuBoardView(
+        sudoku: sudoku,
+      );
 }
