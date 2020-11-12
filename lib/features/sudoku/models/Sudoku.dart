@@ -50,9 +50,8 @@ abstract class Sudoku implements _$Sudoku {
     return builder.build();
   }
 
-  BuiltSet<SudokuIndex> _highlighted(SudokuIndex index) {
-    return null;
-  }
+  BuiltSet<SudokuIndex> _highlighted(SudokuIndex index) =>
+      BuiltSet.build((b) => b..addAll(index.parentRow)..addAll(index.parentColumn)..addAll(index.parentBlock));
 
   BuiltSet<SudokuIndex> _checkConflict(
     SudokuIndex changedIndex,
