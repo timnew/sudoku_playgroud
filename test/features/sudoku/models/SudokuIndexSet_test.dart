@@ -109,7 +109,7 @@ void main() {
     group("Board", () {
       test("it should generate all index", () {
         expect(
-          SudokuArea.board().toList(),
+          SudokuArea.whole().toList(),
           containsAllInOrder([
             SudokuIndex(1, 1),
             SudokuIndex(1, 2),

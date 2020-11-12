@@ -25,7 +25,7 @@ class SudokuArea extends Iterable<SudokuIndex> {
 
   factory SudokuArea.block(BlockIndex blockIndex) => blocks[blockIndex.index];
 
-  factory SudokuArea.board() => Singleton.lazy(
+  factory SudokuArea.whole() => Singleton.lazy(
         () => SudokuArea._("board", 81, (i) => SudokuIndex(i ~/ 9 + 1, i % 9 + 1)),
       ).instance;
 }

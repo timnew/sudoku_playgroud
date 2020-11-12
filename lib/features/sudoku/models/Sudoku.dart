@@ -10,12 +10,12 @@ typedef SudokuValue ValueBuilder(SudokuIndex index);
 class Sudoku extends ResultNotifier<BuiltMap<SudokuIndex, SudokuValue>> {
   factory Sudoku.fromValues(Iterable<SudokuValue> values) => Sudoku._(
         BuiltMap.of(
-          Map.fromIterables(SudokuArea.board(), values),
+          Map.fromIterables(SudokuArea.whole(), values),
         ),
       );
 
   factory Sudoku.build(ValueBuilder builder) => Sudoku.fromValues(
-        SudokuArea.board().map((e) => builder(e)),
+        SudokuArea.whole().map((e) => builder(e)),
       );
 
   factory Sudoku.blank() => Sudoku.build(
@@ -51,7 +51,7 @@ class Sudoku extends ResultNotifier<BuiltMap<SudokuIndex, SudokuValue>> {
     putValue(builder.build());
   }
 
-  void fullMarkBoard() => updateArea(SudokuArea.board(), (current) => current.fullMark());
+  void fullMarkBoard() => updateArea(SudokuArea.whole(), (current) => current.fullMark());
 
   SudokuValue fullMark(SudokuIndex index) => updateCell(index, (current) => current.fullMark());
 
