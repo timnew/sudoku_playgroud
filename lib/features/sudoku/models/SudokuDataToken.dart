@@ -7,7 +7,7 @@ abstract class SudokuDataToken implements _$SudokuDataToken {
   SudokuDataToken._();
 
   static RegExp _digitPattern = RegExp("[1-9]");
-  static RegExp _spacePattern = RegExp("\s");
+  static RegExp _spacePattern = RegExp(r"\s");
 
   factory SudokuDataToken.parse(String character, {int offset, String expression}) {
     if (character == '_') return SudokuDataToken.blank(offset: offset, expression: expression);
