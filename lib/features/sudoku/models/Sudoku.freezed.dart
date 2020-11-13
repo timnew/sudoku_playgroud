@@ -15,10 +15,10 @@ class _$SudokuTearOff {
 
 // ignore: unused_element
   _Sudoku call(
-      {BuiltMap<SudokuIndex, SudokuValue> cells,
-      BuiltSet<SudokuIndex> conflicts,
-      SudokuIndex selected,
-      BuiltSet<SudokuIndex> highlighted}) {
+      {BuiltMap<SudokuPos, SudokuValue> cells,
+      BuiltSet<SudokuPos> conflicts,
+      SudokuPos selected,
+      BuiltSet<SudokuPos> highlighted}) {
     return _Sudoku(
       cells: cells,
       conflicts: conflicts,
@@ -34,10 +34,10 @@ const $Sudoku = _$SudokuTearOff();
 
 /// @nodoc
 mixin _$Sudoku {
-  BuiltMap<SudokuIndex, SudokuValue> get cells;
-  BuiltSet<SudokuIndex> get conflicts;
-  SudokuIndex get selected;
-  BuiltSet<SudokuIndex> get highlighted;
+  BuiltMap<SudokuPos, SudokuValue> get cells;
+  BuiltSet<SudokuPos> get conflicts;
+  SudokuPos get selected;
+  BuiltSet<SudokuPos> get highlighted;
 
   $SudokuCopyWith<Sudoku> get copyWith;
 }
@@ -47,10 +47,10 @@ abstract class $SudokuCopyWith<$Res> {
   factory $SudokuCopyWith(Sudoku value, $Res Function(Sudoku) then) =
       _$SudokuCopyWithImpl<$Res>;
   $Res call(
-      {BuiltMap<SudokuIndex, SudokuValue> cells,
-      BuiltSet<SudokuIndex> conflicts,
-      SudokuIndex selected,
-      BuiltSet<SudokuIndex> highlighted});
+      {BuiltMap<SudokuPos, SudokuValue> cells,
+      BuiltSet<SudokuPos> conflicts,
+      SudokuPos selected,
+      BuiltSet<SudokuPos> highlighted});
 }
 
 /// @nodoc
@@ -71,14 +71,14 @@ class _$SudokuCopyWithImpl<$Res> implements $SudokuCopyWith<$Res> {
     return _then(_value.copyWith(
       cells: cells == freezed
           ? _value.cells
-          : cells as BuiltMap<SudokuIndex, SudokuValue>,
+          : cells as BuiltMap<SudokuPos, SudokuValue>,
       conflicts: conflicts == freezed
           ? _value.conflicts
-          : conflicts as BuiltSet<SudokuIndex>,
-      selected: selected == freezed ? _value.selected : selected as SudokuIndex,
+          : conflicts as BuiltSet<SudokuPos>,
+      selected: selected == freezed ? _value.selected : selected as SudokuPos,
       highlighted: highlighted == freezed
           ? _value.highlighted
-          : highlighted as BuiltSet<SudokuIndex>,
+          : highlighted as BuiltSet<SudokuPos>,
     ));
   }
 }
@@ -89,10 +89,10 @@ abstract class _$SudokuCopyWith<$Res> implements $SudokuCopyWith<$Res> {
       __$SudokuCopyWithImpl<$Res>;
   @override
   $Res call(
-      {BuiltMap<SudokuIndex, SudokuValue> cells,
-      BuiltSet<SudokuIndex> conflicts,
-      SudokuIndex selected,
-      BuiltSet<SudokuIndex> highlighted});
+      {BuiltMap<SudokuPos, SudokuValue> cells,
+      BuiltSet<SudokuPos> conflicts,
+      SudokuPos selected,
+      BuiltSet<SudokuPos> highlighted});
 }
 
 /// @nodoc
@@ -114,14 +114,14 @@ class __$SudokuCopyWithImpl<$Res> extends _$SudokuCopyWithImpl<$Res>
     return _then(_Sudoku(
       cells: cells == freezed
           ? _value.cells
-          : cells as BuiltMap<SudokuIndex, SudokuValue>,
+          : cells as BuiltMap<SudokuPos, SudokuValue>,
       conflicts: conflicts == freezed
           ? _value.conflicts
-          : conflicts as BuiltSet<SudokuIndex>,
-      selected: selected == freezed ? _value.selected : selected as SudokuIndex,
+          : conflicts as BuiltSet<SudokuPos>,
+      selected: selected == freezed ? _value.selected : selected as SudokuPos,
       highlighted: highlighted == freezed
           ? _value.highlighted
-          : highlighted as BuiltSet<SudokuIndex>,
+          : highlighted as BuiltSet<SudokuPos>,
     ));
   }
 }
@@ -133,13 +133,13 @@ class _$_Sudoku extends _Sudoku {
         super._();
 
   @override
-  final BuiltMap<SudokuIndex, SudokuValue> cells;
+  final BuiltMap<SudokuPos, SudokuValue> cells;
   @override
-  final BuiltSet<SudokuIndex> conflicts;
+  final BuiltSet<SudokuPos> conflicts;
   @override
-  final SudokuIndex selected;
+  final SudokuPos selected;
   @override
-  final BuiltSet<SudokuIndex> highlighted;
+  final BuiltSet<SudokuPos> highlighted;
 
   @override
   String toString() {
@@ -179,19 +179,19 @@ class _$_Sudoku extends _Sudoku {
 abstract class _Sudoku extends Sudoku {
   _Sudoku._() : super._();
   factory _Sudoku(
-      {BuiltMap<SudokuIndex, SudokuValue> cells,
-      BuiltSet<SudokuIndex> conflicts,
-      SudokuIndex selected,
-      BuiltSet<SudokuIndex> highlighted}) = _$_Sudoku;
+      {BuiltMap<SudokuPos, SudokuValue> cells,
+      BuiltSet<SudokuPos> conflicts,
+      SudokuPos selected,
+      BuiltSet<SudokuPos> highlighted}) = _$_Sudoku;
 
   @override
-  BuiltMap<SudokuIndex, SudokuValue> get cells;
+  BuiltMap<SudokuPos, SudokuValue> get cells;
   @override
-  BuiltSet<SudokuIndex> get conflicts;
+  BuiltSet<SudokuPos> get conflicts;
   @override
-  SudokuIndex get selected;
+  SudokuPos get selected;
   @override
-  BuiltSet<SudokuIndex> get highlighted;
+  BuiltSet<SudokuPos> get highlighted;
   @override
   _$SudokuCopyWith<_Sudoku> get copyWith;
 }

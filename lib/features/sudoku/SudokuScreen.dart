@@ -6,7 +6,7 @@ import 'package:sudoku_playground/features/sudoku/models/Sudoku.dart';
 import 'package:sudoku_playground/features/sudoku/models/SudokuValue.dart';
 
 import 'SudokuView.dart';
-import 'models/SudokuIndex.dart';
+import 'models/SudokuPos.dart';
 
 class SudokuScreen extends StatefulWidget {
   @override
@@ -20,7 +20,7 @@ class _SudokuScreenState extends State<SudokuScreen> with BuildValue<Sudoku> {
     initialValue: Sudoku.build(randomBuilder),
   );
 
-  static SudokuValue randomBuilder(SudokuIndex index) {
+  static SudokuValue randomBuilder(SudokuPos index) {
     switch (SudokuValueType.values[random.nextInt(4)]) {
       case SudokuValueType.Blank:
         return SudokuValue.blank();

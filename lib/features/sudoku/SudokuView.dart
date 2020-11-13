@@ -2,8 +2,7 @@ import 'package:flutter/material.dart' hide ValueWidgetBuilder;
 import 'package:sudoku_playground/features/sudoku/SudokuTheme.dart';
 
 import 'models/Sudoku.dart';
-import 'models/SudokuArea.dart';
-import 'models/SudokuIndex.dart';
+import 'models/SudokuPos.dart';
 import 'models/SudokuValue.dart';
 
 import 'SudokuGrid.dart';
@@ -23,14 +22,14 @@ class SudokuBoardView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(border: Border.all(width: 3)),
-      child: SudokuGrid<SudokuBlock>(
+      child: SudokuGrid<SudokuSubPos>(
         borderWidth: 0.5,
-        builder: (BuildContext context, SudokuBlock block) => SudokuBlockView(
+        builder: (BuildContext context, SudokuSubPos block) => SudokuBlockView(
           sudoku: sudoku,
           block: block,
           theme: theme,
         ),
-        selector: (int index) => SudokuArea.blocks[index],
+        selector: (int index) => SudokuSubPos.ALL_BY_ROW[index],
       ),
     );
   }
@@ -39,7 +38,7 @@ class SudokuBoardView extends StatelessWidget {
 class SudokuBlockView extends StatelessWidget {
   final SudokuTheme theme;
   final Sudoku sudoku;
-  final SudokuBlock block;
+  final SudokuSubPos block;
 
   SudokuBlockView({
     @required this.theme,
@@ -48,14 +47,14 @@ class SudokuBlockView extends StatelessWidget {
   })  : assert(sudoku != null),
         assert(block != null),
         assert(theme != null),
-        super(key: Key(block.name));
+        super(key: Key(block.toString()));
 
   @override
   Widget build(BuildContext context) {
-    return SudokuGrid<SudokuIndex>(
+    return SudokuGrid<SudokuPos>(
       borderWidth: 0.2,
-      selector: (int index) => block[index],
-      builder: (BuildContext context, SudokuIndex index) => SudokuCellView(
+      selector: (int index) => block + index,
+      builder: (BuildContext context, SudokuPos index) => SudokuCellView(
         theme: theme,
         sudoku: sudoku,
         index: index,
@@ -67,7 +66,7 @@ class SudokuBlockView extends StatelessWidget {
 class SudokuCellView extends StatelessWidget {
   final SudokuTheme theme;
   final Sudoku sudoku;
-  final SudokuIndex index;
+  final SudokuPos index;
 
   SudokuCellView({
     @required this.theme,

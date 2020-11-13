@@ -1,5 +1,5 @@
 import 'package:built_collection/built_collection.dart';
-import 'package:sudoku_playground/features/sudoku/models/SudokuIndex.dart';
+import 'package:sudoku_playground/features/sudoku/models/SudokuPos.dart';
 import 'package:sudoku_playground/features/sudoku/models/SudokuDataToken.dart';
 import 'package:sudoku_playground/features/sudoku/models/SudokuValue.dart';
 
@@ -8,7 +8,7 @@ class SudokuParser {
 
   SudokuParser(this.sudokuExpression);
 
-  void writeTo(MapBuilder<SudokuIndex, SudokuValue> builder) {}
+  void writeTo(MapBuilder<SudokuPos, SudokuValue> builder) {}
 
   Iterable<SudokuDataToken> _tokenize(String expression) sync* {
     final iterator = expression.split("").asMap().entries.iterator;
@@ -24,7 +24,7 @@ class SudokuParser {
     FormatException("Unexpected token ${token.runtimeType}", token.expression, token.offset);
   }
 
-  void _parse(Iterable<SudokuDataToken> tokens, MapBuilder<SudokuIndex, SudokuValue> builder) {
+  void _parse(Iterable<SudokuDataToken> tokens, MapBuilder<SudokuPos, SudokuValue> builder) {
     final iterator = tokens.iterator;
 
     if (!iterator.moveNext()) throw FormatException("Empty expression");
@@ -41,9 +41,9 @@ class SudokuParser {
     if (iterator.moveNext() == true) _parseError(iterator.current);
   }
 
-  void _rowSudoku(Iterator<SudokuDataToken> iterator, MapBuilder<SudokuIndex, SudokuValue> builder) {}
+  void _rowSudoku(Iterator<SudokuDataToken> iterator, MapBuilder<SudokuPos, SudokuValue> builder) {}
 
-  void _columnSudoku(Iterator<SudokuDataToken> iterator, MapBuilder<SudokuIndex, SudokuValue> builder) {}
+  void _columnSudoku(Iterator<SudokuDataToken> iterator, MapBuilder<SudokuPos, SudokuValue> builder) {}
 
-  void _positionedSudoku(Iterator<SudokuDataToken> iterator, MapBuilder<SudokuIndex, SudokuValue> builder) {}
+  void _positionedSudoku(Iterator<SudokuDataToken> iterator, MapBuilder<SudokuPos, SudokuValue> builder) {}
 }
