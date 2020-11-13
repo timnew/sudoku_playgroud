@@ -3,10 +3,15 @@ import 'package:sudoku_playground/features/sudoku/models/SudokuPos.dart';
 import 'package:sudoku_playground/features/sudoku/models/SudokuDataToken.dart';
 import 'package:sudoku_playground/features/sudoku/models/SudokuValue.dart';
 
-class SudokuParser {
+import 'SudokuBuilder.dart';
+
+class SudokuParser extends SudokuBuilder with SudokuFullScan {
   final String expression;
 
   SudokuParser(this.expression);
+
+  @override
+  BuiltMap<SudokuPos, SudokuValue> updateCells(SudokuPos selected, BuiltSet<SudokuPos> impactZone) => parseAsBuiltMap();
 
   BuiltMap<SudokuPos, SudokuValue> parseAsBuiltMap() => parseAsMap().build();
 

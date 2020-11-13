@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sudoku_playground/features/sudoku/models/SudokuParser.dart';
+import 'package:sudoku_playground/features/sudoku/models/actions/SudokuParser.dart';
 import 'package:sudoku_playground/features/sudoku/models/SudokuPos.dart';
 import 'package:sudoku_playground/features/sudoku/models/SudokuValue.dart';
 
@@ -25,7 +25,7 @@ void main() {
   String stringify(Map<SudokuPos, SudokuValue> input) => doFormat(
         Map.fromIterable(
           SudokuPos.ALL,
-          key: (pos) => pos.index,
+          key: (pos) => pos.pos,
           value: (pos) => input[pos].maybeMap(
             given: (v) => "${v.number}",
             blank: (_) => "_",

@@ -15,15 +15,17 @@ class _$SudokuTearOff {
 
 // ignore: unused_element
   _Sudoku call(
-      {BuiltMap<SudokuPos, SudokuValue> cells,
-      BuiltSet<SudokuPos> conflicts,
-      SudokuPos selected,
-      BuiltSet<SudokuPos> highlighted}) {
+      {@nullable SudokuPos cursor,
+      @nullable BuiltSet<SudokuPos> impactZone,
+      BuiltMap<SudokuPos, SudokuValue> cells,
+      BuiltSetMultimap<SudokuPos, SudokuPos> conflicts,
+      int filledCellCount}) {
     return _Sudoku(
+      cursor: cursor,
+      impactZone: impactZone,
       cells: cells,
       conflicts: conflicts,
-      selected: selected,
-      highlighted: highlighted,
+      filledCellCount: filledCellCount,
     );
   }
 }
@@ -34,10 +36,13 @@ const $Sudoku = _$SudokuTearOff();
 
 /// @nodoc
 mixin _$Sudoku {
+  @nullable
+  SudokuPos get cursor;
+  @nullable
+  BuiltSet<SudokuPos> get impactZone;
   BuiltMap<SudokuPos, SudokuValue> get cells;
-  BuiltSet<SudokuPos> get conflicts;
-  SudokuPos get selected;
-  BuiltSet<SudokuPos> get highlighted;
+  BuiltSetMultimap<SudokuPos, SudokuPos> get conflicts;
+  int get filledCellCount;
 
   $SudokuCopyWith<Sudoku> get copyWith;
 }
@@ -47,10 +52,11 @@ abstract class $SudokuCopyWith<$Res> {
   factory $SudokuCopyWith(Sudoku value, $Res Function(Sudoku) then) =
       _$SudokuCopyWithImpl<$Res>;
   $Res call(
-      {BuiltMap<SudokuPos, SudokuValue> cells,
-      BuiltSet<SudokuPos> conflicts,
-      SudokuPos selected,
-      BuiltSet<SudokuPos> highlighted});
+      {@nullable SudokuPos cursor,
+      @nullable BuiltSet<SudokuPos> impactZone,
+      BuiltMap<SudokuPos, SudokuValue> cells,
+      BuiltSetMultimap<SudokuPos, SudokuPos> conflicts,
+      int filledCellCount});
 }
 
 /// @nodoc
@@ -63,22 +69,26 @@ class _$SudokuCopyWithImpl<$Res> implements $SudokuCopyWith<$Res> {
 
   @override
   $Res call({
+    Object cursor = freezed,
+    Object impactZone = freezed,
     Object cells = freezed,
     Object conflicts = freezed,
-    Object selected = freezed,
-    Object highlighted = freezed,
+    Object filledCellCount = freezed,
   }) {
     return _then(_value.copyWith(
+      cursor: cursor == freezed ? _value.cursor : cursor as SudokuPos,
+      impactZone: impactZone == freezed
+          ? _value.impactZone
+          : impactZone as BuiltSet<SudokuPos>,
       cells: cells == freezed
           ? _value.cells
           : cells as BuiltMap<SudokuPos, SudokuValue>,
       conflicts: conflicts == freezed
           ? _value.conflicts
-          : conflicts as BuiltSet<SudokuPos>,
-      selected: selected == freezed ? _value.selected : selected as SudokuPos,
-      highlighted: highlighted == freezed
-          ? _value.highlighted
-          : highlighted as BuiltSet<SudokuPos>,
+          : conflicts as BuiltSetMultimap<SudokuPos, SudokuPos>,
+      filledCellCount: filledCellCount == freezed
+          ? _value.filledCellCount
+          : filledCellCount as int,
     ));
   }
 }
@@ -89,10 +99,11 @@ abstract class _$SudokuCopyWith<$Res> implements $SudokuCopyWith<$Res> {
       __$SudokuCopyWithImpl<$Res>;
   @override
   $Res call(
-      {BuiltMap<SudokuPos, SudokuValue> cells,
-      BuiltSet<SudokuPos> conflicts,
-      SudokuPos selected,
-      BuiltSet<SudokuPos> highlighted});
+      {@nullable SudokuPos cursor,
+      @nullable BuiltSet<SudokuPos> impactZone,
+      BuiltMap<SudokuPos, SudokuValue> cells,
+      BuiltSetMultimap<SudokuPos, SudokuPos> conflicts,
+      int filledCellCount});
 }
 
 /// @nodoc
@@ -106,70 +117,86 @@ class __$SudokuCopyWithImpl<$Res> extends _$SudokuCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object cursor = freezed,
+    Object impactZone = freezed,
     Object cells = freezed,
     Object conflicts = freezed,
-    Object selected = freezed,
-    Object highlighted = freezed,
+    Object filledCellCount = freezed,
   }) {
     return _then(_Sudoku(
+      cursor: cursor == freezed ? _value.cursor : cursor as SudokuPos,
+      impactZone: impactZone == freezed
+          ? _value.impactZone
+          : impactZone as BuiltSet<SudokuPos>,
       cells: cells == freezed
           ? _value.cells
           : cells as BuiltMap<SudokuPos, SudokuValue>,
       conflicts: conflicts == freezed
           ? _value.conflicts
-          : conflicts as BuiltSet<SudokuPos>,
-      selected: selected == freezed ? _value.selected : selected as SudokuPos,
-      highlighted: highlighted == freezed
-          ? _value.highlighted
-          : highlighted as BuiltSet<SudokuPos>,
+          : conflicts as BuiltSetMultimap<SudokuPos, SudokuPos>,
+      filledCellCount: filledCellCount == freezed
+          ? _value.filledCellCount
+          : filledCellCount as int,
     ));
   }
 }
 
 /// @nodoc
 class _$_Sudoku extends _Sudoku {
-  _$_Sudoku({this.cells, this.conflicts, this.selected, this.highlighted})
+  _$_Sudoku(
+      {@nullable this.cursor,
+      @nullable this.impactZone,
+      this.cells,
+      this.conflicts,
+      this.filledCellCount})
       : assert(cells.length == 81),
         super._();
 
   @override
+  @nullable
+  final SudokuPos cursor;
+  @override
+  @nullable
+  final BuiltSet<SudokuPos> impactZone;
+  @override
   final BuiltMap<SudokuPos, SudokuValue> cells;
   @override
-  final BuiltSet<SudokuPos> conflicts;
+  final BuiltSetMultimap<SudokuPos, SudokuPos> conflicts;
   @override
-  final SudokuPos selected;
-  @override
-  final BuiltSet<SudokuPos> highlighted;
+  final int filledCellCount;
 
   @override
   String toString() {
-    return 'Sudoku(cells: $cells, conflicts: $conflicts, selected: $selected, highlighted: $highlighted)';
+    return 'Sudoku(cursor: $cursor, impactZone: $impactZone, cells: $cells, conflicts: $conflicts, filledCellCount: $filledCellCount)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Sudoku &&
+            (identical(other.cursor, cursor) ||
+                const DeepCollectionEquality().equals(other.cursor, cursor)) &&
+            (identical(other.impactZone, impactZone) ||
+                const DeepCollectionEquality()
+                    .equals(other.impactZone, impactZone)) &&
             (identical(other.cells, cells) ||
                 const DeepCollectionEquality().equals(other.cells, cells)) &&
             (identical(other.conflicts, conflicts) ||
                 const DeepCollectionEquality()
                     .equals(other.conflicts, conflicts)) &&
-            (identical(other.selected, selected) ||
+            (identical(other.filledCellCount, filledCellCount) ||
                 const DeepCollectionEquality()
-                    .equals(other.selected, selected)) &&
-            (identical(other.highlighted, highlighted) ||
-                const DeepCollectionEquality()
-                    .equals(other.highlighted, highlighted)));
+                    .equals(other.filledCellCount, filledCellCount)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(cursor) ^
+      const DeepCollectionEquality().hash(impactZone) ^
       const DeepCollectionEquality().hash(cells) ^
       const DeepCollectionEquality().hash(conflicts) ^
-      const DeepCollectionEquality().hash(selected) ^
-      const DeepCollectionEquality().hash(highlighted);
+      const DeepCollectionEquality().hash(filledCellCount);
 
   @override
   _$SudokuCopyWith<_Sudoku> get copyWith =>
@@ -179,19 +206,24 @@ class _$_Sudoku extends _Sudoku {
 abstract class _Sudoku extends Sudoku {
   _Sudoku._() : super._();
   factory _Sudoku(
-      {BuiltMap<SudokuPos, SudokuValue> cells,
-      BuiltSet<SudokuPos> conflicts,
-      SudokuPos selected,
-      BuiltSet<SudokuPos> highlighted}) = _$_Sudoku;
+      {@nullable SudokuPos cursor,
+      @nullable BuiltSet<SudokuPos> impactZone,
+      BuiltMap<SudokuPos, SudokuValue> cells,
+      BuiltSetMultimap<SudokuPos, SudokuPos> conflicts,
+      int filledCellCount}) = _$_Sudoku;
 
+  @override
+  @nullable
+  SudokuPos get cursor;
+  @override
+  @nullable
+  BuiltSet<SudokuPos> get impactZone;
   @override
   BuiltMap<SudokuPos, SudokuValue> get cells;
   @override
-  BuiltSet<SudokuPos> get conflicts;
+  BuiltSetMultimap<SudokuPos, SudokuPos> get conflicts;
   @override
-  SudokuPos get selected;
-  @override
-  BuiltSet<SudokuPos> get highlighted;
+  int get filledCellCount;
   @override
   _$SudokuCopyWith<_Sudoku> get copyWith;
 }

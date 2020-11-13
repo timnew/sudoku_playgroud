@@ -2,11 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:response_builder/response_builder.dart';
-import 'package:sudoku_playground/features/sudoku/models/Sudoku.dart';
-import 'package:sudoku_playground/features/sudoku/models/SudokuValue.dart';
 
 import 'SudokuView.dart';
+import 'models/Sudoku.dart';
 import 'models/SudokuPos.dart';
+import 'models/SudokuValue.dart';
 
 class SudokuScreen extends StatefulWidget {
   @override

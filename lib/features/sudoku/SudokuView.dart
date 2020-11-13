@@ -54,10 +54,10 @@ class SudokuBlockView extends StatelessWidget {
     return SudokuGrid<SudokuPos>(
       borderWidth: 0.2,
       selector: (int index) => block + index,
-      builder: (BuildContext context, SudokuPos index) => SudokuCellView(
+      builder: (BuildContext context, SudokuPos pos) => SudokuCellView(
         theme: theme,
         sudoku: sudoku,
-        index: index,
+        pos: pos,
       ),
     );
   }
@@ -66,24 +66,24 @@ class SudokuBlockView extends StatelessWidget {
 class SudokuCellView extends StatelessWidget {
   final SudokuTheme theme;
   final Sudoku sudoku;
-  final SudokuPos index;
+  final SudokuPos pos;
 
   SudokuCellView({
     @required this.theme,
     @required this.sudoku,
-    @required this.index,
-  })  : assert(index != null),
+    @required this.pos,
+  })  : assert(pos != null),
         assert(sudoku != null),
         assert(theme != null),
-        super(key: Key(index.toString()));
+        super(key: Key(pos.toString()));
 
-  bool get isConflicted => sudoku.conflicts.contains(index);
+  bool get isConflicted => sudoku.conflicts.containsKey(pos);
 
-  bool get isSelected => sudoku.selected == index;
+  bool get isSelected => sudoku.cursor == pos;
 
-  bool get isHighlighted => sudoku.highlighted?.contains(index) ?? false;
+  bool get isHighlighted => sudoku.impactZone?.contains(pos) ?? false;
 
-  SudokuValue get value => sudoku.cells[index];
+  SudokuValue get value => sudoku.cells[pos];
 
   @override
   Widget build(BuildContext context) {
