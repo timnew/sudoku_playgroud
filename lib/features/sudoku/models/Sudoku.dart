@@ -4,6 +4,7 @@ import 'package:response_builder/response_builder.dart';
 
 import 'SudokuArea.dart';
 import 'SudokuIndex.dart';
+import 'SudokuParser.dart';
 import 'SudokuValue.dart';
 
 part 'Sudoku.freezed.dart';
@@ -34,6 +35,11 @@ abstract class Sudoku implements _$Sudoku {
       );
 
   factory Sudoku.blank() => Sudoku.build((index) => SudokuValue.blank());
+
+  factory Sudoku.parse(String sudokuExpression) => Sudoku(
+        cells: BuiltMap.build((builder) => SudokuParser(sudokuExpression).writeTo(builder)),
+        conflicts: BuiltSet(),
+      );
 
   BuiltMap<SudokuIndex, SudokuValue> _updateCell(SudokuIndex index, ValueUpdater<SudokuValue> valueUpdater) =>
       cells.rebuild(
