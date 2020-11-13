@@ -14,41 +14,41 @@ class _$SudokuDataTokenTearOff {
   const _$SudokuDataTokenTearOff();
 
 // ignore: unused_element
-  RowBlockToken row({int offset, String expression}) {
-    return RowBlockToken(
+  RowToken row({int offset, String expression}) {
+    return RowToken(
       offset: offset,
       expression: expression,
     );
   }
 
 // ignore: unused_element
-  ColumnBlockToken column({int offset, String expression}) {
-    return ColumnBlockToken(
+  ColumnToken column({int offset, String expression}) {
+    return ColumnToken(
       offset: offset,
       expression: expression,
     );
   }
 
 // ignore: unused_element
-  PositionBlockToken positioned({int offset, String expression}) {
-    return PositionBlockToken(
+  PositionedToken positioned({int offset, String expression}) {
+    return PositionedToken(
       offset: offset,
       expression: expression,
     );
   }
 
 // ignore: unused_element
-  EmptyBlockToken emptyBlock({int offset, String expression}) {
-    return EmptyBlockToken(
+  EmptyToken emptyBlock({int offset, String expression}) {
+    return EmptyToken(
       offset: offset,
       expression: expression,
     );
   }
 
 // ignore: unused_element
-  DigitToken digit(int number, {int offset, String expression}) {
+  DigitToken digit(int digit, {int offset, String expression}) {
     return DigitToken(
-      number,
+      digit,
       offset: offset,
       expression: expression,
     );
@@ -86,7 +86,7 @@ mixin _$SudokuDataToken {
     @required Result column(int offset, String expression),
     @required Result positioned(int offset, String expression),
     @required Result emptyBlock(int offset, String expression),
-    @required Result digit(int number, int offset, String expression),
+    @required Result digit(int digit, int offset, String expression),
     @required Result blank(int offset, String expression),
     @required Result tripleBlank(int offset, String expression),
   });
@@ -96,27 +96,27 @@ mixin _$SudokuDataToken {
     Result column(int offset, String expression),
     Result positioned(int offset, String expression),
     Result emptyBlock(int offset, String expression),
-    Result digit(int number, int offset, String expression),
+    Result digit(int digit, int offset, String expression),
     Result blank(int offset, String expression),
     Result tripleBlank(int offset, String expression),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result row(RowBlockToken value),
-    @required Result column(ColumnBlockToken value),
-    @required Result positioned(PositionBlockToken value),
-    @required Result emptyBlock(EmptyBlockToken value),
+    @required Result row(RowToken value),
+    @required Result column(ColumnToken value),
+    @required Result positioned(PositionedToken value),
+    @required Result emptyBlock(EmptyToken value),
     @required Result digit(DigitToken value),
     @required Result blank(BlankToken value),
     @required Result tripleBlank(TripleBlankToken value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result row(RowBlockToken value),
-    Result column(ColumnBlockToken value),
-    Result positioned(PositionBlockToken value),
-    Result emptyBlock(EmptyBlockToken value),
+    Result row(RowToken value),
+    Result column(ColumnToken value),
+    Result positioned(PositionedToken value),
+    Result emptyBlock(EmptyToken value),
     Result digit(DigitToken value),
     Result blank(BlankToken value),
     Result tripleBlank(TripleBlankToken value),
@@ -157,32 +157,29 @@ class _$SudokuDataTokenCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $RowBlockTokenCopyWith<$Res>
+abstract class $RowTokenCopyWith<$Res>
     implements $SudokuDataTokenCopyWith<$Res> {
-  factory $RowBlockTokenCopyWith(
-          RowBlockToken value, $Res Function(RowBlockToken) then) =
-      _$RowBlockTokenCopyWithImpl<$Res>;
+  factory $RowTokenCopyWith(RowToken value, $Res Function(RowToken) then) =
+      _$RowTokenCopyWithImpl<$Res>;
   @override
   $Res call({int offset, String expression});
 }
 
 /// @nodoc
-class _$RowBlockTokenCopyWithImpl<$Res>
-    extends _$SudokuDataTokenCopyWithImpl<$Res>
-    implements $RowBlockTokenCopyWith<$Res> {
-  _$RowBlockTokenCopyWithImpl(
-      RowBlockToken _value, $Res Function(RowBlockToken) _then)
-      : super(_value, (v) => _then(v as RowBlockToken));
+class _$RowTokenCopyWithImpl<$Res> extends _$SudokuDataTokenCopyWithImpl<$Res>
+    implements $RowTokenCopyWith<$Res> {
+  _$RowTokenCopyWithImpl(RowToken _value, $Res Function(RowToken) _then)
+      : super(_value, (v) => _then(v as RowToken));
 
   @override
-  RowBlockToken get _value => super._value as RowBlockToken;
+  RowToken get _value => super._value as RowToken;
 
   @override
   $Res call({
     Object offset = freezed,
     Object expression = freezed,
   }) {
-    return _then(RowBlockToken(
+    return _then(RowToken(
       offset: offset == freezed ? _value.offset : offset as int,
       expression:
           expression == freezed ? _value.expression : expression as String,
@@ -191,8 +188,8 @@ class _$RowBlockTokenCopyWithImpl<$Res>
 }
 
 /// @nodoc
-class _$RowBlockToken extends RowBlockToken {
-  _$RowBlockToken({this.offset, this.expression}) : super._();
+class _$RowToken extends RowToken {
+  _$RowToken({this.offset, this.expression}) : super._();
 
   @override
   final int offset;
@@ -207,7 +204,7 @@ class _$RowBlockToken extends RowBlockToken {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is RowBlockToken &&
+        (other is RowToken &&
             (identical(other.offset, offset) ||
                 const DeepCollectionEquality().equals(other.offset, offset)) &&
             (identical(other.expression, expression) ||
@@ -222,8 +219,8 @@ class _$RowBlockToken extends RowBlockToken {
       const DeepCollectionEquality().hash(expression);
 
   @override
-  $RowBlockTokenCopyWith<RowBlockToken> get copyWith =>
-      _$RowBlockTokenCopyWithImpl<RowBlockToken>(this, _$identity);
+  $RowTokenCopyWith<RowToken> get copyWith =>
+      _$RowTokenCopyWithImpl<RowToken>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -232,7 +229,7 @@ class _$RowBlockToken extends RowBlockToken {
     @required Result column(int offset, String expression),
     @required Result positioned(int offset, String expression),
     @required Result emptyBlock(int offset, String expression),
-    @required Result digit(int number, int offset, String expression),
+    @required Result digit(int digit, int offset, String expression),
     @required Result blank(int offset, String expression),
     @required Result tripleBlank(int offset, String expression),
   }) {
@@ -253,7 +250,7 @@ class _$RowBlockToken extends RowBlockToken {
     Result column(int offset, String expression),
     Result positioned(int offset, String expression),
     Result emptyBlock(int offset, String expression),
-    Result digit(int number, int offset, String expression),
+    Result digit(int digit, int offset, String expression),
     Result blank(int offset, String expression),
     Result tripleBlank(int offset, String expression),
     @required Result orElse(),
@@ -268,10 +265,10 @@ class _$RowBlockToken extends RowBlockToken {
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result row(RowBlockToken value),
-    @required Result column(ColumnBlockToken value),
-    @required Result positioned(PositionBlockToken value),
-    @required Result emptyBlock(EmptyBlockToken value),
+    @required Result row(RowToken value),
+    @required Result column(ColumnToken value),
+    @required Result positioned(PositionedToken value),
+    @required Result emptyBlock(EmptyToken value),
     @required Result digit(DigitToken value),
     @required Result blank(BlankToken value),
     @required Result tripleBlank(TripleBlankToken value),
@@ -289,10 +286,10 @@ class _$RowBlockToken extends RowBlockToken {
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result row(RowBlockToken value),
-    Result column(ColumnBlockToken value),
-    Result positioned(PositionBlockToken value),
-    Result emptyBlock(EmptyBlockToken value),
+    Result row(RowToken value),
+    Result column(ColumnToken value),
+    Result positioned(PositionedToken value),
+    Result emptyBlock(EmptyToken value),
     Result digit(DigitToken value),
     Result blank(BlankToken value),
     Result tripleBlank(TripleBlankToken value),
@@ -306,45 +303,45 @@ class _$RowBlockToken extends RowBlockToken {
   }
 }
 
-abstract class RowBlockToken extends SudokuDataToken {
-  RowBlockToken._() : super._();
-  factory RowBlockToken({int offset, String expression}) = _$RowBlockToken;
+abstract class RowToken extends SudokuDataToken {
+  RowToken._() : super._();
+  factory RowToken({int offset, String expression}) = _$RowToken;
 
   @override
   int get offset;
   @override
   String get expression;
   @override
-  $RowBlockTokenCopyWith<RowBlockToken> get copyWith;
+  $RowTokenCopyWith<RowToken> get copyWith;
 }
 
 /// @nodoc
-abstract class $ColumnBlockTokenCopyWith<$Res>
+abstract class $ColumnTokenCopyWith<$Res>
     implements $SudokuDataTokenCopyWith<$Res> {
-  factory $ColumnBlockTokenCopyWith(
-          ColumnBlockToken value, $Res Function(ColumnBlockToken) then) =
-      _$ColumnBlockTokenCopyWithImpl<$Res>;
+  factory $ColumnTokenCopyWith(
+          ColumnToken value, $Res Function(ColumnToken) then) =
+      _$ColumnTokenCopyWithImpl<$Res>;
   @override
   $Res call({int offset, String expression});
 }
 
 /// @nodoc
-class _$ColumnBlockTokenCopyWithImpl<$Res>
+class _$ColumnTokenCopyWithImpl<$Res>
     extends _$SudokuDataTokenCopyWithImpl<$Res>
-    implements $ColumnBlockTokenCopyWith<$Res> {
-  _$ColumnBlockTokenCopyWithImpl(
-      ColumnBlockToken _value, $Res Function(ColumnBlockToken) _then)
-      : super(_value, (v) => _then(v as ColumnBlockToken));
+    implements $ColumnTokenCopyWith<$Res> {
+  _$ColumnTokenCopyWithImpl(
+      ColumnToken _value, $Res Function(ColumnToken) _then)
+      : super(_value, (v) => _then(v as ColumnToken));
 
   @override
-  ColumnBlockToken get _value => super._value as ColumnBlockToken;
+  ColumnToken get _value => super._value as ColumnToken;
 
   @override
   $Res call({
     Object offset = freezed,
     Object expression = freezed,
   }) {
-    return _then(ColumnBlockToken(
+    return _then(ColumnToken(
       offset: offset == freezed ? _value.offset : offset as int,
       expression:
           expression == freezed ? _value.expression : expression as String,
@@ -353,8 +350,8 @@ class _$ColumnBlockTokenCopyWithImpl<$Res>
 }
 
 /// @nodoc
-class _$ColumnBlockToken extends ColumnBlockToken {
-  _$ColumnBlockToken({this.offset, this.expression}) : super._();
+class _$ColumnToken extends ColumnToken {
+  _$ColumnToken({this.offset, this.expression}) : super._();
 
   @override
   final int offset;
@@ -369,7 +366,7 @@ class _$ColumnBlockToken extends ColumnBlockToken {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is ColumnBlockToken &&
+        (other is ColumnToken &&
             (identical(other.offset, offset) ||
                 const DeepCollectionEquality().equals(other.offset, offset)) &&
             (identical(other.expression, expression) ||
@@ -384,8 +381,8 @@ class _$ColumnBlockToken extends ColumnBlockToken {
       const DeepCollectionEquality().hash(expression);
 
   @override
-  $ColumnBlockTokenCopyWith<ColumnBlockToken> get copyWith =>
-      _$ColumnBlockTokenCopyWithImpl<ColumnBlockToken>(this, _$identity);
+  $ColumnTokenCopyWith<ColumnToken> get copyWith =>
+      _$ColumnTokenCopyWithImpl<ColumnToken>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -394,7 +391,7 @@ class _$ColumnBlockToken extends ColumnBlockToken {
     @required Result column(int offset, String expression),
     @required Result positioned(int offset, String expression),
     @required Result emptyBlock(int offset, String expression),
-    @required Result digit(int number, int offset, String expression),
+    @required Result digit(int digit, int offset, String expression),
     @required Result blank(int offset, String expression),
     @required Result tripleBlank(int offset, String expression),
   }) {
@@ -415,7 +412,7 @@ class _$ColumnBlockToken extends ColumnBlockToken {
     Result column(int offset, String expression),
     Result positioned(int offset, String expression),
     Result emptyBlock(int offset, String expression),
-    Result digit(int number, int offset, String expression),
+    Result digit(int digit, int offset, String expression),
     Result blank(int offset, String expression),
     Result tripleBlank(int offset, String expression),
     @required Result orElse(),
@@ -430,10 +427,10 @@ class _$ColumnBlockToken extends ColumnBlockToken {
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result row(RowBlockToken value),
-    @required Result column(ColumnBlockToken value),
-    @required Result positioned(PositionBlockToken value),
-    @required Result emptyBlock(EmptyBlockToken value),
+    @required Result row(RowToken value),
+    @required Result column(ColumnToken value),
+    @required Result positioned(PositionedToken value),
+    @required Result emptyBlock(EmptyToken value),
     @required Result digit(DigitToken value),
     @required Result blank(BlankToken value),
     @required Result tripleBlank(TripleBlankToken value),
@@ -451,10 +448,10 @@ class _$ColumnBlockToken extends ColumnBlockToken {
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result row(RowBlockToken value),
-    Result column(ColumnBlockToken value),
-    Result positioned(PositionBlockToken value),
-    Result emptyBlock(EmptyBlockToken value),
+    Result row(RowToken value),
+    Result column(ColumnToken value),
+    Result positioned(PositionedToken value),
+    Result emptyBlock(EmptyToken value),
     Result digit(DigitToken value),
     Result blank(BlankToken value),
     Result tripleBlank(TripleBlankToken value),
@@ -468,46 +465,45 @@ class _$ColumnBlockToken extends ColumnBlockToken {
   }
 }
 
-abstract class ColumnBlockToken extends SudokuDataToken {
-  ColumnBlockToken._() : super._();
-  factory ColumnBlockToken({int offset, String expression}) =
-      _$ColumnBlockToken;
+abstract class ColumnToken extends SudokuDataToken {
+  ColumnToken._() : super._();
+  factory ColumnToken({int offset, String expression}) = _$ColumnToken;
 
   @override
   int get offset;
   @override
   String get expression;
   @override
-  $ColumnBlockTokenCopyWith<ColumnBlockToken> get copyWith;
+  $ColumnTokenCopyWith<ColumnToken> get copyWith;
 }
 
 /// @nodoc
-abstract class $PositionBlockTokenCopyWith<$Res>
+abstract class $PositionedTokenCopyWith<$Res>
     implements $SudokuDataTokenCopyWith<$Res> {
-  factory $PositionBlockTokenCopyWith(
-          PositionBlockToken value, $Res Function(PositionBlockToken) then) =
-      _$PositionBlockTokenCopyWithImpl<$Res>;
+  factory $PositionedTokenCopyWith(
+          PositionedToken value, $Res Function(PositionedToken) then) =
+      _$PositionedTokenCopyWithImpl<$Res>;
   @override
   $Res call({int offset, String expression});
 }
 
 /// @nodoc
-class _$PositionBlockTokenCopyWithImpl<$Res>
+class _$PositionedTokenCopyWithImpl<$Res>
     extends _$SudokuDataTokenCopyWithImpl<$Res>
-    implements $PositionBlockTokenCopyWith<$Res> {
-  _$PositionBlockTokenCopyWithImpl(
-      PositionBlockToken _value, $Res Function(PositionBlockToken) _then)
-      : super(_value, (v) => _then(v as PositionBlockToken));
+    implements $PositionedTokenCopyWith<$Res> {
+  _$PositionedTokenCopyWithImpl(
+      PositionedToken _value, $Res Function(PositionedToken) _then)
+      : super(_value, (v) => _then(v as PositionedToken));
 
   @override
-  PositionBlockToken get _value => super._value as PositionBlockToken;
+  PositionedToken get _value => super._value as PositionedToken;
 
   @override
   $Res call({
     Object offset = freezed,
     Object expression = freezed,
   }) {
-    return _then(PositionBlockToken(
+    return _then(PositionedToken(
       offset: offset == freezed ? _value.offset : offset as int,
       expression:
           expression == freezed ? _value.expression : expression as String,
@@ -516,8 +512,8 @@ class _$PositionBlockTokenCopyWithImpl<$Res>
 }
 
 /// @nodoc
-class _$PositionBlockToken extends PositionBlockToken {
-  _$PositionBlockToken({this.offset, this.expression}) : super._();
+class _$PositionedToken extends PositionedToken {
+  _$PositionedToken({this.offset, this.expression}) : super._();
 
   @override
   final int offset;
@@ -532,7 +528,7 @@ class _$PositionBlockToken extends PositionBlockToken {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is PositionBlockToken &&
+        (other is PositionedToken &&
             (identical(other.offset, offset) ||
                 const DeepCollectionEquality().equals(other.offset, offset)) &&
             (identical(other.expression, expression) ||
@@ -547,8 +543,8 @@ class _$PositionBlockToken extends PositionBlockToken {
       const DeepCollectionEquality().hash(expression);
 
   @override
-  $PositionBlockTokenCopyWith<PositionBlockToken> get copyWith =>
-      _$PositionBlockTokenCopyWithImpl<PositionBlockToken>(this, _$identity);
+  $PositionedTokenCopyWith<PositionedToken> get copyWith =>
+      _$PositionedTokenCopyWithImpl<PositionedToken>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -557,7 +553,7 @@ class _$PositionBlockToken extends PositionBlockToken {
     @required Result column(int offset, String expression),
     @required Result positioned(int offset, String expression),
     @required Result emptyBlock(int offset, String expression),
-    @required Result digit(int number, int offset, String expression),
+    @required Result digit(int digit, int offset, String expression),
     @required Result blank(int offset, String expression),
     @required Result tripleBlank(int offset, String expression),
   }) {
@@ -578,7 +574,7 @@ class _$PositionBlockToken extends PositionBlockToken {
     Result column(int offset, String expression),
     Result positioned(int offset, String expression),
     Result emptyBlock(int offset, String expression),
-    Result digit(int number, int offset, String expression),
+    Result digit(int digit, int offset, String expression),
     Result blank(int offset, String expression),
     Result tripleBlank(int offset, String expression),
     @required Result orElse(),
@@ -593,10 +589,10 @@ class _$PositionBlockToken extends PositionBlockToken {
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result row(RowBlockToken value),
-    @required Result column(ColumnBlockToken value),
-    @required Result positioned(PositionBlockToken value),
-    @required Result emptyBlock(EmptyBlockToken value),
+    @required Result row(RowToken value),
+    @required Result column(ColumnToken value),
+    @required Result positioned(PositionedToken value),
+    @required Result emptyBlock(EmptyToken value),
     @required Result digit(DigitToken value),
     @required Result blank(BlankToken value),
     @required Result tripleBlank(TripleBlankToken value),
@@ -614,10 +610,10 @@ class _$PositionBlockToken extends PositionBlockToken {
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result row(RowBlockToken value),
-    Result column(ColumnBlockToken value),
-    Result positioned(PositionBlockToken value),
-    Result emptyBlock(EmptyBlockToken value),
+    Result row(RowToken value),
+    Result column(ColumnToken value),
+    Result positioned(PositionedToken value),
+    Result emptyBlock(EmptyToken value),
     Result digit(DigitToken value),
     Result blank(BlankToken value),
     Result tripleBlank(TripleBlankToken value),
@@ -631,46 +627,43 @@ class _$PositionBlockToken extends PositionBlockToken {
   }
 }
 
-abstract class PositionBlockToken extends SudokuDataToken {
-  PositionBlockToken._() : super._();
-  factory PositionBlockToken({int offset, String expression}) =
-      _$PositionBlockToken;
+abstract class PositionedToken extends SudokuDataToken {
+  PositionedToken._() : super._();
+  factory PositionedToken({int offset, String expression}) = _$PositionedToken;
 
   @override
   int get offset;
   @override
   String get expression;
   @override
-  $PositionBlockTokenCopyWith<PositionBlockToken> get copyWith;
+  $PositionedTokenCopyWith<PositionedToken> get copyWith;
 }
 
 /// @nodoc
-abstract class $EmptyBlockTokenCopyWith<$Res>
+abstract class $EmptyTokenCopyWith<$Res>
     implements $SudokuDataTokenCopyWith<$Res> {
-  factory $EmptyBlockTokenCopyWith(
-          EmptyBlockToken value, $Res Function(EmptyBlockToken) then) =
-      _$EmptyBlockTokenCopyWithImpl<$Res>;
+  factory $EmptyTokenCopyWith(
+          EmptyToken value, $Res Function(EmptyToken) then) =
+      _$EmptyTokenCopyWithImpl<$Res>;
   @override
   $Res call({int offset, String expression});
 }
 
 /// @nodoc
-class _$EmptyBlockTokenCopyWithImpl<$Res>
-    extends _$SudokuDataTokenCopyWithImpl<$Res>
-    implements $EmptyBlockTokenCopyWith<$Res> {
-  _$EmptyBlockTokenCopyWithImpl(
-      EmptyBlockToken _value, $Res Function(EmptyBlockToken) _then)
-      : super(_value, (v) => _then(v as EmptyBlockToken));
+class _$EmptyTokenCopyWithImpl<$Res> extends _$SudokuDataTokenCopyWithImpl<$Res>
+    implements $EmptyTokenCopyWith<$Res> {
+  _$EmptyTokenCopyWithImpl(EmptyToken _value, $Res Function(EmptyToken) _then)
+      : super(_value, (v) => _then(v as EmptyToken));
 
   @override
-  EmptyBlockToken get _value => super._value as EmptyBlockToken;
+  EmptyToken get _value => super._value as EmptyToken;
 
   @override
   $Res call({
     Object offset = freezed,
     Object expression = freezed,
   }) {
-    return _then(EmptyBlockToken(
+    return _then(EmptyToken(
       offset: offset == freezed ? _value.offset : offset as int,
       expression:
           expression == freezed ? _value.expression : expression as String,
@@ -679,8 +672,8 @@ class _$EmptyBlockTokenCopyWithImpl<$Res>
 }
 
 /// @nodoc
-class _$EmptyBlockToken extends EmptyBlockToken {
-  _$EmptyBlockToken({this.offset, this.expression}) : super._();
+class _$EmptyToken extends EmptyToken {
+  _$EmptyToken({this.offset, this.expression}) : super._();
 
   @override
   final int offset;
@@ -695,7 +688,7 @@ class _$EmptyBlockToken extends EmptyBlockToken {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is EmptyBlockToken &&
+        (other is EmptyToken &&
             (identical(other.offset, offset) ||
                 const DeepCollectionEquality().equals(other.offset, offset)) &&
             (identical(other.expression, expression) ||
@@ -710,8 +703,8 @@ class _$EmptyBlockToken extends EmptyBlockToken {
       const DeepCollectionEquality().hash(expression);
 
   @override
-  $EmptyBlockTokenCopyWith<EmptyBlockToken> get copyWith =>
-      _$EmptyBlockTokenCopyWithImpl<EmptyBlockToken>(this, _$identity);
+  $EmptyTokenCopyWith<EmptyToken> get copyWith =>
+      _$EmptyTokenCopyWithImpl<EmptyToken>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -720,7 +713,7 @@ class _$EmptyBlockToken extends EmptyBlockToken {
     @required Result column(int offset, String expression),
     @required Result positioned(int offset, String expression),
     @required Result emptyBlock(int offset, String expression),
-    @required Result digit(int number, int offset, String expression),
+    @required Result digit(int digit, int offset, String expression),
     @required Result blank(int offset, String expression),
     @required Result tripleBlank(int offset, String expression),
   }) {
@@ -741,7 +734,7 @@ class _$EmptyBlockToken extends EmptyBlockToken {
     Result column(int offset, String expression),
     Result positioned(int offset, String expression),
     Result emptyBlock(int offset, String expression),
-    Result digit(int number, int offset, String expression),
+    Result digit(int digit, int offset, String expression),
     Result blank(int offset, String expression),
     Result tripleBlank(int offset, String expression),
     @required Result orElse(),
@@ -756,10 +749,10 @@ class _$EmptyBlockToken extends EmptyBlockToken {
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result row(RowBlockToken value),
-    @required Result column(ColumnBlockToken value),
-    @required Result positioned(PositionBlockToken value),
-    @required Result emptyBlock(EmptyBlockToken value),
+    @required Result row(RowToken value),
+    @required Result column(ColumnToken value),
+    @required Result positioned(PositionedToken value),
+    @required Result emptyBlock(EmptyToken value),
     @required Result digit(DigitToken value),
     @required Result blank(BlankToken value),
     @required Result tripleBlank(TripleBlankToken value),
@@ -777,10 +770,10 @@ class _$EmptyBlockToken extends EmptyBlockToken {
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result row(RowBlockToken value),
-    Result column(ColumnBlockToken value),
-    Result positioned(PositionBlockToken value),
-    Result emptyBlock(EmptyBlockToken value),
+    Result row(RowToken value),
+    Result column(ColumnToken value),
+    Result positioned(PositionedToken value),
+    Result emptyBlock(EmptyToken value),
     Result digit(DigitToken value),
     Result blank(BlankToken value),
     Result tripleBlank(TripleBlankToken value),
@@ -794,16 +787,16 @@ class _$EmptyBlockToken extends EmptyBlockToken {
   }
 }
 
-abstract class EmptyBlockToken extends SudokuDataToken {
-  EmptyBlockToken._() : super._();
-  factory EmptyBlockToken({int offset, String expression}) = _$EmptyBlockToken;
+abstract class EmptyToken extends SudokuDataToken {
+  EmptyToken._() : super._();
+  factory EmptyToken({int offset, String expression}) = _$EmptyToken;
 
   @override
   int get offset;
   @override
   String get expression;
   @override
-  $EmptyBlockTokenCopyWith<EmptyBlockToken> get copyWith;
+  $EmptyTokenCopyWith<EmptyToken> get copyWith;
 }
 
 /// @nodoc
@@ -813,7 +806,7 @@ abstract class $DigitTokenCopyWith<$Res>
           DigitToken value, $Res Function(DigitToken) then) =
       _$DigitTokenCopyWithImpl<$Res>;
   @override
-  $Res call({int number, int offset, String expression});
+  $Res call({int digit, int offset, String expression});
 }
 
 /// @nodoc
@@ -827,12 +820,12 @@ class _$DigitTokenCopyWithImpl<$Res> extends _$SudokuDataTokenCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object number = freezed,
+    Object digit = freezed,
     Object offset = freezed,
     Object expression = freezed,
   }) {
     return _then(DigitToken(
-      number == freezed ? _value.number : number as int,
+      digit == freezed ? _value.digit : digit as int,
       offset: offset == freezed ? _value.offset : offset as int,
       expression:
           expression == freezed ? _value.expression : expression as String,
@@ -842,13 +835,13 @@ class _$DigitTokenCopyWithImpl<$Res> extends _$SudokuDataTokenCopyWithImpl<$Res>
 
 /// @nodoc
 class _$DigitToken extends DigitToken {
-  _$DigitToken(this.number, {this.offset, this.expression})
-      : assert(number != null),
-        assert(1 <= number && number <= 9),
+  _$DigitToken(this.digit, {this.offset, this.expression})
+      : assert(digit != null),
+        assert(1 <= digit && digit <= 9),
         super._();
 
   @override
-  final int number;
+  final int digit;
   @override
   final int offset;
   @override
@@ -856,15 +849,15 @@ class _$DigitToken extends DigitToken {
 
   @override
   String toString() {
-    return 'SudokuDataToken.digit(number: $number, offset: $offset, expression: $expression)';
+    return 'SudokuDataToken.digit(digit: $digit, offset: $offset, expression: $expression)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is DigitToken &&
-            (identical(other.number, number) ||
-                const DeepCollectionEquality().equals(other.number, number)) &&
+            (identical(other.digit, digit) ||
+                const DeepCollectionEquality().equals(other.digit, digit)) &&
             (identical(other.offset, offset) ||
                 const DeepCollectionEquality().equals(other.offset, offset)) &&
             (identical(other.expression, expression) ||
@@ -875,7 +868,7 @@ class _$DigitToken extends DigitToken {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(number) ^
+      const DeepCollectionEquality().hash(digit) ^
       const DeepCollectionEquality().hash(offset) ^
       const DeepCollectionEquality().hash(expression);
 
@@ -890,7 +883,7 @@ class _$DigitToken extends DigitToken {
     @required Result column(int offset, String expression),
     @required Result positioned(int offset, String expression),
     @required Result emptyBlock(int offset, String expression),
-    @required Result digit(int number, int offset, String expression),
+    @required Result digit(int digit, int offset, String expression),
     @required Result blank(int offset, String expression),
     @required Result tripleBlank(int offset, String expression),
   }) {
@@ -901,7 +894,7 @@ class _$DigitToken extends DigitToken {
     assert(digit != null);
     assert(blank != null);
     assert(tripleBlank != null);
-    return digit(number, offset, expression);
+    return digit(this.digit, offset, expression);
   }
 
   @override
@@ -911,14 +904,14 @@ class _$DigitToken extends DigitToken {
     Result column(int offset, String expression),
     Result positioned(int offset, String expression),
     Result emptyBlock(int offset, String expression),
-    Result digit(int number, int offset, String expression),
+    Result digit(int digit, int offset, String expression),
     Result blank(int offset, String expression),
     Result tripleBlank(int offset, String expression),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (digit != null) {
-      return digit(number, offset, expression);
+      return digit(this.digit, offset, expression);
     }
     return orElse();
   }
@@ -926,10 +919,10 @@ class _$DigitToken extends DigitToken {
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result row(RowBlockToken value),
-    @required Result column(ColumnBlockToken value),
-    @required Result positioned(PositionBlockToken value),
-    @required Result emptyBlock(EmptyBlockToken value),
+    @required Result row(RowToken value),
+    @required Result column(ColumnToken value),
+    @required Result positioned(PositionedToken value),
+    @required Result emptyBlock(EmptyToken value),
     @required Result digit(DigitToken value),
     @required Result blank(BlankToken value),
     @required Result tripleBlank(TripleBlankToken value),
@@ -947,10 +940,10 @@ class _$DigitToken extends DigitToken {
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result row(RowBlockToken value),
-    Result column(ColumnBlockToken value),
-    Result positioned(PositionBlockToken value),
-    Result emptyBlock(EmptyBlockToken value),
+    Result row(RowToken value),
+    Result column(ColumnToken value),
+    Result positioned(PositionedToken value),
+    Result emptyBlock(EmptyToken value),
     Result digit(DigitToken value),
     Result blank(BlankToken value),
     Result tripleBlank(TripleBlankToken value),
@@ -966,10 +959,9 @@ class _$DigitToken extends DigitToken {
 
 abstract class DigitToken extends SudokuDataToken {
   DigitToken._() : super._();
-  factory DigitToken(int number, {int offset, String expression}) =
-      _$DigitToken;
+  factory DigitToken(int digit, {int offset, String expression}) = _$DigitToken;
 
-  int get number;
+  int get digit;
   @override
   int get offset;
   @override
@@ -1052,7 +1044,7 @@ class _$BlankToken extends BlankToken {
     @required Result column(int offset, String expression),
     @required Result positioned(int offset, String expression),
     @required Result emptyBlock(int offset, String expression),
-    @required Result digit(int number, int offset, String expression),
+    @required Result digit(int digit, int offset, String expression),
     @required Result blank(int offset, String expression),
     @required Result tripleBlank(int offset, String expression),
   }) {
@@ -1073,7 +1065,7 @@ class _$BlankToken extends BlankToken {
     Result column(int offset, String expression),
     Result positioned(int offset, String expression),
     Result emptyBlock(int offset, String expression),
-    Result digit(int number, int offset, String expression),
+    Result digit(int digit, int offset, String expression),
     Result blank(int offset, String expression),
     Result tripleBlank(int offset, String expression),
     @required Result orElse(),
@@ -1088,10 +1080,10 @@ class _$BlankToken extends BlankToken {
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result row(RowBlockToken value),
-    @required Result column(ColumnBlockToken value),
-    @required Result positioned(PositionBlockToken value),
-    @required Result emptyBlock(EmptyBlockToken value),
+    @required Result row(RowToken value),
+    @required Result column(ColumnToken value),
+    @required Result positioned(PositionedToken value),
+    @required Result emptyBlock(EmptyToken value),
     @required Result digit(DigitToken value),
     @required Result blank(BlankToken value),
     @required Result tripleBlank(TripleBlankToken value),
@@ -1109,10 +1101,10 @@ class _$BlankToken extends BlankToken {
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result row(RowBlockToken value),
-    Result column(ColumnBlockToken value),
-    Result positioned(PositionBlockToken value),
-    Result emptyBlock(EmptyBlockToken value),
+    Result row(RowToken value),
+    Result column(ColumnToken value),
+    Result positioned(PositionedToken value),
+    Result emptyBlock(EmptyToken value),
     Result digit(DigitToken value),
     Result blank(BlankToken value),
     Result tripleBlank(TripleBlankToken value),
@@ -1214,7 +1206,7 @@ class _$TripleBlankToken extends TripleBlankToken {
     @required Result column(int offset, String expression),
     @required Result positioned(int offset, String expression),
     @required Result emptyBlock(int offset, String expression),
-    @required Result digit(int number, int offset, String expression),
+    @required Result digit(int digit, int offset, String expression),
     @required Result blank(int offset, String expression),
     @required Result tripleBlank(int offset, String expression),
   }) {
@@ -1235,7 +1227,7 @@ class _$TripleBlankToken extends TripleBlankToken {
     Result column(int offset, String expression),
     Result positioned(int offset, String expression),
     Result emptyBlock(int offset, String expression),
-    Result digit(int number, int offset, String expression),
+    Result digit(int digit, int offset, String expression),
     Result blank(int offset, String expression),
     Result tripleBlank(int offset, String expression),
     @required Result orElse(),
@@ -1250,10 +1242,10 @@ class _$TripleBlankToken extends TripleBlankToken {
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result row(RowBlockToken value),
-    @required Result column(ColumnBlockToken value),
-    @required Result positioned(PositionBlockToken value),
-    @required Result emptyBlock(EmptyBlockToken value),
+    @required Result row(RowToken value),
+    @required Result column(ColumnToken value),
+    @required Result positioned(PositionedToken value),
+    @required Result emptyBlock(EmptyToken value),
     @required Result digit(DigitToken value),
     @required Result blank(BlankToken value),
     @required Result tripleBlank(TripleBlankToken value),
@@ -1271,10 +1263,10 @@ class _$TripleBlankToken extends TripleBlankToken {
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result row(RowBlockToken value),
-    Result column(ColumnBlockToken value),
-    Result positioned(PositionBlockToken value),
-    Result emptyBlock(EmptyBlockToken value),
+    Result row(RowToken value),
+    Result column(ColumnToken value),
+    Result positioned(PositionedToken value),
+    Result emptyBlock(EmptyToken value),
     Result digit(DigitToken value),
     Result blank(BlankToken value),
     Result tripleBlank(TripleBlankToken value),

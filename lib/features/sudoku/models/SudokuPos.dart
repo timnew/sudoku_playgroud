@@ -44,8 +44,11 @@ class SudokuSubPos {
 
   static final List<SudokuSubPos> ALL_BY_COLUMN = List.unmodifiable(_generateByColumn());
 
+  static final ZERO = SudokuSubPos.index(0);
+
   final int row;
   final int col;
+
   final int index;
 
   SudokuSubPos(this.row, this.col)
@@ -77,6 +80,8 @@ class SudokuSubPos {
   SudokuSubPos nextPosVertically() =>
       isLastOfColumn ? (isLastOfRow ? null : SudokuSubPos(0, col + 1)) : SudokuSubPos(row + 1, col);
 
+  Iterable<SudokuPos> allChildren() => Iterable.generate(9, (i) => this + i);
+
   @override
   String toString() => "Sub[$row,$col]";
 
@@ -87,7 +92,7 @@ class SudokuSubPos {
   int get hashCode => runtimeType.hashCode ^ index.hashCode;
 
   static Iterable<SudokuSubPos> _generateByColumn() sync* {
-    var current = SudokuSubPos.index(0);
+    var current = SudokuSubPos.ZERO;
 
     do {
       yield current;

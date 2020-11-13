@@ -35,10 +35,12 @@ abstract class Sudoku implements _$Sudoku {
 
   factory Sudoku.blank() => Sudoku.build((index) => SudokuValue.blank());
 
-  factory Sudoku.parse(String sudokuExpression) => Sudoku(
-        cells: BuiltMap.build((builder) => SudokuParser(sudokuExpression).writeTo(builder)),
-        conflicts: BuiltSet(),
-      );
+  factory Sudoku.parse(String sudokuExpression) {
+    return Sudoku(
+      cells: SudokuParser(sudokuExpression).parseAsBuiltMap(),
+      conflicts: BuiltSet(),
+    );
+  }
 
   BuiltMap<SudokuPos, SudokuValue> _updateCell(SudokuPos index, ValueUpdater<SudokuValue> valueUpdater) =>
       cells.rebuild(
