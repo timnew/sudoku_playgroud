@@ -12,7 +12,8 @@ void main() {
       final posIndex = index + 1;
       if (posIndex % 9 == 0) {
         result.writeln(value);
-        if (posIndex % 27 == 0) result.writeln(); // Extra linebreak every 3 rows
+        if (posIndex % 27 == 0)
+          result.writeln(); // Extra linebreak every 3 rows
       } else {
         result.write("$value ");
         if (posIndex % 3 == 0) result.write(" "); // Extra space every 3 cols
@@ -22,7 +23,7 @@ void main() {
     return result.toString();
   }
 
-  String stringify(Map<SudokuPos, SudokuValue> input) => doFormat(
+  String stringify(List<SudokuValue> input) => doFormat(
         Map.fromIterable(
           SudokuPos.ALL,
           key: (pos) => pos.pos,
@@ -42,7 +43,8 @@ void main() {
             .asMap(), // paired with index
       );
 
-  void testPattern(String name, {@required String input, @required String expected}) {
+  void testPattern(String name,
+      {@required String input, @required String expected}) {
     test(name, () {
       final parsed = SudokuParser(input).parseAsMap();
       final converted = stringify(parsed);
@@ -51,9 +53,11 @@ void main() {
     });
   }
 
-  void testBadPattern(String name, {@required String input, bool expectError: true}) {
+  void testBadPattern(String name,
+      {@required String input, bool expectError: true}) {
     test(name, () {
-      expect(() => SudokuParser(input).parseAsMap(), expectError ? throwsFormatException : returnsNormally);
+      expect(() => SudokuParser(input).parseAsMap(),
+          expectError ? throwsFormatException : returnsNormally);
     });
   }
 
@@ -84,11 +88,11 @@ void main() {
         _ _ _  _ _ _  _ _ _
         _ _ _  _ 2 _  _ _ _
         _ _ _  _ _ _  _ _ _
-      
+
         _ _ _  _ _ _  _ _ _
         _ _ _  _ _ _  _ _ _
         _ _ _  _ _ _  _ _ _
-      
+
         _ _ _  _ _ _  _ _ _
         _ _ _  _ _ _  _ _ _
         _ _ _  _ _ _  _ _ _
@@ -158,11 +162,11 @@ void main() {
         _ _ _  _ _ _  _ _ _
         _ 2 _  _ _ _  _ _ _
         _ _ _  _ _ _  _ _ _
-      
+
         _ _ _  _ _ _  _ _ _
         _ _ _  _ _ _  _ _ _
         _ _ _  _ _ _  _ _ _
-      
+
         _ _ _  _ _ _  _ _ _
         _ _ _  _ _ _  _ _ _
         _ _ _  _ _ _  _ _ _
@@ -176,11 +180,11 @@ void main() {
         _ _ _  _ _ _  _ _ _
         _ _ _  _ _ _  _ 2 _
         _ _ _  _ _ _  _ _ _
-      
+
         _ _ _  _ _ _  _ _ _
         _ _ _  _ _ _  _ _ _
         _ _ _  _ _ _  _ _ _
-      
+
         _ _ _  _ _ _  _ _ _
         _ _ _  _ _ _  _ _ _
         _ _ _  _ _ _  _ _ _
@@ -194,11 +198,11 @@ void main() {
         _ _ _  _ _ _  _ _ _
         _ _ _  _ _ _  _ _ _
         _ _ _  _ _ _  _ _ _
-      
+
         _ _ _  _ _ _  _ _ _
         _ _ _  _ _ _  _ _ _
         _ _ _  _ _ _  _ _ _
-      
+
         _ _ _  _ _ _  _ _ _
         _ 2 _  _ _ _  _ _ _
         _ _ _  _ _ _  _ _ _
@@ -212,11 +216,11 @@ void main() {
         _ _ _  _ _ _  _ _ _
         _ _ _  _ _ _  _ _ _
         _ _ _  _ _ _  _ _ _
-      
+
         _ _ _  _ _ _  _ _ _
         _ _ _  _ _ _  _ _ _
         _ _ _  _ _ _  _ _ _
-      
+
         _ _ _  _ _ _  _ _ _
         _ _ _  _ _ _  _ 2 _
         _ _ _  _ _ _  _ _ _
@@ -230,11 +234,11 @@ void main() {
         _ _ _  _ _ _  _ _ _
         _ 2 _  _ _ _  _ _ _
         _ _ _  _ _ _  _ _ _
-      
+
         _ _ _  _ _ _  _ _ _
         _ _ _  _ _ _  _ _ _
         _ _ _  _ _ _  _ _ _
-      
+
         _ _ _  _ _ _  _ _ _
         _ _ _  _ _ _  _ 2 _
         _ _ _  _ _ _  _ _ _

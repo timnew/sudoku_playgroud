@@ -7,20 +7,24 @@ import 'SudokuBuilder.dart';
 typedef SudokuValue CellBuilder(SudokuPos index);
 
 class InitializeSudoku extends SudokuBuilder with SudokuFullScan {
-  final BuiltMap<SudokuPos, SudokuValue> cells;
+  final BuiltList<SudokuValue> cells;
 
   InitializeSudoku._(this.cells);
 
-  factory InitializeSudoku.fromCellValues(Iterable<SudokuValue> values) => InitializeSudoku._(
-        BuiltMap.of(Map.fromIterables(SudokuPos.ALL, values)),
-      );
+  factory InitializeSudoku.fromCellValues(Iterable<SudokuValue> values) =>
+      InitializeSudoku._(values.toBuiltList());
 
-  factory InitializeSudoku.build(CellBuilder builder) => InitializeSudoku.fromCellValues(
+  factory InitializeSudoku.build(CellBuilder builder) =>
+      InitializeSudoku.fromCellValues(
         SudokuPos.ALL.map((e) => builder(e)),
       );
 
-  factory InitializeSudoku.blank() => InitializeSudoku.build((index) => SudokuValue.blank());
+  factory InitializeSudoku.blank() => InitializeSudoku._(
+        List.filled(81, SudokuValue.blank()).toBuiltList(),
+      );
 
   @override
-  BuiltMap<SudokuPos, SudokuValue> updateCells(SudokuPos selected, BuiltSet<SudokuPos> impactZone) => cells;
+  BuiltList<SudokuValue> updateCells(
+          SudokuPos selected, BuiltSet<SudokuPos> impactZone) =>
+      cells;
 }

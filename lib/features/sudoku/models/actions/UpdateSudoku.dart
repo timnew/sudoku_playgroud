@@ -24,19 +24,22 @@ class SelectAction extends SudokuBuilder {
     );
   }
 
-  BuiltMap<SudokuPos, SudokuValue> updateCells(
+  BuiltList<SudokuValue> updateCells(
           SudokuPos selected, BuiltSet<SudokuPos> impactZone) =>
       sudoku.cells;
 
   BuiltSetMultimap<SudokuPos, SudokuPos> updateConflicts(
     SudokuPos selected,
     BuiltSet<SudokuPos> impactZone,
-    BuiltMap<SudokuPos, SudokuValue> cells,
+    BuiltList<SudokuValue> cells,
   ) =>
       sudoku.conflicts;
 
-  int updateFilledCount(SudokuPos selected, BuiltSet<SudokuPos> impactZone,
-          BuiltMap<SudokuPos, SudokuValue> cells) =>
+  int updateFilledCount(
+    SudokuPos selected,
+    BuiltSet<SudokuPos> impactZone,
+    BuiltList<SudokuValue> cells,
+  ) =>
       sudoku.filledCellCount;
 }
 
@@ -44,7 +47,7 @@ class FullMarkAction extends SelectAction {
   FullMarkAction(Sudoku sudoku, SudokuPos cursor) : super(sudoku, cursor);
 
   @override
-  BuiltMap<SudokuPos, SudokuValue> updateCells(
+  BuiltList<SudokuValue> updateCells(
     SudokuPos selected,
     BuiltSet<SudokuPos> impactZone,
   ) =>
@@ -58,7 +61,7 @@ class ToogleMarkAction extends SelectAction {
       : super(sudoku, cursor);
 
   @override
-  BuiltMap<SudokuPos, SudokuValue> updateCells(
+  BuiltList<SudokuValue> updateCells(
     SudokuPos selected,
     BuiltSet<SudokuPos> impactZone,
   ) =>
@@ -71,7 +74,7 @@ class FillAction extends SelectAction {
       : super(sudoku, cursor);
 
   @override
-  BuiltMap<SudokuPos, SudokuValue> updateCells(
+  BuiltList<SudokuValue> updateCells(
     SudokuPos selected,
     BuiltSet<SudokuPos> impactZone,
   ) =>
@@ -82,7 +85,7 @@ class EraseAction extends SelectAction {
   EraseAction(Sudoku sudoku, SudokuPos cursor) : super(sudoku, cursor);
 
   @override
-  BuiltMap<SudokuPos, SudokuValue> updateCells(
+  BuiltList<SudokuValue> updateCells(
     SudokuPos selected,
     BuiltSet<SudokuPos> impactZone,
   ) =>
@@ -90,7 +93,7 @@ class EraseAction extends SelectAction {
 }
 
 extension SudokuCellManipuation on Sudoku {
-  BuiltMap<SudokuPos, SudokuValue> updateValue(
+  BuiltList<SudokuValue> updateValue(
           SudokuPos cursor, SudokuValue updater(SudokuValue current)) =>
-      cells.rebuild((b) => b[cursor] = updater(b[cursor]));
+      cells.rebuild((b) => b[cursor.index] = updater(b[cursor.index]));
 }

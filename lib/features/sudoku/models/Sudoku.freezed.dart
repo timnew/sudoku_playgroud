@@ -17,7 +17,7 @@ class _$SudokuTearOff {
   _Sudoku call(
       {@nullable SudokuPos cursor,
       @nullable BuiltSet<SudokuPos> impactZone,
-      BuiltMap<SudokuPos, SudokuValue> cells,
+      BuiltList<SudokuValue> cells,
       BuiltSetMultimap<SudokuPos, SudokuPos> conflicts,
       int filledCellCount}) {
     return _Sudoku(
@@ -40,7 +40,7 @@ mixin _$Sudoku {
   SudokuPos get cursor;
   @nullable
   BuiltSet<SudokuPos> get impactZone;
-  BuiltMap<SudokuPos, SudokuValue> get cells;
+  BuiltList<SudokuValue> get cells;
   BuiltSetMultimap<SudokuPos, SudokuPos> get conflicts;
   int get filledCellCount;
 
@@ -54,7 +54,7 @@ abstract class $SudokuCopyWith<$Res> {
   $Res call(
       {@nullable SudokuPos cursor,
       @nullable BuiltSet<SudokuPos> impactZone,
-      BuiltMap<SudokuPos, SudokuValue> cells,
+      BuiltList<SudokuValue> cells,
       BuiltSetMultimap<SudokuPos, SudokuPos> conflicts,
       int filledCellCount});
 }
@@ -80,9 +80,7 @@ class _$SudokuCopyWithImpl<$Res> implements $SudokuCopyWith<$Res> {
       impactZone: impactZone == freezed
           ? _value.impactZone
           : impactZone as BuiltSet<SudokuPos>,
-      cells: cells == freezed
-          ? _value.cells
-          : cells as BuiltMap<SudokuPos, SudokuValue>,
+      cells: cells == freezed ? _value.cells : cells as BuiltList<SudokuValue>,
       conflicts: conflicts == freezed
           ? _value.conflicts
           : conflicts as BuiltSetMultimap<SudokuPos, SudokuPos>,
@@ -101,7 +99,7 @@ abstract class _$SudokuCopyWith<$Res> implements $SudokuCopyWith<$Res> {
   $Res call(
       {@nullable SudokuPos cursor,
       @nullable BuiltSet<SudokuPos> impactZone,
-      BuiltMap<SudokuPos, SudokuValue> cells,
+      BuiltList<SudokuValue> cells,
       BuiltSetMultimap<SudokuPos, SudokuPos> conflicts,
       int filledCellCount});
 }
@@ -128,9 +126,7 @@ class __$SudokuCopyWithImpl<$Res> extends _$SudokuCopyWithImpl<$Res>
       impactZone: impactZone == freezed
           ? _value.impactZone
           : impactZone as BuiltSet<SudokuPos>,
-      cells: cells == freezed
-          ? _value.cells
-          : cells as BuiltMap<SudokuPos, SudokuValue>,
+      cells: cells == freezed ? _value.cells : cells as BuiltList<SudokuValue>,
       conflicts: conflicts == freezed
           ? _value.conflicts
           : conflicts as BuiltSetMultimap<SudokuPos, SudokuPos>,
@@ -159,7 +155,7 @@ class _$_Sudoku extends _Sudoku {
   @nullable
   final BuiltSet<SudokuPos> impactZone;
   @override
-  final BuiltMap<SudokuPos, SudokuValue> cells;
+  final BuiltList<SudokuValue> cells;
   @override
   final BuiltSetMultimap<SudokuPos, SudokuPos> conflicts;
   @override
@@ -208,7 +204,7 @@ abstract class _Sudoku extends Sudoku {
   factory _Sudoku(
       {@nullable SudokuPos cursor,
       @nullable BuiltSet<SudokuPos> impactZone,
-      BuiltMap<SudokuPos, SudokuValue> cells,
+      BuiltList<SudokuValue> cells,
       BuiltSetMultimap<SudokuPos, SudokuPos> conflicts,
       int filledCellCount}) = _$_Sudoku;
 
@@ -219,7 +215,7 @@ abstract class _Sudoku extends Sudoku {
   @nullable
   BuiltSet<SudokuPos> get impactZone;
   @override
-  BuiltMap<SudokuPos, SudokuValue> get cells;
+  BuiltList<SudokuValue> get cells;
   @override
   BuiltSetMultimap<SudokuPos, SudokuPos> get conflicts;
   @override

@@ -11,19 +11,21 @@ class SudokuParser extends SudokuBuilder with SudokuFullScan {
   SudokuParser(this.expression);
 
   @override
-  BuiltMap<SudokuPos, SudokuValue> updateCells(SudokuPos selected, BuiltSet<SudokuPos> impactZone) => parseAsBuiltMap();
+  BuiltList<SudokuValue> updateCells(
+          SudokuPos selected, BuiltSet<SudokuPos> impactZone) =>
+      parseAsBuiltMap();
 
-  BuiltMap<SudokuPos, SudokuValue> parseAsBuiltMap() => parseAsMap().build();
+  BuiltList<SudokuValue> parseAsBuiltMap() => parseAsMap().build();
 
-  Map<SudokuPos, SudokuValue> parseAsMap() {
-    final result = Map<SudokuPos, SudokuValue>();
+  List<SudokuValue> parseAsMap() {
+    final result = List<SudokuValue>.filled(81, null);
 
     writeTo(result);
 
     return result;
   }
 
-  void writeTo(Map<SudokuPos, SudokuValue> builder) {
+  void writeTo(List<SudokuValue> builder) {
     final tokens = tokenize(expression);
 
     final iterator = tokens.iterator;
@@ -37,7 +39,8 @@ class SudokuParser extends SudokuBuilder with SudokuFullScan {
     final iterator = expression.split("").asMap().entries.iterator;
 
     while (iterator.moveNext()) {
-      final token = SudokuDataToken.parse(iterator.current.value, offset: iterator.current.key, expression: expression);
+      final token = SudokuDataToken.parse(iterator.current.value,
+          offset: iterator.current.key, expression: expression);
       if (token != null) yield token;
     }
   }
@@ -45,7 +48,8 @@ class SudokuParser extends SudokuBuilder with SudokuFullScan {
   // ignore: sdk_version_never
   Never _parseError(Iterator<SudokuDataToken> iterator, [String message]) {
     final token = iterator.current;
-    throw FormatException(message ?? "Unexpected token ${token.runtimeType}", token?.expression, token?.offset);
+    throw FormatException(message ?? "Unexpected token ${token.runtimeType}",
+        token?.expression, token?.offset);
   }
 
   SudokuDataToken _ensureNext(Iterator<SudokuDataToken> iterator) {
@@ -70,7 +74,8 @@ class SudokuParser extends SudokuBuilder with SudokuFullScan {
     return iterator.current;
   }
 
-  T _ensureNextType<T extends SudokuDataToken>(Iterator<SudokuDataToken> iterator) {
+  T _ensureNextType<T extends SudokuDataToken>(
+      Iterator<SudokuDataToken> iterator) {
     _ensureNext(iterator);
 
     if (!(iterator.current is T)) {
@@ -83,7 +88,7 @@ class SudokuParser extends SudokuBuilder with SudokuFullScan {
     return iterator.current;
   }
 
-  void _parse(Iterator<SudokuDataToken> iterator, Map<SudokuPos, SudokuValue> builder) {
+  void _parse(Iterator<SudokuDataToken> iterator, List<SudokuValue> builder) {
     _ensureNext(iterator).maybeMap(
       row: (_) => _blockByRow(iterator, builder),
       column: (_) => _blockByCol(iterator, builder),
@@ -96,27 +101,30 @@ class SudokuParser extends SudokuBuilder with SudokuFullScan {
     if (iterator.moveNext() == true) _parseError(iterator);
   }
 
-  void _explicitText(Iterator<SudokuDataToken> iterator, Map<SudokuPos, SudokuValue> builder) {
+  void _explicitText(
+      Iterator<SudokuDataToken> iterator, List<SudokuValue> builder) {
     final posIterator = SudokuPos.ALL.iterator;
     posIterator.moveNext();
 
     bool hasNext;
 
     do {
-      builder[posIterator.current] = iterator.current.maybeMap(
+      builder[posIterator.current.index] = iterator.current.maybeMap(
         digit: (c) => SudokuValue.given(c.digit),
         blank: (_) => SudokuValue.blank(),
         orElse: () => _parseError(iterator),
       );
 
       hasNext = iterator.moveNext();
-      if (hasNext != posIterator.moveNext()) _parseError(iterator, "Unexpected data length");
+      if (hasNext != posIterator.moveNext())
+        _parseError(iterator, "Unexpected data length");
     } while (hasNext);
 
     assert(builder.length == 81);
   }
 
-  void _blockByRow(Iterator<SudokuDataToken> iterator, Map<SudokuPos, SudokuValue> builder) {
+  void _blockByRow(
+      Iterator<SudokuDataToken> iterator, List<SudokuValue> builder) {
     SudokuSubPos.ALL_BY_ROW.forEach((block) {
       _parseBlock(block, iterator, builder);
     });
@@ -124,7 +132,8 @@ class SudokuParser extends SudokuBuilder with SudokuFullScan {
     _ensureNextType<RowToken>(iterator);
   }
 
-  void _blockByCol(Iterator<SudokuDataToken> iterator, Map<SudokuPos, SudokuValue> builder) {
+  void _blockByCol(
+      Iterator<SudokuDataToken> iterator, List<SudokuValue> builder) {
     SudokuSubPos.ALL_BY_COLUMN.forEach((block) {
       _parseBlock(block, iterator, builder);
     });
@@ -132,14 +141,16 @@ class SudokuParser extends SudokuBuilder with SudokuFullScan {
     _ensureNextType<ColumnToken>(iterator);
   }
 
-  void _blockByPos(Iterator<SudokuDataToken> iterator, Map<SudokuPos, SudokuValue> builder) {
+  void _blockByPos(
+      Iterator<SudokuDataToken> iterator, List<SudokuValue> builder) {
     final missings = SudokuSubPos.ALL_BY_ROW.toSet();
 
     while (!(_ensureNext(iterator) is PositionedToken)) {
       final row = _ensureType<DigitToken>(iterator).digit - 1;
       final col = _ensureNextType<DigitToken>(iterator).digit - 1;
       final block = SudokuSubPos(row, col);
-      if (!missings.remove(block)) _parseError(iterator, "Duplicated block definition at $block");
+      if (!missings.remove(block))
+        _parseError(iterator, "Duplicated block definition at $block");
       _parseBlock(block, iterator, builder);
     }
 
@@ -149,7 +160,7 @@ class SudokuParser extends SudokuBuilder with SudokuFullScan {
   void _parseBlock(
     SudokuSubPos block,
     Iterator<SudokuDataToken> iterator,
-    Map<SudokuPos, SudokuValue> builder,
+    List<SudokuValue> builder,
   ) {
     _ensureNext(iterator).maybeMap(
       row: (_) => _rowBlock(block, iterator, builder),
@@ -160,16 +171,16 @@ class SudokuParser extends SudokuBuilder with SudokuFullScan {
     );
   }
 
-  void _emptyBlock(SudokuSubPos block, Map<SudokuPos, SudokuValue> builder) {
+  void _emptyBlock(SudokuSubPos block, List<SudokuValue> builder) {
     for (var i = 0; i < 9; i++) {
-      builder[block + i] = SudokuValue.blank();
+      builder[(block + i).index] = SudokuValue.blank();
     }
   }
 
   void _rowBlock(
     SudokuSubPos block,
     Iterator<SudokuDataToken> iterator,
-    Map<SudokuPos, SudokuValue> builder,
+    List<SudokuValue> builder,
   ) {
     var current = SudokuSubPos.ZERO;
 
@@ -203,7 +214,7 @@ class SudokuParser extends SudokuBuilder with SudokuFullScan {
   void _columnBlock(
     SudokuSubPos block,
     Iterator<SudokuDataToken> iterator,
-    Map<SudokuPos, SudokuValue> builder,
+    List<SudokuValue> builder,
   ) {
     var current = SudokuSubPos.ZERO;
 
@@ -237,7 +248,7 @@ class SudokuParser extends SudokuBuilder with SudokuFullScan {
   void _posBlock(
     SudokuSubPos block,
     Iterator<SudokuDataToken> iterator,
-    Map<SudokuPos, SudokuValue> builder,
+    List<SudokuValue> builder,
   ) {
     final missings = SudokuSubPos.ALL_BY_ROW.toSet();
 
@@ -253,7 +264,8 @@ class SudokuParser extends SudokuBuilder with SudokuFullScan {
       );
     }
 
-    missings.forEach((current) => _writeBlank(block, current, iterator, builder));
+    missings
+        .forEach((current) => _writeBlank(block, current, iterator, builder));
   }
 
   void _writeDigit(
@@ -261,15 +273,16 @@ class SudokuParser extends SudokuBuilder with SudokuFullScan {
     SudokuSubPos cell,
     DigitToken token,
     Iterator<SudokuDataToken> iterator,
-    Map<SudokuPos, SudokuValue> builder,
+    List<SudokuValue> builder,
   ) =>
-      _writeValue(block, cell, SudokuValue.given(token.digit), iterator, builder);
+      _writeValue(
+          block, cell, SudokuValue.given(token.digit), iterator, builder);
 
   void _writeBlank(
     SudokuSubPos block,
     SudokuSubPos cell,
     Iterator<SudokuDataToken> iterator,
-    Map<SudokuPos, SudokuValue> builder,
+    List<SudokuValue> builder,
   ) =>
       _writeValue(block, cell, SudokuValue.blank(), iterator, builder);
 
@@ -278,12 +291,14 @@ class SudokuParser extends SudokuBuilder with SudokuFullScan {
     SudokuSubPos cell,
     SudokuValue value,
     Iterator<SudokuDataToken> iterator,
-    Map<SudokuPos, SudokuValue> builder,
+    List<SudokuValue> builder,
   ) {
     final pos = block * cell;
+    final index = pos.index;
 
-    if (builder.containsKey(pos)) _parseError(iterator, "Duplicated cell definition at $pos");
+    if (builder[index] != null)
+      _parseError(iterator, "Duplicated cell definition at $pos");
 
-    builder[pos] = value;
+    builder[index] = value;
   }
 }

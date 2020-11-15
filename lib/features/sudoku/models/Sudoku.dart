@@ -16,7 +16,7 @@ abstract class Sudoku implements _$Sudoku {
   factory Sudoku({
     @nullable SudokuPos cursor,
     @nullable BuiltSet<SudokuPos> impactZone,
-    BuiltMap<SudokuPos, SudokuValue> cells,
+    BuiltList<SudokuValue> cells,
     BuiltSetMultimap<SudokuPos, SudokuPos> conflicts,
     int filledCellCount,
   }) = _Sudoku;
