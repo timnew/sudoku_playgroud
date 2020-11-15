@@ -21,10 +21,9 @@ abstract class SudokuValue implements _$SudokuValue {
   @Assert("0 < number && number <= 9")
   factory SudokuValue.filled(int number) = FilledValue;
 
-  @Assert("number == null || (0 < number && number <= 9)")
   @Assert("marks != null")
   @Assert("marks.length == 9")
-  factory SudokuValue.guessing(@nullable int number, BuiltList<bool> marks) = GuessingValue;
+  factory SudokuValue.guessing(BuiltList<bool> marks) = GuessingValue;
 
   SudokuValueType get type => map(
         blank: (_) => SudokuValueType.Blank,
@@ -33,17 +32,23 @@ abstract class SudokuValue implements _$SudokuValue {
         guessing: (_) => SudokuValueType.Guessing,
       );
 
-  static BuiltList<bool> EMPTY_MARKS = BuiltList<bool>.of(Iterable.generate(9, (_) => false));
-  static BuiltList<bool> FULL_MARKS = BuiltList<bool>.of(Iterable.generate(9, (_) => true));
+  static BuiltList<bool> EMPTY_MARKS =
+      BuiltList<bool>.of(Iterable.generate(9, (_) => false));
+  static BuiltList<bool> FULL_MARKS =
+      BuiltList<bool>.of(Iterable.generate(9, (_) => true));
 
   SudokuValue fullMark() => maybeMap(
-        blank: (_) => SudokuValue.guessing(null, FULL_MARKS),
-        guessing: (v) => v.copyWith(marks: FULL_MARKS),
+        blank: (_) => SudokuValue.guessing(FULL_MARKS),
+        orElse: () => this,
+      );
+
+  SudokuValue clearMarks() => maybeMap(
+        guessing: (v) => v.copyWith(marks: EMPTY_MARKS),
         orElse: () => this,
       );
 
   SudokuValue addMark(int mark) => maybeMap(
-        blank: (_) => SudokuValue.guessing(null, EMPTY_MARKS.addMark(mark)),
+        blank: (_) => SudokuValue.guessing(EMPTY_MARKS.addMark(mark)),
         guessing: (v) => v.copyWith(marks: v.marks.addMark(mark)),
         orElse: () => this,
       );
@@ -53,9 +58,9 @@ abstract class SudokuValue implements _$SudokuValue {
         orElse: () => this,
       );
 
-  SudokuValue guess(int number) => maybeMap(
-        blank: (_) => SudokuValue.guessing(number, EMPTY_MARKS),
-        guessing: (v) => v.copyWith(number: number),
+  SudokuValue toggleMark(int mark) => maybeMap(
+        blank: (_) => SudokuValue.guessing(EMPTY_MARKS.addMark(mark)),
+        guessing: (v) => v.copyWith(marks: v.marks.toggleMark(mark)),
         orElse: () => this,
       );
 
@@ -67,16 +72,24 @@ abstract class SudokuValue implements _$SudokuValue {
       );
 
   SudokuValue erase() => maybeMap(
-        guessing: (v) => v.copyWith(number: null),
+        guessing: (v) => SudokuValue.blank(),
         filled: (_) => SudokuValue.blank(),
         orElse: () => this,
       );
 }
 
 extension MarkManipulations on BuiltList<bool> {
-  BuiltList<bool> addMark(int mark) => rebuild((b) => b[mark - 1] = true);
+  BuiltList<bool> addMark(int mark) => rebuild(
+        (b) => b[mark - 1] = true,
+      );
 
-  BuiltList<bool> removeMark(int mark) => rebuild((b) => b[mark - 1] = false);
+  BuiltList<bool> removeMark(int mark) => rebuild(
+        (b) => b[mark - 1] = false,
+      );
+
+  BuiltList<bool> toggleMark(int mark) => rebuild(
+        (b) => b[mark - 1] = !b[mark - 1],
+      );
 
   bool isMarked(int mark) => this[mark - 1];
 }

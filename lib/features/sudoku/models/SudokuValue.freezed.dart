@@ -33,9 +33,8 @@ class _$SudokuValueTearOff {
   }
 
 // ignore: unused_element
-  GuessingValue guessing(@nullable int number, BuiltList<bool> marks) {
+  GuessingValue guessing(BuiltList<bool> marks) {
     return GuessingValue(
-      number,
       marks,
     );
   }
@@ -52,14 +51,14 @@ mixin _$SudokuValue {
     @required Result blank(),
     @required Result given(int number),
     @required Result filled(int number),
-    @required Result guessing(@nullable int number, BuiltList<bool> marks),
+    @required Result guessing(BuiltList<bool> marks),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result blank(),
     Result given(int number),
     Result filled(int number),
-    Result guessing(@nullable int number, BuiltList<bool> marks),
+    Result guessing(BuiltList<bool> marks),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -135,7 +134,7 @@ class _$BlankValue extends BlankValue {
     @required Result blank(),
     @required Result given(int number),
     @required Result filled(int number),
-    @required Result guessing(@nullable int number, BuiltList<bool> marks),
+    @required Result guessing(BuiltList<bool> marks),
   }) {
     assert(blank != null);
     assert(given != null);
@@ -150,7 +149,7 @@ class _$BlankValue extends BlankValue {
     Result blank(),
     Result given(int number),
     Result filled(int number),
-    Result guessing(@nullable int number, BuiltList<bool> marks),
+    Result guessing(BuiltList<bool> marks),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -261,7 +260,7 @@ class _$GivenValue extends GivenValue {
     @required Result blank(),
     @required Result given(int number),
     @required Result filled(int number),
-    @required Result guessing(@nullable int number, BuiltList<bool> marks),
+    @required Result guessing(BuiltList<bool> marks),
   }) {
     assert(blank != null);
     assert(given != null);
@@ -276,7 +275,7 @@ class _$GivenValue extends GivenValue {
     Result blank(),
     Result given(int number),
     Result filled(int number),
-    Result guessing(@nullable int number, BuiltList<bool> marks),
+    Result guessing(BuiltList<bool> marks),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -391,7 +390,7 @@ class _$FilledValue extends FilledValue {
     @required Result blank(),
     @required Result given(int number),
     @required Result filled(int number),
-    @required Result guessing(@nullable int number, BuiltList<bool> marks),
+    @required Result guessing(BuiltList<bool> marks),
   }) {
     assert(blank != null);
     assert(given != null);
@@ -406,7 +405,7 @@ class _$FilledValue extends FilledValue {
     Result blank(),
     Result given(int number),
     Result filled(int number),
-    Result guessing(@nullable int number, BuiltList<bool> marks),
+    Result guessing(BuiltList<bool> marks),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -461,7 +460,7 @@ abstract class $GuessingValueCopyWith<$Res> {
   factory $GuessingValueCopyWith(
           GuessingValue value, $Res Function(GuessingValue) then) =
       _$GuessingValueCopyWithImpl<$Res>;
-  $Res call({@nullable int number, BuiltList<bool> marks});
+  $Res call({BuiltList<bool> marks});
 }
 
 /// @nodoc
@@ -476,11 +475,9 @@ class _$GuessingValueCopyWithImpl<$Res> extends _$SudokuValueCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object number = freezed,
     Object marks = freezed,
   }) {
     return _then(GuessingValue(
-      number == freezed ? _value.number : number as int,
       marks == freezed ? _value.marks : marks as BuiltList<bool>,
     ));
   }
@@ -488,39 +485,31 @@ class _$GuessingValueCopyWithImpl<$Res> extends _$SudokuValueCopyWithImpl<$Res>
 
 /// @nodoc
 class _$GuessingValue extends GuessingValue {
-  _$GuessingValue(@nullable this.number, this.marks)
+  _$GuessingValue(this.marks)
       : assert(marks != null),
-        assert(number == null || (0 < number && number <= 9)),
         assert(marks != null),
         assert(marks.length == 9),
         super._();
 
   @override
-  @nullable
-  final int number;
-  @override
   final BuiltList<bool> marks;
 
   @override
   String toString() {
-    return 'SudokuValue.guessing(number: $number, marks: $marks)';
+    return 'SudokuValue.guessing(marks: $marks)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is GuessingValue &&
-            (identical(other.number, number) ||
-                const DeepCollectionEquality().equals(other.number, number)) &&
             (identical(other.marks, marks) ||
                 const DeepCollectionEquality().equals(other.marks, marks)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(number) ^
-      const DeepCollectionEquality().hash(marks);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(marks);
 
   @override
   $GuessingValueCopyWith<GuessingValue> get copyWith =>
@@ -532,13 +521,13 @@ class _$GuessingValue extends GuessingValue {
     @required Result blank(),
     @required Result given(int number),
     @required Result filled(int number),
-    @required Result guessing(@nullable int number, BuiltList<bool> marks),
+    @required Result guessing(BuiltList<bool> marks),
   }) {
     assert(blank != null);
     assert(given != null);
     assert(filled != null);
     assert(guessing != null);
-    return guessing(number, marks);
+    return guessing(marks);
   }
 
   @override
@@ -547,12 +536,12 @@ class _$GuessingValue extends GuessingValue {
     Result blank(),
     Result given(int number),
     Result filled(int number),
-    Result guessing(@nullable int number, BuiltList<bool> marks),
+    Result guessing(BuiltList<bool> marks),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (guessing != null) {
-      return guessing(number, marks);
+      return guessing(marks);
     }
     return orElse();
   }
@@ -591,11 +580,8 @@ class _$GuessingValue extends GuessingValue {
 
 abstract class GuessingValue extends SudokuValue {
   GuessingValue._() : super._();
-  factory GuessingValue(@nullable int number, BuiltList<bool> marks) =
-      _$GuessingValue;
+  factory GuessingValue(BuiltList<bool> marks) = _$GuessingValue;
 
-  @nullable
-  int get number;
   BuiltList<bool> get marks;
   $GuessingValueCopyWith<GuessingValue> get copyWith;
 }

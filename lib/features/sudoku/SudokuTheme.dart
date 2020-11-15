@@ -37,22 +37,7 @@ class SudokuTheme {
   Color get markTextColor => Colors.black45;
 
   double get markTextSize => 10;
-  double get guessingTextSize => markTextSize * 1.2;
 
   TextStyle get markTextStyle =>
       TextStyle(fontSize: markTextSize, color: markTextColor);
-
-  Color get guessingTextColor => Colors.blue;
-
-  TextStyle get guessingTextStyle => TextStyle(
-        fontSize: guessingTextSize,
-        color: guessingTextColor,
-        fontWeight: FontWeight.bold,
-      );
-
-  TextStyle get conflictedGuessingTextStyle => TextStyle(
-        fontSize: guessingTextSize,
-        color: conflictedTextColor,
-        fontWeight: FontWeight.bold,
-      );
 }

@@ -65,7 +65,7 @@ class DigitPanel extends StatelessWidget with BuildValue<UserOperation> {
               fontSize: 24,
             )),
         onPressed: () =>
-            manager.putAndRunOperation(operation.onNumberPressed(number)),
+            manager.setOperation(operation.onNumberPressed(number)),
       );
 }
 
@@ -88,18 +88,18 @@ class AltPanel extends StatelessWidget with BuildValue<UserOperation> {
             key: Key("mark"),
             selected: opeartion.markEnabled(),
             child: Icon(Icons.create),
-            onPressed: () => manager.putOperation(opeartion.onMarkPressed()),
+            onPressed: () => manager.setOperation(opeartion.onMarkPressed()),
           ),
           ToggleButton(
             key: Key("erase"),
             selected: opeartion.eraseEnabled(),
             child: Icon(Icons.cancel),
-            onPressed: () => manager.putOperation(opeartion.onEnrasePressed()),
+            onPressed: () => manager.setOperation(opeartion.onEnrasePressed()),
           ),
           SudokuButton(
             key: Key("select"),
             child: Icon(Icons.touch_app),
-            onPressed: () => manager.putOperation(UserOperation.select()),
+            onPressed: () => manager.setOperation(UserOperation.select()),
           ),
         ],
       );

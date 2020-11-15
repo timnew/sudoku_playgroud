@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:response_builder/response_builder.dart';
 import 'package:sudoku_playground/features/sudoku/models/SudokuPos.dart';
@@ -21,11 +22,9 @@ class SudokuManager {
       case SudokuValueType.Filled:
         return SudokuValue.filled(random.nextInt(8) + 1);
       case SudokuValueType.Guessing:
-        final number = random.nextInt(9);
-        final hasMarks = random.nextBool();
         return SudokuValue.guessing(
-          number == 0 ? null : number,
-          hasMarks ? SudokuValue.FULL_MARKS : SudokuValue.EMPTY_MARKS,
+          List.generate(9, (_) => random.nextBool(), growable: false)
+              .toBuiltList(),
         );
     }
 
@@ -45,28 +44,22 @@ class SudokuManager {
     final sudoku = currentSudoku.value;
 
     final action = currentOperation.value.map(
-      select: (_) => SelectSudoku(sudoku, cursor),
-      fill: (c) => null,
-      eraseNumber: (c) => null,
-      erase: (_) => null,
-      markAll: (_) => null,
-      mark: (c) => null,
-      eraseMark: (c) => null,
-      eraseAllMarks: (_) => null,
+      select: (_) => SelectAction(sudoku, cursor),
+      fill: (c) => FillAction(sudoku, cursor, c.number),
+      erase: (_) => EraseAction(sudoku, cursor),
+      markAll: (_) => FullMarkAction(sudoku, cursor),
+      mark: (c) => ToogleMarkAction(sudoku, cursor, c.number),
     );
 
     if (action != null) currentSudoku.putValue(action.execute());
   }
 
-  void putAndRunOperation(UserOperation newOperation) {
-    putOperation(newOperation);
+  void setOperation(UserOperation newOperation) {
+    currentOperation.value = newOperation;
+
     final cursor = currentSudoku.value.cursor;
     if (cursor != null) {
       operateOn(cursor);
     }
-  }
-
-  void putOperation(UserOperation newOperation) {
-    currentOperation.value = newOperation;
   }
 }

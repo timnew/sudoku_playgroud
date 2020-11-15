@@ -128,7 +128,7 @@ class SudokuCellView extends StatelessWidget {
 }
 
 class GivenNumberView extends StatelessWidget {
-  final SudokuValue value;
+  final GivenValue value;
   final SudokuTheme theme;
 
   const GivenNumberView({
@@ -145,7 +145,7 @@ class GivenNumberView extends StatelessWidget {
 }
 
 class FilledNumberView extends StatelessWidget {
-  final SudokuValue value;
+  final FilledValue value;
   final bool isConflicted;
   final SudokuTheme theme;
 
@@ -168,7 +168,7 @@ class FilledNumberView extends StatelessWidget {
 }
 
 class GuessingValueView extends StatelessWidget {
-  final SudokuValue value;
+  final GuessingValue value;
   final SudokuTheme theme;
   final bool isConflicted;
 
@@ -186,18 +186,10 @@ class GuessingValueView extends StatelessWidget {
         ),
       );
 
-  Widget _buildMark(BuildContext context, int index) {
-    if (!value.marks[index]) return null;
-
-    final mark = index + 1;
-    return Center(
-      child: Text("$mark", style: _markStyle(mark)),
-    );
-  }
-
-  TextStyle _markStyle(int mark) {
-    if (mark != value.number) return theme.markTextStyle;
-    if (isConflicted) return theme.conflictedGuessingTextStyle;
-    return theme.guessingTextStyle;
-  }
+  Widget _buildMark(BuildContext context, int index) => Center(
+        child: Text(
+          value.marks[index] ? "${index + 1}" : " ",
+          style: theme.markTextStyle,
+        ),
+      );
 }

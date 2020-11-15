@@ -26,13 +26,6 @@ class _$UserOperationTearOff {
   }
 
 // ignore: unused_element
-  EraseNumberOperation eraseNumber(int number) {
-    return EraseNumberOperation(
-      number,
-    );
-  }
-
-// ignore: unused_element
   EraseOperation erase() {
     return EraseOperation();
   }
@@ -48,18 +41,6 @@ class _$UserOperationTearOff {
       number,
     );
   }
-
-// ignore: unused_element
-  EraseMarkOpeartion eraseMark(int number) {
-    return EraseMarkOpeartion(
-      number,
-    );
-  }
-
-// ignore: unused_element
-  EraseAllMarksOperation eraseAllMarks() {
-    return EraseAllMarksOperation();
-  }
 }
 
 /// @nodoc
@@ -72,46 +53,34 @@ mixin _$UserOperation {
   Result when<Result extends Object>({
     @required Result select(),
     @required Result fill(int number),
-    @required Result eraseNumber(int number),
     @required Result erase(),
     @required Result markAll(),
     @required Result mark(int number),
-    @required Result eraseMark(int number),
-    @required Result eraseAllMarks(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result select(),
     Result fill(int number),
-    Result eraseNumber(int number),
     Result erase(),
     Result markAll(),
     Result mark(int number),
-    Result eraseMark(int number),
-    Result eraseAllMarks(),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result select(SelectOperation value),
     @required Result fill(FillOperation value),
-    @required Result eraseNumber(EraseNumberOperation value),
     @required Result erase(EraseOperation value),
     @required Result markAll(MarkAllOperation value),
     @required Result mark(MarkOperation value),
-    @required Result eraseMark(EraseMarkOpeartion value),
-    @required Result eraseAllMarks(EraseAllMarksOperation value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result select(SelectOperation value),
     Result fill(FillOperation value),
-    Result eraseNumber(EraseNumberOperation value),
     Result erase(EraseOperation value),
     Result markAll(MarkAllOperation value),
     Result mark(MarkOperation value),
-    Result eraseMark(EraseMarkOpeartion value),
-    Result eraseAllMarks(EraseAllMarksOperation value),
     @required Result orElse(),
   });
 }
@@ -174,21 +143,15 @@ class _$SelectOperation extends SelectOperation {
   Result when<Result extends Object>({
     @required Result select(),
     @required Result fill(int number),
-    @required Result eraseNumber(int number),
     @required Result erase(),
     @required Result markAll(),
     @required Result mark(int number),
-    @required Result eraseMark(int number),
-    @required Result eraseAllMarks(),
   }) {
     assert(select != null);
     assert(fill != null);
-    assert(eraseNumber != null);
     assert(erase != null);
     assert(markAll != null);
     assert(mark != null);
-    assert(eraseMark != null);
-    assert(eraseAllMarks != null);
     return select();
   }
 
@@ -197,12 +160,9 @@ class _$SelectOperation extends SelectOperation {
   Result maybeWhen<Result extends Object>({
     Result select(),
     Result fill(int number),
-    Result eraseNumber(int number),
     Result erase(),
     Result markAll(),
     Result mark(int number),
-    Result eraseMark(int number),
-    Result eraseAllMarks(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -217,21 +177,15 @@ class _$SelectOperation extends SelectOperation {
   Result map<Result extends Object>({
     @required Result select(SelectOperation value),
     @required Result fill(FillOperation value),
-    @required Result eraseNumber(EraseNumberOperation value),
     @required Result erase(EraseOperation value),
     @required Result markAll(MarkAllOperation value),
     @required Result mark(MarkOperation value),
-    @required Result eraseMark(EraseMarkOpeartion value),
-    @required Result eraseAllMarks(EraseAllMarksOperation value),
   }) {
     assert(select != null);
     assert(fill != null);
-    assert(eraseNumber != null);
     assert(erase != null);
     assert(markAll != null);
     assert(mark != null);
-    assert(eraseMark != null);
-    assert(eraseAllMarks != null);
     return select(this);
   }
 
@@ -240,12 +194,9 @@ class _$SelectOperation extends SelectOperation {
   Result maybeMap<Result extends Object>({
     Result select(SelectOperation value),
     Result fill(FillOperation value),
-    Result eraseNumber(EraseNumberOperation value),
     Result erase(EraseOperation value),
     Result markAll(MarkAllOperation value),
     Result mark(MarkOperation value),
-    Result eraseMark(EraseMarkOpeartion value),
-    Result eraseAllMarks(EraseAllMarksOperation value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -325,21 +276,15 @@ class _$FillOperation extends FillOperation {
   Result when<Result extends Object>({
     @required Result select(),
     @required Result fill(int number),
-    @required Result eraseNumber(int number),
     @required Result erase(),
     @required Result markAll(),
     @required Result mark(int number),
-    @required Result eraseMark(int number),
-    @required Result eraseAllMarks(),
   }) {
     assert(select != null);
     assert(fill != null);
-    assert(eraseNumber != null);
     assert(erase != null);
     assert(markAll != null);
     assert(mark != null);
-    assert(eraseMark != null);
-    assert(eraseAllMarks != null);
     return fill(number);
   }
 
@@ -348,12 +293,9 @@ class _$FillOperation extends FillOperation {
   Result maybeWhen<Result extends Object>({
     Result select(),
     Result fill(int number),
-    Result eraseNumber(int number),
     Result erase(),
     Result markAll(),
     Result mark(int number),
-    Result eraseMark(int number),
-    Result eraseAllMarks(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -368,21 +310,15 @@ class _$FillOperation extends FillOperation {
   Result map<Result extends Object>({
     @required Result select(SelectOperation value),
     @required Result fill(FillOperation value),
-    @required Result eraseNumber(EraseNumberOperation value),
     @required Result erase(EraseOperation value),
     @required Result markAll(MarkAllOperation value),
     @required Result mark(MarkOperation value),
-    @required Result eraseMark(EraseMarkOpeartion value),
-    @required Result eraseAllMarks(EraseAllMarksOperation value),
   }) {
     assert(select != null);
     assert(fill != null);
-    assert(eraseNumber != null);
     assert(erase != null);
     assert(markAll != null);
     assert(mark != null);
-    assert(eraseMark != null);
-    assert(eraseAllMarks != null);
     return fill(this);
   }
 
@@ -391,12 +327,9 @@ class _$FillOperation extends FillOperation {
   Result maybeMap<Result extends Object>({
     Result select(SelectOperation value),
     Result fill(FillOperation value),
-    Result eraseNumber(EraseNumberOperation value),
     Result erase(EraseOperation value),
     Result markAll(MarkAllOperation value),
     Result mark(MarkOperation value),
-    Result eraseMark(EraseMarkOpeartion value),
-    Result eraseAllMarks(EraseAllMarksOperation value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -413,161 +346,6 @@ abstract class FillOperation extends UserOperation {
 
   int get number;
   $FillOperationCopyWith<FillOperation> get copyWith;
-}
-
-/// @nodoc
-abstract class $EraseNumberOperationCopyWith<$Res> {
-  factory $EraseNumberOperationCopyWith(EraseNumberOperation value,
-          $Res Function(EraseNumberOperation) then) =
-      _$EraseNumberOperationCopyWithImpl<$Res>;
-  $Res call({int number});
-}
-
-/// @nodoc
-class _$EraseNumberOperationCopyWithImpl<$Res>
-    extends _$UserOperationCopyWithImpl<$Res>
-    implements $EraseNumberOperationCopyWith<$Res> {
-  _$EraseNumberOperationCopyWithImpl(
-      EraseNumberOperation _value, $Res Function(EraseNumberOperation) _then)
-      : super(_value, (v) => _then(v as EraseNumberOperation));
-
-  @override
-  EraseNumberOperation get _value => super._value as EraseNumberOperation;
-
-  @override
-  $Res call({
-    Object number = freezed,
-  }) {
-    return _then(EraseNumberOperation(
-      number == freezed ? _value.number : number as int,
-    ));
-  }
-}
-
-/// @nodoc
-class _$EraseNumberOperation extends EraseNumberOperation {
-  _$EraseNumberOperation(this.number)
-      : assert(number != null),
-        super._();
-
-  @override
-  final int number;
-
-  @override
-  String toString() {
-    return 'UserOperation.eraseNumber(number: $number)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is EraseNumberOperation &&
-            (identical(other.number, number) ||
-                const DeepCollectionEquality().equals(other.number, number)));
-  }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(number);
-
-  @override
-  $EraseNumberOperationCopyWith<EraseNumberOperation> get copyWith =>
-      _$EraseNumberOperationCopyWithImpl<EraseNumberOperation>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result select(),
-    @required Result fill(int number),
-    @required Result eraseNumber(int number),
-    @required Result erase(),
-    @required Result markAll(),
-    @required Result mark(int number),
-    @required Result eraseMark(int number),
-    @required Result eraseAllMarks(),
-  }) {
-    assert(select != null);
-    assert(fill != null);
-    assert(eraseNumber != null);
-    assert(erase != null);
-    assert(markAll != null);
-    assert(mark != null);
-    assert(eraseMark != null);
-    assert(eraseAllMarks != null);
-    return eraseNumber(number);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result select(),
-    Result fill(int number),
-    Result eraseNumber(int number),
-    Result erase(),
-    Result markAll(),
-    Result mark(int number),
-    Result eraseMark(int number),
-    Result eraseAllMarks(),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (eraseNumber != null) {
-      return eraseNumber(number);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result select(SelectOperation value),
-    @required Result fill(FillOperation value),
-    @required Result eraseNumber(EraseNumberOperation value),
-    @required Result erase(EraseOperation value),
-    @required Result markAll(MarkAllOperation value),
-    @required Result mark(MarkOperation value),
-    @required Result eraseMark(EraseMarkOpeartion value),
-    @required Result eraseAllMarks(EraseAllMarksOperation value),
-  }) {
-    assert(select != null);
-    assert(fill != null);
-    assert(eraseNumber != null);
-    assert(erase != null);
-    assert(markAll != null);
-    assert(mark != null);
-    assert(eraseMark != null);
-    assert(eraseAllMarks != null);
-    return eraseNumber(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result select(SelectOperation value),
-    Result fill(FillOperation value),
-    Result eraseNumber(EraseNumberOperation value),
-    Result erase(EraseOperation value),
-    Result markAll(MarkAllOperation value),
-    Result mark(MarkOperation value),
-    Result eraseMark(EraseMarkOpeartion value),
-    Result eraseAllMarks(EraseAllMarksOperation value),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (eraseNumber != null) {
-      return eraseNumber(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class EraseNumberOperation extends UserOperation {
-  EraseNumberOperation._() : super._();
-  factory EraseNumberOperation(int number) = _$EraseNumberOperation;
-
-  int get number;
-  $EraseNumberOperationCopyWith<EraseNumberOperation> get copyWith;
 }
 
 /// @nodoc
@@ -611,21 +389,15 @@ class _$EraseOperation extends EraseOperation {
   Result when<Result extends Object>({
     @required Result select(),
     @required Result fill(int number),
-    @required Result eraseNumber(int number),
     @required Result erase(),
     @required Result markAll(),
     @required Result mark(int number),
-    @required Result eraseMark(int number),
-    @required Result eraseAllMarks(),
   }) {
     assert(select != null);
     assert(fill != null);
-    assert(eraseNumber != null);
     assert(erase != null);
     assert(markAll != null);
     assert(mark != null);
-    assert(eraseMark != null);
-    assert(eraseAllMarks != null);
     return erase();
   }
 
@@ -634,12 +406,9 @@ class _$EraseOperation extends EraseOperation {
   Result maybeWhen<Result extends Object>({
     Result select(),
     Result fill(int number),
-    Result eraseNumber(int number),
     Result erase(),
     Result markAll(),
     Result mark(int number),
-    Result eraseMark(int number),
-    Result eraseAllMarks(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -654,21 +423,15 @@ class _$EraseOperation extends EraseOperation {
   Result map<Result extends Object>({
     @required Result select(SelectOperation value),
     @required Result fill(FillOperation value),
-    @required Result eraseNumber(EraseNumberOperation value),
     @required Result erase(EraseOperation value),
     @required Result markAll(MarkAllOperation value),
     @required Result mark(MarkOperation value),
-    @required Result eraseMark(EraseMarkOpeartion value),
-    @required Result eraseAllMarks(EraseAllMarksOperation value),
   }) {
     assert(select != null);
     assert(fill != null);
-    assert(eraseNumber != null);
     assert(erase != null);
     assert(markAll != null);
     assert(mark != null);
-    assert(eraseMark != null);
-    assert(eraseAllMarks != null);
     return erase(this);
   }
 
@@ -677,12 +440,9 @@ class _$EraseOperation extends EraseOperation {
   Result maybeMap<Result extends Object>({
     Result select(SelectOperation value),
     Result fill(FillOperation value),
-    Result eraseNumber(EraseNumberOperation value),
     Result erase(EraseOperation value),
     Result markAll(MarkAllOperation value),
     Result mark(MarkOperation value),
-    Result eraseMark(EraseMarkOpeartion value),
-    Result eraseAllMarks(EraseAllMarksOperation value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -739,21 +499,15 @@ class _$MarkAllOperation extends MarkAllOperation {
   Result when<Result extends Object>({
     @required Result select(),
     @required Result fill(int number),
-    @required Result eraseNumber(int number),
     @required Result erase(),
     @required Result markAll(),
     @required Result mark(int number),
-    @required Result eraseMark(int number),
-    @required Result eraseAllMarks(),
   }) {
     assert(select != null);
     assert(fill != null);
-    assert(eraseNumber != null);
     assert(erase != null);
     assert(markAll != null);
     assert(mark != null);
-    assert(eraseMark != null);
-    assert(eraseAllMarks != null);
     return markAll();
   }
 
@@ -762,12 +516,9 @@ class _$MarkAllOperation extends MarkAllOperation {
   Result maybeWhen<Result extends Object>({
     Result select(),
     Result fill(int number),
-    Result eraseNumber(int number),
     Result erase(),
     Result markAll(),
     Result mark(int number),
-    Result eraseMark(int number),
-    Result eraseAllMarks(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -782,21 +533,15 @@ class _$MarkAllOperation extends MarkAllOperation {
   Result map<Result extends Object>({
     @required Result select(SelectOperation value),
     @required Result fill(FillOperation value),
-    @required Result eraseNumber(EraseNumberOperation value),
     @required Result erase(EraseOperation value),
     @required Result markAll(MarkAllOperation value),
     @required Result mark(MarkOperation value),
-    @required Result eraseMark(EraseMarkOpeartion value),
-    @required Result eraseAllMarks(EraseAllMarksOperation value),
   }) {
     assert(select != null);
     assert(fill != null);
-    assert(eraseNumber != null);
     assert(erase != null);
     assert(markAll != null);
     assert(mark != null);
-    assert(eraseMark != null);
-    assert(eraseAllMarks != null);
     return markAll(this);
   }
 
@@ -805,12 +550,9 @@ class _$MarkAllOperation extends MarkAllOperation {
   Result maybeMap<Result extends Object>({
     Result select(SelectOperation value),
     Result fill(FillOperation value),
-    Result eraseNumber(EraseNumberOperation value),
     Result erase(EraseOperation value),
     Result markAll(MarkAllOperation value),
     Result mark(MarkOperation value),
-    Result eraseMark(EraseMarkOpeartion value),
-    Result eraseAllMarks(EraseAllMarksOperation value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -890,21 +632,15 @@ class _$MarkOperation extends MarkOperation {
   Result when<Result extends Object>({
     @required Result select(),
     @required Result fill(int number),
-    @required Result eraseNumber(int number),
     @required Result erase(),
     @required Result markAll(),
     @required Result mark(int number),
-    @required Result eraseMark(int number),
-    @required Result eraseAllMarks(),
   }) {
     assert(select != null);
     assert(fill != null);
-    assert(eraseNumber != null);
     assert(erase != null);
     assert(markAll != null);
     assert(mark != null);
-    assert(eraseMark != null);
-    assert(eraseAllMarks != null);
     return mark(number);
   }
 
@@ -913,12 +649,9 @@ class _$MarkOperation extends MarkOperation {
   Result maybeWhen<Result extends Object>({
     Result select(),
     Result fill(int number),
-    Result eraseNumber(int number),
     Result erase(),
     Result markAll(),
     Result mark(int number),
-    Result eraseMark(int number),
-    Result eraseAllMarks(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -933,21 +666,15 @@ class _$MarkOperation extends MarkOperation {
   Result map<Result extends Object>({
     @required Result select(SelectOperation value),
     @required Result fill(FillOperation value),
-    @required Result eraseNumber(EraseNumberOperation value),
     @required Result erase(EraseOperation value),
     @required Result markAll(MarkAllOperation value),
     @required Result mark(MarkOperation value),
-    @required Result eraseMark(EraseMarkOpeartion value),
-    @required Result eraseAllMarks(EraseAllMarksOperation value),
   }) {
     assert(select != null);
     assert(fill != null);
-    assert(eraseNumber != null);
     assert(erase != null);
     assert(markAll != null);
     assert(mark != null);
-    assert(eraseMark != null);
-    assert(eraseAllMarks != null);
     return mark(this);
   }
 
@@ -956,12 +683,9 @@ class _$MarkOperation extends MarkOperation {
   Result maybeMap<Result extends Object>({
     Result select(SelectOperation value),
     Result fill(FillOperation value),
-    Result eraseNumber(EraseNumberOperation value),
     Result erase(EraseOperation value),
     Result markAll(MarkAllOperation value),
     Result mark(MarkOperation value),
-    Result eraseMark(EraseMarkOpeartion value),
-    Result eraseAllMarks(EraseAllMarksOperation value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -978,286 +702,4 @@ abstract class MarkOperation extends UserOperation {
 
   int get number;
   $MarkOperationCopyWith<MarkOperation> get copyWith;
-}
-
-/// @nodoc
-abstract class $EraseMarkOpeartionCopyWith<$Res> {
-  factory $EraseMarkOpeartionCopyWith(
-          EraseMarkOpeartion value, $Res Function(EraseMarkOpeartion) then) =
-      _$EraseMarkOpeartionCopyWithImpl<$Res>;
-  $Res call({int number});
-}
-
-/// @nodoc
-class _$EraseMarkOpeartionCopyWithImpl<$Res>
-    extends _$UserOperationCopyWithImpl<$Res>
-    implements $EraseMarkOpeartionCopyWith<$Res> {
-  _$EraseMarkOpeartionCopyWithImpl(
-      EraseMarkOpeartion _value, $Res Function(EraseMarkOpeartion) _then)
-      : super(_value, (v) => _then(v as EraseMarkOpeartion));
-
-  @override
-  EraseMarkOpeartion get _value => super._value as EraseMarkOpeartion;
-
-  @override
-  $Res call({
-    Object number = freezed,
-  }) {
-    return _then(EraseMarkOpeartion(
-      number == freezed ? _value.number : number as int,
-    ));
-  }
-}
-
-/// @nodoc
-class _$EraseMarkOpeartion extends EraseMarkOpeartion {
-  _$EraseMarkOpeartion(this.number)
-      : assert(number != null),
-        super._();
-
-  @override
-  final int number;
-
-  @override
-  String toString() {
-    return 'UserOperation.eraseMark(number: $number)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is EraseMarkOpeartion &&
-            (identical(other.number, number) ||
-                const DeepCollectionEquality().equals(other.number, number)));
-  }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(number);
-
-  @override
-  $EraseMarkOpeartionCopyWith<EraseMarkOpeartion> get copyWith =>
-      _$EraseMarkOpeartionCopyWithImpl<EraseMarkOpeartion>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result select(),
-    @required Result fill(int number),
-    @required Result eraseNumber(int number),
-    @required Result erase(),
-    @required Result markAll(),
-    @required Result mark(int number),
-    @required Result eraseMark(int number),
-    @required Result eraseAllMarks(),
-  }) {
-    assert(select != null);
-    assert(fill != null);
-    assert(eraseNumber != null);
-    assert(erase != null);
-    assert(markAll != null);
-    assert(mark != null);
-    assert(eraseMark != null);
-    assert(eraseAllMarks != null);
-    return eraseMark(number);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result select(),
-    Result fill(int number),
-    Result eraseNumber(int number),
-    Result erase(),
-    Result markAll(),
-    Result mark(int number),
-    Result eraseMark(int number),
-    Result eraseAllMarks(),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (eraseMark != null) {
-      return eraseMark(number);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result select(SelectOperation value),
-    @required Result fill(FillOperation value),
-    @required Result eraseNumber(EraseNumberOperation value),
-    @required Result erase(EraseOperation value),
-    @required Result markAll(MarkAllOperation value),
-    @required Result mark(MarkOperation value),
-    @required Result eraseMark(EraseMarkOpeartion value),
-    @required Result eraseAllMarks(EraseAllMarksOperation value),
-  }) {
-    assert(select != null);
-    assert(fill != null);
-    assert(eraseNumber != null);
-    assert(erase != null);
-    assert(markAll != null);
-    assert(mark != null);
-    assert(eraseMark != null);
-    assert(eraseAllMarks != null);
-    return eraseMark(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result select(SelectOperation value),
-    Result fill(FillOperation value),
-    Result eraseNumber(EraseNumberOperation value),
-    Result erase(EraseOperation value),
-    Result markAll(MarkAllOperation value),
-    Result mark(MarkOperation value),
-    Result eraseMark(EraseMarkOpeartion value),
-    Result eraseAllMarks(EraseAllMarksOperation value),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (eraseMark != null) {
-      return eraseMark(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class EraseMarkOpeartion extends UserOperation {
-  EraseMarkOpeartion._() : super._();
-  factory EraseMarkOpeartion(int number) = _$EraseMarkOpeartion;
-
-  int get number;
-  $EraseMarkOpeartionCopyWith<EraseMarkOpeartion> get copyWith;
-}
-
-/// @nodoc
-abstract class $EraseAllMarksOperationCopyWith<$Res> {
-  factory $EraseAllMarksOperationCopyWith(EraseAllMarksOperation value,
-          $Res Function(EraseAllMarksOperation) then) =
-      _$EraseAllMarksOperationCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class _$EraseAllMarksOperationCopyWithImpl<$Res>
-    extends _$UserOperationCopyWithImpl<$Res>
-    implements $EraseAllMarksOperationCopyWith<$Res> {
-  _$EraseAllMarksOperationCopyWithImpl(EraseAllMarksOperation _value,
-      $Res Function(EraseAllMarksOperation) _then)
-      : super(_value, (v) => _then(v as EraseAllMarksOperation));
-
-  @override
-  EraseAllMarksOperation get _value => super._value as EraseAllMarksOperation;
-}
-
-/// @nodoc
-class _$EraseAllMarksOperation extends EraseAllMarksOperation {
-  _$EraseAllMarksOperation() : super._();
-
-  @override
-  String toString() {
-    return 'UserOperation.eraseAllMarks()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) || (other is EraseAllMarksOperation);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result select(),
-    @required Result fill(int number),
-    @required Result eraseNumber(int number),
-    @required Result erase(),
-    @required Result markAll(),
-    @required Result mark(int number),
-    @required Result eraseMark(int number),
-    @required Result eraseAllMarks(),
-  }) {
-    assert(select != null);
-    assert(fill != null);
-    assert(eraseNumber != null);
-    assert(erase != null);
-    assert(markAll != null);
-    assert(mark != null);
-    assert(eraseMark != null);
-    assert(eraseAllMarks != null);
-    return eraseAllMarks();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result select(),
-    Result fill(int number),
-    Result eraseNumber(int number),
-    Result erase(),
-    Result markAll(),
-    Result mark(int number),
-    Result eraseMark(int number),
-    Result eraseAllMarks(),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (eraseAllMarks != null) {
-      return eraseAllMarks();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result select(SelectOperation value),
-    @required Result fill(FillOperation value),
-    @required Result eraseNumber(EraseNumberOperation value),
-    @required Result erase(EraseOperation value),
-    @required Result markAll(MarkAllOperation value),
-    @required Result mark(MarkOperation value),
-    @required Result eraseMark(EraseMarkOpeartion value),
-    @required Result eraseAllMarks(EraseAllMarksOperation value),
-  }) {
-    assert(select != null);
-    assert(fill != null);
-    assert(eraseNumber != null);
-    assert(erase != null);
-    assert(markAll != null);
-    assert(mark != null);
-    assert(eraseMark != null);
-    assert(eraseAllMarks != null);
-    return eraseAllMarks(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result select(SelectOperation value),
-    Result fill(FillOperation value),
-    Result eraseNumber(EraseNumberOperation value),
-    Result erase(EraseOperation value),
-    Result markAll(MarkAllOperation value),
-    Result mark(MarkOperation value),
-    Result eraseMark(EraseMarkOpeartion value),
-    Result eraseAllMarks(EraseAllMarksOperation value),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (eraseAllMarks != null) {
-      return eraseAllMarks(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class EraseAllMarksOperation extends UserOperation {
-  EraseAllMarksOperation._() : super._();
-  factory EraseAllMarksOperation() = _$EraseAllMarksOperation;
 }
