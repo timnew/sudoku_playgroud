@@ -4,14 +4,14 @@ class SudokuTheme {
   const SudokuTheme();
 
   BorderSide get sudokuBorder => BorderSide(width: 2.5);
-  BorderSide get blockBorder => BorderSide(width: 1.5);
+  BorderSide get blockBorder => BorderSide(width: 2);
   BorderSide get cellBroder => BorderSide(width: 0.5);
 
   Color get conflictedCellBackgroundColor => Colors.red[100];
 
   Color get selectedCellBackgroundColor => Colors.blue[100];
 
-  Color get highlightedCellBackgroundColor => Colors.white70;
+  Color get highlightedCellBackgroundColor => Colors.grey[300];
 
   Color get normalCellBackgroundColor => Colors.white;
 
