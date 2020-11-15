@@ -5,22 +5,28 @@ import '../Sudoku.dart';
 import '../SudokuPos.dart';
 import 'SudokuBuilder.dart';
 
-abstract class UpdateSudoku extends SudokuBuilder {
+class SelectSudoku extends SudokuBuilder {
   final Sudoku sudoku;
+  final SudokuPos cursor;
 
-  UpdateSudoku(this.sudoku);
+  SelectSudoku(this.sudoku, this.cursor);
 
-  SudokuPos updateCursor() => sudoku.cursor;
+  SudokuPos updateCursor() => cursor;
 
   BuiltSet<SudokuPos> updateImpactZone(SudokuPos cursor) {
     if (cursor == null) return null;
     if (cursor == sudoku.cursor) return sudoku.impactZone;
     return BuiltSet.build(
-      (b) => b..addAll(cursor.parentRow())..addAll(cursor.parentColumn())..addAll(cursor.parentBlock()),
+      (b) => b
+        ..addAll(cursor.parentRow())
+        ..addAll(cursor.parentColumn())
+        ..addAll(cursor.parentBlock()),
     );
   }
 
-  BuiltMap<SudokuPos, SudokuValue> updateCells(SudokuPos selected, BuiltSet<SudokuPos> impactZone) => sudoku.cells;
+  BuiltMap<SudokuPos, SudokuValue> updateCells(
+          SudokuPos selected, BuiltSet<SudokuPos> impactZone) =>
+      sudoku.cells;
 
   BuiltSetMultimap<SudokuPos, SudokuPos> updateConflicts(
     SudokuPos selected,
@@ -29,6 +35,7 @@ abstract class UpdateSudoku extends SudokuBuilder {
   ) =>
       sudoku.conflicts;
 
-  int updateFilledCount(SudokuPos selected, BuiltSet<SudokuPos> impactZone, BuiltMap<SudokuPos, SudokuValue> cells) =>
+  int updateFilledCount(SudokuPos selected, BuiltSet<SudokuPos> impactZone,
+          BuiltMap<SudokuPos, SudokuValue> cells) =>
       sudoku.filledCellCount;
 }

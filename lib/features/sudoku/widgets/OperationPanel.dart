@@ -1,22 +1,20 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:response_builder/response_builder.dart';
+import 'package:sudoku_playground/features/sudoku/SudokuManager.dart';
 import 'package:sudoku_playground/features/sudoku/user_operations/UserOperation.dart';
 import 'package:sudoku_playground/features/sudoku/widgets/SudokuBorder.dart';
 import 'package:sudoku_playground/features/sudoku/widgets/SudokuGrid.dart';
 
 import 'SudokuButton.dart';
-import '../models/Sudoku.dart';
 
 class OperationPanel extends StatelessWidget {
-  final ValueNotifier<UserOperation> operation;
-  final HistoryValueNotifier<Sudoku> sudoku;
+  final SudokuManager manager;
 
   const OperationPanel({
     Key key,
-    @required this.operation,
-    @required this.sudoku,
-  })  : assert(operation != null),
+    @required this.manager,
+  })  : assert(manager != null),
         super(key: key);
 
   @override
@@ -27,83 +25,92 @@ class OperationPanel extends StatelessWidget {
           direction: Axis.horizontal,
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            Flexible(flex: 3, child: DigitPanel(operation)),
-            Flexible(child: AltPanel(operation)),
-            Flexible(child: HistoryPanel(sudoku)),
+            Flexible(flex: 3, child: DigitPanel(manager)),
+            Flexible(child: AltPanel(manager)),
+            Flexible(child: HistoryPanel(manager)),
           ],
         ),
       );
 }
 
 class DigitPanel extends StatelessWidget with BuildValue<UserOperation> {
-  final ValueNotifier<UserOperation> operation;
+  final SudokuManager manager;
 
-  DigitPanel(this.operation) : super(key: Key("digitPanel"));
-
-  @override
-  Widget build(BuildContext context) {
-    return buildValueListenable(operation);
-  }
+  DigitPanel(this.manager)
+      : assert(manager != null),
+        super(key: Key("digitPanel"));
 
   @override
-  Widget buildValue(BuildContext context, UserOperation value) {
+  Widget build(BuildContext context) =>
+      buildValueListenable(manager.currentOperation);
+
+  @override
+  Widget buildValue(BuildContext context, UserOperation operation) {
     return SudokuGrid<int>(
       border: TableBorder.symmetric(inside: BorderSide()),
       containerBuilder: (context, child) =>
           AspectRatio(aspectRatio: 1, child: child),
       selector: (int index) => index + 1,
-      builder: _buildDigitButton,
+      builder: (context, number) =>
+          _buildDigitButton(context, operation, number),
     );
   }
 
-  Widget _buildDigitButton(BuildContext context, int number) => ToggleButton(
-        selected: operation.value.numberEnabled(number),
+  Widget _buildDigitButton(
+          BuildContext context, UserOperation operation, int number) =>
+      ToggleButton(
+        selected: operation.numberEnabled(number),
         child: Text("$number",
             style: TextStyle(
               fontSize: 24,
             )),
         onPressed: () =>
-            operation.value = operation.value.onNumberPressed(number),
+            manager.putAndRunOperation(operation.onNumberPressed(number)),
       );
 }
 
 class AltPanel extends StatelessWidget with BuildValue<UserOperation> {
-  final ValueNotifier<UserOperation> operation;
+  final SudokuManager manager;
 
-  AltPanel(this.operation) : super(key: Key("altPanel"));
+  AltPanel(this.manager)
+      : assert(manager != null),
+        super(key: Key("altPanel"));
 
   @override
-  Widget build(BuildContext context) => buildValueListenable(operation);
+  Widget build(BuildContext context) =>
+      buildValueListenable(manager.currentOperation);
 
   @override
-  Widget buildValue(BuildContext context, UserOperation value) => Flex(
+  Widget buildValue(BuildContext context, UserOperation opeartion) => Flex(
         direction: Axis.vertical,
         children: <Widget>[
           ToggleButton(
             key: Key("mark"),
-            selected: value.markEnabled(),
+            selected: opeartion.markEnabled(),
             child: Icon(Icons.create),
-            onPressed: () => operation.value = value.onMarkPressed(),
+            onPressed: () => manager.putOperation(opeartion.onMarkPressed()),
           ),
           ToggleButton(
             key: Key("erase"),
-            selected: value.eraseEnabled(),
+            selected: opeartion.eraseEnabled(),
             child: Icon(Icons.cancel),
-            onPressed: () => operation.value = value.onEnrasePressed(),
+            onPressed: () => manager.putOperation(opeartion.onEnrasePressed()),
           ),
           SudokuButton(
             key: Key("select"),
             child: Icon(Icons.touch_app),
-            onPressed: () => operation.value = UserOperation.select(),
+            onPressed: () => manager.putOperation(UserOperation.select()),
           ),
         ],
       );
 }
 
 class HistoryPanel extends StatelessWidget {
-  final HistoryValueNotifier<Sudoku> sudoku;
+  final SudokuManager manager;
 
-  HistoryPanel(this.sudoku) : super(key: Key("historyPanel"));
+  HistoryPanel(this.manager)
+      : assert(manager != null),
+        super(key: Key("historyPanel"));
 
   @override
   Widget build(BuildContext context) => Flex(
@@ -113,13 +120,13 @@ class HistoryPanel extends StatelessWidget {
             key: Key("undo"),
             aspectRatio: 2 / 3,
             child: Icon(Icons.undo),
-            onPressed: () => sudoku.undo(),
+            onPressed: () => manager.currentSudoku.undo(),
           ),
           SudokuButton(
             key: Key("redo"),
             aspectRatio: 2 / 3,
             child: Icon(Icons.redo),
-            onPressed: () => sudoku.redo(),
+            onPressed: () => manager.currentSudoku.redo(),
           ),
         ],
       );

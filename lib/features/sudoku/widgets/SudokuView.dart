@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' hide ValueWidgetBuilder;
 import 'package:provider/provider.dart';
+import 'package:sudoku_playground/features/sudoku/SudokuManager.dart';
 import 'package:sudoku_playground/features/sudoku/widgets/SudokuButton.dart';
 import 'package:sudoku_playground/features/sudoku/SudokuTheme.dart';
 
@@ -8,7 +9,6 @@ import '../models/SudokuPos.dart';
 import '../models/SudokuValue.dart';
 
 import 'SudokuGrid.dart';
-import '../models/user_operations/UserOperation.dart';
 
 class SudokuBoardView extends StatelessWidget {
   final Sudoku sudoku;
@@ -105,8 +105,7 @@ class SudokuCellView extends StatelessWidget {
   }
 
   void _onPressed(BuildContext context) {
-    final operation = context.read<UserOperation>();
-    sudoku.execute(operation);
+    context.read<SudokuManager>().operateOn(pos);
   }
 
   Widget _buildContent() => value.map(
