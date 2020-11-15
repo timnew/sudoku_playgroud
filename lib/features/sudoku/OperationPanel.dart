@@ -82,18 +82,12 @@ class ToggleButton extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final toggleButtonsTheme = Theme.of(context).toggleButtonsTheme;
-
-    return OperationButton(
-      aspectRatio: aspectRatio,
-      onPressed: this.onPressed,
-      child: child,
-      color: selected
-          ? toggleButtonsTheme.selectedBorderColor
-          : toggleButtonsTheme.fillColor,
-    );
-  }
+  Widget build(BuildContext context) => OperationButton(
+        aspectRatio: aspectRatio,
+        onPressed: this.onPressed,
+        child: child,
+        color: selected ? Colors.blue[100] : null,
+      );
 }
 
 class OperationButton extends StatelessWidget {
@@ -113,38 +107,44 @@ class OperationButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => AspectRatio(
         aspectRatio: aspectRatio,
-        child: OutlineButton(
-          borderSide: BorderSide(),
-          disabledBorderColor: Colors.black,
-          highlightedBorderColor: Colors.black,
+        child: OutlinedButton(
+          style: OutlinedButton.styleFrom(
+            side: BorderSide(),
+            primary: Colors.black87,
+            shape: ContinuousRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+            backgroundColor: color,
+          ),
           onPressed: this.onPressed,
-          color: this.color,
           child: child,
         ),
       );
 }
 
-class AltPanel extends StatelessWidget {
+class AltPanel extends StatelessWidget with BuildValue<UserOperation> {
   final ValueNotifier<UserOperation> operation;
 
   AltPanel(this.operation) : super(key: Key("altPanel"));
 
   @override
-  Widget build(BuildContext context) => Flex(
+  Widget build(BuildContext context) => buildValueListenable(operation);
+
+  @override
+  Widget buildValue(BuildContext context, UserOperation value) => Flex(
         direction: Axis.vertical,
         children: <Widget>[
           ToggleButton(
             key: Key("mark"),
-            selected: operation.value.markEnabled(),
+            selected: value.markEnabled(),
             child: Icon(Icons.create),
-            onPressed: () => operation.value = operation.value.onMarkPressed(),
+            onPressed: () => operation.value = value.onMarkPressed(),
           ),
           ToggleButton(
             key: Key("erase"),
-            selected: operation.value.eraseEnabled(),
+            selected: value.eraseEnabled(),
             child: Icon(Icons.cancel),
-            onPressed: () =>
-                operation.value = operation.value.onEnrasePressed(),
+            onPressed: () => operation.value = value.onEnrasePressed(),
           ),
           OperationButton(
             key: Key("select"),
