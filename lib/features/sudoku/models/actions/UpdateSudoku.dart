@@ -80,7 +80,8 @@ class EraseAction extends SelectAction
       sudoku.updateValue(cursor, (current) => current.erase());
 }
 
-class FillAction extends EraseAction {
+class FillAction extends SelectAction
+    with UpdateConflictMap, UpdateFilledCount {
   final int number;
   FillAction(Sudoku sudoku, SudokuPos cursor, this.number)
       : super(sudoku, cursor);
@@ -99,10 +100,13 @@ mixin UpdateFilledCount implements SelectAction {
     SudokuPos cursor,
     BuiltSet<SudokuPos> impactZone,
     BuiltList<SudokuValue> cells,
-  ) =>
-      sudoku.filledCellCount -
-      _valueAsFilledCount(sudoku.cells.getValue(cursor)) +
-      _valueAsFilledCount(cells.getValue(cursor));
+  ) {
+    if (cells == sudoku.cells) return sudoku.filledCellCount;
+
+    return sudoku.filledCellCount -
+        _valueAsFilledCount(sudoku.cells.getValue(cursor)) +
+        _valueAsFilledCount(cells.getValue(cursor));
+  }
 
   int _valueAsFilledCount(SudokuValue value) => value.maybeMap(
         given: (_) => 1,
@@ -118,11 +122,16 @@ mixin UpdateConflictMap implements SelectAction {
     BuiltSet<SudokuPos> impactZone,
     BuiltList<SudokuValue> cells,
   ) {
+    if (cells == sudoku.cells) return sudoku.conflicts;
+
     final newNumber = sudoku.cells.getValue(cursor).number;
     final oldConflicts = sudoku.conflicts[cursor].asSet();
     final newConflicts = newNumber == null
         ? Set()
         : _searchConflicts(cells, cursor, impactZone, newNumber).toSet();
+
+    print(oldConflicts);
+    print(newConflicts);
 
     if (oldConflicts.isEmpty) {
       if (newConflicts.isEmpty) {
