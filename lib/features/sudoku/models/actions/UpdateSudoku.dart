@@ -5,6 +5,43 @@ import '../Sudoku.dart';
 import '../SudokuPos.dart';
 import 'SudokuBuilder.dart';
 
+class UpdateSudoku extends SudokuBuilder {
+  Sudoku execute() {
+    final cursor = updateCursor();
+    final impactZone = updateImpactZone(cursor);
+    final cells = updateCells(cursor, impactZone);
+    final conflicts = updateConflicts(cursor, impactZone, cells);
+    final filledCellCount = updateFilledCount(cursor, impactZone, cells);
+
+    return Sudoku(
+      cursor: cursor,
+      impactZone: impactZone,
+      cells: cells,
+      conflicts: conflicts,
+      filledCellCount: filledCellCount,
+    );
+  }
+
+  SudokuPos updateCursor();
+
+  BuiltSet<SudokuPos> updateImpactZone(SudokuPos cursor);
+
+  BuiltList<SudokuValue> updateCells(
+      SudokuPos cursor, BuiltSet<SudokuPos> impactZone);
+
+  BuiltSetMultimap<SudokuPos, SudokuPos> updateConflicts(
+    SudokuPos cursor,
+    BuiltSet<SudokuPos> impactZone,
+    BuiltList<SudokuValue> cells,
+  );
+
+  int updateFilledCount(
+    SudokuPos cursor,
+    BuiltSet<SudokuPos> impactZone,
+    BuiltList<SudokuValue> cells,
+  );
+}
+
 class SelectAction extends SudokuBuilder {
   final Sudoku sudoku;
   final SudokuPos cursor;

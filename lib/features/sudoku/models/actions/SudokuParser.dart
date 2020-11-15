@@ -2,27 +2,20 @@ import 'package:built_collection/built_collection.dart';
 import 'package:sudoku_playground/features/sudoku/models/SudokuPos.dart';
 import 'package:sudoku_playground/features/sudoku/models/SudokuDataToken.dart';
 import 'package:sudoku_playground/features/sudoku/models/SudokuValue.dart';
+import 'package:sudoku_playground/features/sudoku/models/actions/CreateSudoku.dart';
 
-import 'SudokuBuilder.dart';
-
-class SudokuParser extends SudokuBuilder with SudokuFullScan {
+class SudokuParser extends CreateSudoku {
   final String expression;
 
   SudokuParser(this.expression);
 
   @override
-  BuiltList<SudokuValue> updateCells(
-          SudokuPos selected, BuiltSet<SudokuPos> impactZone) =>
-      parseAsBuiltMap();
-
-  BuiltList<SudokuValue> parseAsBuiltMap() => parseAsMap().build();
-
-  List<SudokuValue> parseAsMap() {
+  BuiltList<SudokuValue> buildCells() {
     final result = List<SudokuValue>.filled(81, null);
 
     writeTo(result);
 
-    return result;
+    return result.build();
   }
 
   void writeTo(List<SudokuValue> builder) {

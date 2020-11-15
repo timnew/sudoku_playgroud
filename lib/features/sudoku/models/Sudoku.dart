@@ -3,7 +3,7 @@ import 'package:built_collection/built_collection.dart';
 
 import 'SudokuPos.dart';
 import 'SudokuValue.dart';
-import 'actions/InitializeSudoku.dart';
+import 'actions/CreateSudoku.dart';
 import 'actions/SudokuParser.dart';
 
 part 'Sudoku.freezed.dart';
@@ -21,10 +21,10 @@ abstract class Sudoku implements _$Sudoku {
     int filledCellCount,
   }) = _Sudoku;
 
-  factory Sudoku.blank() => InitializeSudoku.blank().execute();
+  factory Sudoku.blank() => CreateSudoku.blank().execute();
 
   factory Sudoku.build(CellBuilder builder) =>
-      InitializeSudoku.build(builder).execute();
+      CreateSudoku.build(builder).execute();
 
   factory Sudoku.parse(String sudokuExpressions) =>
       SudokuParser(sudokuExpressions).execute();

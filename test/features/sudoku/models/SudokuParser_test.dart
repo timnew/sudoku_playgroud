@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sudoku_playground/features/sudoku/models/actions/SudokuParser.dart';
@@ -5,10 +6,10 @@ import 'package:sudoku_playground/features/sudoku/models/SudokuPos.dart';
 import 'package:sudoku_playground/features/sudoku/models/SudokuValue.dart';
 
 void main() {
-  String doFormat(Map<int, String> sudoku) {
+  String doFormat(Iterable<String> sudoku) {
     final result = StringBuffer();
 
-    sudoku.forEach((index, value) {
+    sudoku.toList(growable: false).asMap().forEach((index, value) {
       final posIndex = index + 1;
       if (posIndex % 9 == 0) {
         result.writeln(value);
@@ -23,11 +24,9 @@ void main() {
     return result.toString();
   }
 
-  String stringify(List<SudokuValue> input) => doFormat(
-        Map.fromIterable(
-          SudokuPos.ALL,
-          key: (pos) => pos.pos,
-          value: (pos) => input[pos].maybeMap(
+  String stringify(BuiltList<SudokuValue> input) => doFormat(
+        input.map(
+          (v) => v.maybeMap(
             given: (v) => "${v.number}",
             blank: (_) => "_",
             orElse: () => "!",
@@ -38,15 +37,13 @@ void main() {
   String reformat(String input) => doFormat(
         RegExp("[1-9_]")
             .allMatches(input) // Clean the text
-            .map((e) => e.group(0)) // Extract the matched char
-            .toList()
-            .asMap(), // paired with index
+            .map((e) => e.group(0)), // Extract the matched char
       );
 
   void testPattern(String name,
       {@required String input, @required String expected}) {
     test(name, () {
-      final parsed = SudokuParser(input).parseAsMap();
+      final parsed = SudokuParser(input).buildCells();
       final converted = stringify(parsed);
 
       expect(converted, reformat(expected));
@@ -56,7 +53,7 @@ void main() {
   void testBadPattern(String name,
       {@required String input, bool expectError: true}) {
     test(name, () {
-      expect(() => SudokuParser(input).parseAsMap(),
+      expect(() => SudokuParser(input).buildCells(),
           expectError ? throwsFormatException : returnsNormally);
     });
   }
