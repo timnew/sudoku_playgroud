@@ -5,13 +5,17 @@ import '../Sudoku.dart';
 import '../SudokuPos.dart';
 import 'SudokuBuilder.dart';
 
-class UpdateSudoku extends SudokuBuilder {
+abstract class UpdateSudoku implements SudokuBuilder {
+  final Sudoku sudoku;
+  final SudokuPos cursor;
+
+  UpdateSudoku(this.sudoku, this.cursor);
+
   Sudoku execute() {
-    final cursor = updateCursor();
-    final impactZone = updateImpactZone(cursor);
-    final cells = updateCells(cursor, impactZone);
-    final conflicts = updateConflicts(cursor, impactZone, cells);
-    final filledCellCount = updateFilledCount(cursor, impactZone, cells);
+    final impactZone = updateImpactZone();
+    final cells = updateCells(impactZone);
+    final conflicts = updateConflicts(impactZone, cells);
+    final filledCellCount = updateFilledCount(cells);
 
     return Sudoku(
       cursor: cursor,
@@ -22,35 +26,21 @@ class UpdateSudoku extends SudokuBuilder {
     );
   }
 
-  SudokuPos updateCursor();
+  BuiltSet<SudokuPos> updateImpactZone() => sudoku.impactZone;
 
-  BuiltSet<SudokuPos> updateImpactZone(SudokuPos cursor);
-
-  BuiltList<SudokuValue> updateCells(
-      SudokuPos cursor, BuiltSet<SudokuPos> impactZone);
+  BuiltList<SudokuValue> updateCells(BuiltSet<SudokuPos> impactZone) =>
+      sudoku.cells;
 
   BuiltSetMultimap<SudokuPos, SudokuPos> updateConflicts(
-    SudokuPos cursor,
-    BuiltSet<SudokuPos> impactZone,
-    BuiltList<SudokuValue> cells,
-  );
+          BuiltSet<SudokuPos> impactZone, BuiltList<SudokuValue> cells) =>
+      sudoku.conflicts;
 
-  int updateFilledCount(
-    SudokuPos cursor,
-    BuiltSet<SudokuPos> impactZone,
-    BuiltList<SudokuValue> cells,
-  );
+  int updateFilledCount(BuiltList<SudokuValue> cells) => sudoku.filledCellCount;
 }
 
-class SelectAction extends SudokuBuilder {
-  final Sudoku sudoku;
-  final SudokuPos cursor;
-
-  SelectAction(this.sudoku, this.cursor);
-
-  SudokuPos updateCursor() => cursor;
-
-  BuiltSet<SudokuPos> updateImpactZone(SudokuPos cursor) {
+mixin UpdateImpactZone implements UpdateSudoku {
+  @override
+  BuiltSet<SudokuPos> updateImpactZone() {
     if (cursor == null) return null;
     if (cursor == sudoku.cursor) return sudoku.impactZone;
     return BuiltSet.build(
@@ -60,115 +50,19 @@ class SelectAction extends SudokuBuilder {
         ..addAll(cursor.parentBlock()),
     );
   }
-
-  BuiltList<SudokuValue> updateCells(
-          SudokuPos cursor, BuiltSet<SudokuPos> impactZone) =>
-      sudoku.cells;
-
-  BuiltSetMultimap<SudokuPos, SudokuPos> updateConflicts(
-    SudokuPos cursor,
-    BuiltSet<SudokuPos> impactZone,
-    BuiltList<SudokuValue> cells,
-  ) =>
-      sudoku.conflicts;
-
-  int updateFilledCount(
-    SudokuPos cursor,
-    BuiltSet<SudokuPos> impactZone,
-    BuiltList<SudokuValue> cells,
-  ) =>
-      sudoku.filledCellCount;
 }
 
-class FullMarkAction extends SelectAction {
-  FullMarkAction(Sudoku sudoku, SudokuPos cursor) : super(sudoku, cursor);
-
-  @override
-  BuiltList<SudokuValue> updateCells(
-    SudokuPos cursor,
-    BuiltSet<SudokuPos> impactZone,
-  ) =>
-      sudoku.updateValue(cursor, (current) => current.fullMark());
-}
-
-class ToogleMarkAction extends SelectAction {
-  final int mark;
-
-  ToogleMarkAction(Sudoku sudoku, SudokuPos cursor, this.mark)
-      : super(sudoku, cursor);
-
-  @override
-  BuiltList<SudokuValue> updateCells(
-    SudokuPos cursor,
-    BuiltSet<SudokuPos> impactZone,
-  ) =>
-      sudoku.updateValue(cursor, (current) => current.toggleMark(mark));
-}
-
-class EraseAction extends SelectAction
-    with UpdateConflictMap, UpdateFilledCount {
-  EraseAction(Sudoku sudoku, SudokuPos cursor) : super(sudoku, cursor);
-
-  @override
-  BuiltList<SudokuValue> updateCells(
-    SudokuPos cursor,
-    BuiltSet<SudokuPos> impactZone,
-  ) =>
-      sudoku.updateValue(cursor, (current) => current.erase());
-}
-
-class FillAction extends SelectAction
-    with UpdateConflictMap, UpdateFilledCount {
-  final int number;
-  FillAction(Sudoku sudoku, SudokuPos cursor, this.number)
-      : super(sudoku, cursor);
-
-  @override
-  BuiltList<SudokuValue> updateCells(
-    SudokuPos cursor,
-    BuiltSet<SudokuPos> impactZone,
-  ) =>
-      sudoku.updateValue(cursor, (current) => current.fill(number));
-}
-
-mixin UpdateFilledCount implements SelectAction {
-  @override
-  int updateFilledCount(
-    SudokuPos cursor,
-    BuiltSet<SudokuPos> impactZone,
-    BuiltList<SudokuValue> cells,
-  ) {
-    if (cells == sudoku.cells) return sudoku.filledCellCount;
-
-    return sudoku.filledCellCount -
-        _valueAsFilledCount(sudoku.cells.getValue(cursor)) +
-        _valueAsFilledCount(cells.getValue(cursor));
-  }
-
-  int _valueAsFilledCount(SudokuValue value) => value.maybeMap(
-        given: (_) => 1,
-        filled: (_) => 1,
-        orElse: () => 0,
-      );
-}
-
-mixin UpdateConflictMap implements SelectAction {
+mixin UpdateConflictMap implements UpdateSudoku {
   @override
   BuiltSetMultimap<SudokuPos, SudokuPos> updateConflicts(
-    SudokuPos cursor,
-    BuiltSet<SudokuPos> impactZone,
-    BuiltList<SudokuValue> cells,
-  ) {
+      BuiltSet<SudokuPos> impactZone, BuiltList<SudokuValue> cells) {
     if (cells == sudoku.cells) return sudoku.conflicts;
 
     final newNumber = sudoku.cells.getValue(cursor).number;
     final oldConflicts = sudoku.conflicts[cursor].asSet();
     final newConflicts = newNumber == null
         ? Set()
-        : _searchConflicts(cells, cursor, impactZone, newNumber).toSet();
-
-    print(oldConflicts);
-    print(newConflicts);
+        : _searchConflicts(cells, impactZone, newNumber).toSet();
 
     if (oldConflicts.isEmpty) {
       if (newConflicts.isEmpty) {
@@ -196,7 +90,6 @@ mixin UpdateConflictMap implements SelectAction {
 
   Iterable<SudokuPos> _searchConflicts(
     BuiltList<SudokuValue> cells,
-    SudokuPos cursor,
     BuiltSet<SudokuPos> impactZone,
     int number,
   ) =>
@@ -223,6 +116,66 @@ mixin UpdateConflictMap implements SelectAction {
     }
     builder.removeAll(cursor);
   }
+}
+
+mixin UpdateFilledCount implements UpdateSudoku {
+  @override
+  int updateFilledCount(BuiltList<SudokuValue> cells) {
+    if (cells == sudoku.cells) return sudoku.filledCellCount;
+
+    return sudoku.filledCellCount -
+        _valueAsFilledCount(sudoku.cells.getValue(cursor)) +
+        _valueAsFilledCount(cells.getValue(cursor));
+  }
+
+  int _valueAsFilledCount(SudokuValue value) => value.maybeMap(
+        given: (_) => 1,
+        filled: (_) => 1,
+        orElse: () => 0,
+      );
+}
+
+class SelectAction extends UpdateSudoku with UpdateImpactZone {
+  SelectAction(Sudoku sudoku, SudokuPos cursor) : super(sudoku, cursor);
+}
+
+class FullMarkAction extends SelectAction {
+  FullMarkAction(Sudoku sudoku, SudokuPos cursor) : super(sudoku, cursor);
+
+  @override
+  BuiltList<SudokuValue> updateCells(BuiltSet<SudokuPos> impactZone) =>
+      sudoku.updateValue(cursor, (current) => current.fullMark());
+}
+
+class ToggleMarkAction extends SelectAction {
+  final int mark;
+
+  ToggleMarkAction(Sudoku sudoku, SudokuPos cursor, this.mark)
+      : super(sudoku, cursor);
+
+  @override
+  BuiltList<SudokuValue> updateCells(BuiltSet<SudokuPos> impactZone) =>
+      sudoku.updateValue(cursor, (current) => current.toggleMark(mark));
+}
+
+class EraseAction extends SelectAction
+    with UpdateConflictMap, UpdateFilledCount {
+  EraseAction(Sudoku sudoku, SudokuPos cursor) : super(sudoku, cursor);
+
+  @override
+  BuiltList<SudokuValue> updateCells(BuiltSet<SudokuPos> impactZone) =>
+      sudoku.updateValue(cursor, (current) => current.erase());
+}
+
+class FillAction extends SelectAction
+    with UpdateConflictMap, UpdateFilledCount {
+  final int number;
+  FillAction(Sudoku sudoku, SudokuPos cursor, this.number)
+      : super(sudoku, cursor);
+
+  @override
+  BuiltList<SudokuValue> updateCells(BuiltSet<SudokuPos> impactZone) =>
+      sudoku.updateValue(cursor, (current) => current.fill(number));
 }
 
 extension SudokuCellManipuation on Sudoku {

@@ -5,7 +5,7 @@ import '../SudokuPos.dart';
 import '../SudokuValue.dart';
 import 'SudokuBuilder.dart';
 
-abstract class CreateSudoku extends SudokuBuilder {
+abstract class CreateSudoku implements SudokuBuilder {
   factory CreateSudoku.fromCellValues(Iterable<SudokuValue> values) =>
       _CreateSudoku._(values.toBuiltList());
 

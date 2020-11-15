@@ -48,7 +48,7 @@ class SudokuManager {
       fill: (c) => FillAction(sudoku, cursor, c.number),
       erase: (_) => EraseAction(sudoku, cursor),
       markAll: (_) => FullMarkAction(sudoku, cursor),
-      mark: (c) => ToogleMarkAction(sudoku, cursor, c.number),
+      mark: (c) => ToggleMarkAction(sudoku, cursor, c.number),
     );
 
     if (action != null) currentSudoku.putValue(action.execute());
