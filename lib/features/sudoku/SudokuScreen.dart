@@ -2,7 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:response_builder/response_builder.dart';
+import 'package:sudoku_playground/features/sudoku/models/user_operations/UserOperation.dart';
 
+import 'OperationPanel.dart';
 import 'SudokuView.dart';
 import 'models/Sudoku.dart';
 import 'models/SudokuPos.dart';
@@ -15,10 +17,13 @@ class SudokuScreen extends StatefulWidget {
 
 class _SudokuScreenState extends State<SudokuScreen> with BuildValue<Sudoku> {
   static Random random = Random();
-  final HistoryValueNotifier<Sudoku> sudokuNotifier = HistoryValueNotifier<Sudoku>(
+  final HistoryValueNotifier<Sudoku> sudokuNotifier =
+      HistoryValueNotifier<Sudoku>(
     31,
     initialValue: Sudoku.build(randomBuilder),
   );
+  final ValueNotifier<UserOperation> operationNotifier =
+      ValueNotifier(UserOperation.select());
 
   static SudokuValue randomBuilder(SudokuPos index) {
     switch (SudokuValueType.values[random.nextInt(4)]) {
@@ -46,10 +51,18 @@ class _SudokuScreenState extends State<SudokuScreen> with BuildValue<Sudoku> {
       appBar: AppBar(
         title: Text("Sudoku"),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: buildValueListenable(sudokuNotifier),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            buildValueListenable(sudokuNotifier),
+            Padding(padding: const EdgeInsets.only(left: 8.0, top: 8.0)),
+            OperationPanel(
+              operation: operationNotifier,
+              sudoku: sudokuNotifier,
+            ),
+          ],
         ),
       ),
     );
