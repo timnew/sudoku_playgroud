@@ -26,16 +26,16 @@ abstract class SudokuBuilder {
   BuiltSet<SudokuPos> updateImpactZone(SudokuPos cursor);
 
   BuiltList<SudokuValue> updateCells(
-      SudokuPos selected, BuiltSet<SudokuPos> impactZone);
+      SudokuPos cursor, BuiltSet<SudokuPos> impactZone);
 
   BuiltSetMultimap<SudokuPos, SudokuPos> updateConflicts(
-    SudokuPos selected,
+    SudokuPos cursor,
     BuiltSet<SudokuPos> impactZone,
     BuiltList<SudokuValue> cells,
   );
 
   int updateFilledCount(
-    SudokuPos selected,
+    SudokuPos cursor,
     BuiltSet<SudokuPos> impactZone,
     BuiltList<SudokuValue> cells,
   );
@@ -50,7 +50,7 @@ mixin SudokuFullScan implements SudokuBuilder {
 
   @override
   BuiltSetMultimap<SudokuPos, SudokuPos> updateConflicts(
-    SudokuPos selected,
+    SudokuPos cursor,
     BuiltSet<SudokuPos> impactZone,
     BuiltList<SudokuValue> cells,
   ) {
@@ -59,7 +59,7 @@ mixin SudokuFullScan implements SudokuBuilder {
   }
 
   @override
-  int updateFilledCount(SudokuPos selected, BuiltSet<SudokuPos> impactZone,
+  int updateFilledCount(SudokuPos cursor, BuiltSet<SudokuPos> impactZone,
           BuiltList<SudokuValue> cells) =>
       cells
           .where((value) =>
