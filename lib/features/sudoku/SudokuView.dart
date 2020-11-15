@@ -20,17 +20,19 @@ class SudokuBoardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(border: Border.all(width: 3)),
-      child: SudokuGrid<SudokuSubPos>(
-        borderWidth: 0.5,
-        builder: (BuildContext context, SudokuSubPos block) => SudokuBlockView(
-          sudoku: sudoku,
-          block: block,
-          theme: theme,
-        ),
-        selector: (int index) => SudokuSubPos.ALL_BY_ROW[index],
+    return SudokuGrid<SudokuSubPos>(
+      border: TableBorder.symmetric(
+        outside: theme.sudokuBorder,
+        inside: theme.blockBorder,
       ),
+      containerBuilder: (context, child) =>
+          AspectRatio(aspectRatio: 1, child: child),
+      builder: (BuildContext context, SudokuSubPos block) => SudokuBlockView(
+        sudoku: sudoku,
+        block: block,
+        theme: theme,
+      ),
+      selector: (int index) => SudokuSubPos.ALL_BY_ROW[index],
     );
   }
 }
@@ -52,7 +54,9 @@ class SudokuBlockView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SudokuGrid<SudokuPos>(
-      borderWidth: 0.2,
+      border: TableBorder.symmetric(inside: theme.cellBroder),
+      containerBuilder: (context, child) =>
+          AspectRatio(aspectRatio: 1, child: child),
       selector: (int index) => block + index,
       builder: (BuildContext context, SudokuPos pos) => SudokuCellView(
         theme: theme,
@@ -86,26 +90,22 @@ class SudokuCellView extends StatelessWidget {
   SudokuValue get value => sudoku.cells[pos];
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: _buildDecoration(),
-      child: value.map(
-        blank: (_) => null,
-        given: (c) => Center(child: Text(c.number.toString(), style: theme.givenTextStyle)),
-        filled: (c) => Center(
-            child: Text(c.number.toString(),
-                style: isConflicted ? theme.conflictedFilledTextStyle : theme.filledTextStyle)),
-        guessing: (c) => GuessingViewView(c, theme, isConflicted),
-      ),
-    );
-  }
-
-  Decoration _buildDecoration() {
-    return BoxDecoration(
-      color: _buildCellBackground(),
-      border: Border.all(color: theme.cellBorderColor),
-    );
-  }
+  Widget build(BuildContext context) => Container(
+        decoration: BoxDecoration(color: _buildCellBackground()),
+        child: value.map(
+          blank: (_) => null,
+          given: (c) => Center(
+              child: Text(c.number.toString(), style: theme.givenTextStyle)),
+          filled: (c) => Center(
+              child: Text(c.number.toString(),
+                  style: isConflicted
+                      ? theme.conflictedFilledTextStyle
+                      : theme.filledTextStyle)),
+          guessing: (c) => Center(
+            child: GuessingViewView(c, theme, isConflicted),
+          ),
+        ),
+      );
 
   Color _buildCellBackground() {
     if (isConflicted) return theme.conflictedCellBackgroundColor;
@@ -125,7 +125,6 @@ class GuessingViewView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SudokuGrid<int>(
-      borderWidth: 0,
       selector: (int index) => index,
       builder: (context, index) => _buildMark(context, index),
     );

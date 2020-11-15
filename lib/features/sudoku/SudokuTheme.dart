@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class SudokuTheme {
   const SudokuTheme();
 
-  Color get cellBorderColor => Colors.black;
+  BorderSide get sudokuBorder => BorderSide(width: 2.5);
+  BorderSide get blockBorder => BorderSide(width: 1.5);
+  BorderSide get cellBroder => BorderSide(width: 0.5);
 
   Color get conflictedCellBackgroundColor => Colors.red[100];
 
@@ -15,28 +17,40 @@ class SudokuTheme {
 
   Color get givenTextColor => Colors.black;
 
-  TextStyle get givenTextStyle => TextStyle(fontSize: 32, color: givenTextColor, fontWeight: FontWeight.bold);
+  TextStyle get givenTextStyle => TextStyle(
+      fontSize: filledTextSize,
+      color: givenTextColor,
+      fontWeight: FontWeight.w500);
 
   Color get filledTextColor => Colors.blue;
 
   Color get conflictedTextColor => Colors.red;
 
-  TextStyle get filledTextStyle => TextStyle(fontSize: 32, color: filledTextColor);
+  double get filledTextSize => 24;
 
-  TextStyle get conflictedFilledTextStyle => TextStyle(fontSize: 32, color: conflictedTextColor);
+  TextStyle get filledTextStyle =>
+      TextStyle(fontSize: filledTextSize, color: filledTextColor);
+
+  TextStyle get conflictedFilledTextStyle =>
+      TextStyle(fontSize: filledTextSize, color: conflictedTextColor);
 
   Color get markTextColor => Colors.black45;
 
-  TextStyle get markTextStyle => TextStyle(fontSize: 10, color: markTextColor);
+  double get markTextSize => 10;
+  double get guessingTextSize => markTextSize * 1.2;
+
+  TextStyle get markTextStyle =>
+      TextStyle(fontSize: markTextSize, color: markTextColor);
 
   Color get guessingTextColor => Colors.blue;
 
-  TextStyle get guessingTextStyle => TextStyle(fontSize: 12, color: guessingTextColor, fontWeight: FontWeight.bold);
+  TextStyle get guessingTextStyle => TextStyle(
+      fontSize: guessingTextSize,
+      color: guessingTextColor,
+      fontWeight: FontWeight.bold);
 
-  TextStyle get conflictedGuessingTextStyle => TextStyle(fontSize: 12, color: conflictedTextColor, fontWeight: FontWeight.bold);
-
-
-  Color get markBorderColor => Colors.white10;
-
-  double get markBorderWidth => 0.5;
+  TextStyle get conflictedGuessingTextStyle => TextStyle(
+      fontSize: guessingTextSize,
+      color: conflictedTextColor,
+      fontWeight: FontWeight.bold);
 }

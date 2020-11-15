@@ -25,7 +25,8 @@ abstract class SudokuBuilder {
 
   BuiltSet<SudokuPos> updateImpactZone(SudokuPos cursor);
 
-  BuiltMap<SudokuPos, SudokuValue> updateCells(SudokuPos selected, BuiltSet<SudokuPos> impactZone);
+  BuiltMap<SudokuPos, SudokuValue> updateCells(
+      SudokuPos selected, BuiltSet<SudokuPos> impactZone);
 
   BuiltSetMultimap<SudokuPos, SudokuPos> updateConflicts(
     SudokuPos selected,
@@ -33,7 +34,8 @@ abstract class SudokuBuilder {
     BuiltMap<SudokuPos, SudokuValue> cells,
   );
 
-  int updateFilledCount(SudokuPos selected, BuiltSet<SudokuPos> impactZone, BuiltMap<SudokuPos, SudokuValue> cells);
+  int updateFilledCount(SudokuPos selected, BuiltSet<SudokuPos> impactZone,
+      BuiltMap<SudokuPos, SudokuValue> cells);
 }
 
 mixin SudokuFullScan implements SudokuBuilder {
@@ -49,10 +51,16 @@ mixin SudokuFullScan implements SudokuBuilder {
     BuiltSet<SudokuPos> impactZone,
     BuiltMap<SudokuPos, SudokuValue> cells,
   ) {
-    throw UnimplementedError(); // TODO implement this
+    return BuiltSetMultimap();
+    // throw UnimplementedError(); // TODO implement this
   }
 
   @override
-  int updateFilledCount(SudokuPos selected, BuiltSet<SudokuPos> impactZone, BuiltMap<SudokuPos, SudokuValue> cells) =>
-      cells.values.where((value) => value.type == SudokuValueType.Given || value.type == SudokuValueType.Filled).length;
+  int updateFilledCount(SudokuPos selected, BuiltSet<SudokuPos> impactZone,
+          BuiltMap<SudokuPos, SudokuValue> cells) =>
+      cells.values
+          .where((value) =>
+              value.type == SudokuValueType.Given ||
+              value.type == SudokuValueType.Filled)
+          .length;
 }
