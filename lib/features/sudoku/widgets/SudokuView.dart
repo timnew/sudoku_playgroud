@@ -88,7 +88,7 @@ class SudokuCellView extends StatelessWidget {
 
   bool get isHighlighted => sudoku.impactZone?.contains(pos) ?? false;
 
-  SudokuValue get value => sudoku.cells[pos.index];
+  SudokuValue get value => sudoku.cells.getValue(pos);
 
   @override
   Widget build(BuildContext context) => SudokuButton(

@@ -68,7 +68,31 @@ class ToogleMarkAction extends SelectAction {
       sudoku.updateValue(cursor, (current) => current.toggleMark(mark));
 }
 
-class FillAction extends SelectAction {
+class EraseAction extends SelectAction {
+  EraseAction(Sudoku sudoku, SudokuPos cursor) : super(sudoku, cursor);
+
+  @override
+  BuiltList<SudokuValue> updateCells(
+    SudokuPos selected,
+    BuiltSet<SudokuPos> impactZone,
+  ) =>
+      sudoku.updateValue(cursor, (current) => current.erase());
+
+  @override
+  BuiltSetMultimap<SudokuPos, SudokuPos> updateConflicts(SudokuPos selected,
+      BuiltSet<SudokuPos> impactZone, BuiltList<SudokuValue> cells) {
+    // TODO: implement updateConflicts
+    return super.updateConflicts(selected, impactZone, cells);
+  }
+
+  @override
+  int updateFilledCount(SudokuPos selected, BuiltSet<SudokuPos> impactZone,
+      BuiltList<SudokuValue> cells) {
+    return super.updateFilledCount(selected, impactZone, cells);
+  }
+}
+
+class FillAction extends EraseAction {
   final int number;
   FillAction(Sudoku sudoku, SudokuPos cursor, this.number)
       : super(sudoku, cursor);
@@ -81,19 +105,11 @@ class FillAction extends SelectAction {
       sudoku.updateValue(cursor, (current) => current.fill(number));
 }
 
-class EraseAction extends SelectAction {
-  EraseAction(Sudoku sudoku, SudokuPos cursor) : super(sudoku, cursor);
-
-  @override
-  BuiltList<SudokuValue> updateCells(
-    SudokuPos selected,
-    BuiltSet<SudokuPos> impactZone,
-  ) =>
-      sudoku.updateValue(cursor, (current) => current.erase());
-}
-
 extension SudokuCellManipuation on Sudoku {
   BuiltList<SudokuValue> updateValue(
           SudokuPos cursor, SudokuValue updater(SudokuValue current)) =>
-      cells.rebuild((b) => b[cursor.index] = updater(b[cursor.index]));
+      cells.rebuild((b) => b.putValue(
+            cursor,
+            updater(b.getValue(cursor)),
+          ));
 }

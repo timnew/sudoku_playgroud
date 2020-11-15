@@ -109,11 +109,13 @@ class SudokuParser extends SudokuBuilder with SudokuFullScan {
     bool hasNext;
 
     do {
-      builder[posIterator.current.index] = iterator.current.maybeMap(
-        digit: (c) => SudokuValue.given(c.digit),
-        blank: (_) => SudokuValue.blank(),
-        orElse: () => _parseError(iterator),
-      );
+      builder.putValue(
+          posIterator.current,
+          iterator.current.maybeMap(
+            digit: (c) => SudokuValue.given(c.digit),
+            blank: (_) => SudokuValue.blank(),
+            orElse: () => _parseError(iterator),
+          ));
 
       hasNext = iterator.moveNext();
       if (hasNext != posIterator.moveNext())
@@ -173,7 +175,7 @@ class SudokuParser extends SudokuBuilder with SudokuFullScan {
 
   void _emptyBlock(SudokuSubPos block, List<SudokuValue> builder) {
     for (var i = 0; i < 9; i++) {
-      builder[(block + i).index] = SudokuValue.blank();
+      builder.putValue(block + i, SudokuValue.blank());
     }
   }
 
