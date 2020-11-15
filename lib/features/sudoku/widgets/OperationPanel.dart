@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:response_builder/response_builder.dart';
-import 'package:sudoku_playground/features/sudoku/SudokuBorder.dart';
-import 'package:sudoku_playground/features/sudoku/SudokuGrid.dart';
-import 'package:sudoku_playground/features/sudoku/models/user_operations/UserOperation.dart';
+import 'package:sudoku_playground/features/sudoku/user_operations/UserOperation.dart';
+import 'package:sudoku_playground/features/sudoku/widgets/SudokuBorder.dart';
+import 'package:sudoku_playground/features/sudoku/widgets/SudokuGrid.dart';
 
 import 'SudokuButton.dart';
-import 'models/Sudoku.dart';
+import '../models/Sudoku.dart';
 
 class OperationPanel extends StatelessWidget {
   final ValueNotifier<UserOperation> operation;

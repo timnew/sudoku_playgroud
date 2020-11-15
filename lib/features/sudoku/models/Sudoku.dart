@@ -1,10 +1,10 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:built_collection/built_collection.dart';
-import 'package:sudoku_playground/features/sudoku/models/actions/InitializeSudoku.dart';
-import 'package:sudoku_playground/features/sudoku/models/actions/SudokuParser.dart';
 
 import 'SudokuPos.dart';
 import 'SudokuValue.dart';
+import 'actions/InitializeSudoku.dart';
+import 'actions/SudokuParser.dart';
 
 part 'Sudoku.freezed.dart';
 
@@ -23,7 +23,9 @@ abstract class Sudoku implements _$Sudoku {
 
   factory Sudoku.blank() => InitializeSudoku.blank().execute();
 
-  factory Sudoku.build(CellBuilder builder) => InitializeSudoku.build(builder).execute();
+  factory Sudoku.build(CellBuilder builder) =>
+      InitializeSudoku.build(builder).execute();
 
-  factory Sudoku.parse(String sudokuExpressions) => SudokuParser(sudokuExpressions).execute();
+  factory Sudoku.parse(String sudokuExpressions) =>
+      SudokuParser(sudokuExpressions).execute();
 }
