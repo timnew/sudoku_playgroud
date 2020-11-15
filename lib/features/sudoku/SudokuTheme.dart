@@ -45,12 +45,14 @@ class SudokuTheme {
   Color get guessingTextColor => Colors.blue;
 
   TextStyle get guessingTextStyle => TextStyle(
-      fontSize: guessingTextSize,
-      color: guessingTextColor,
-      fontWeight: FontWeight.bold);
+        fontSize: guessingTextSize,
+        color: guessingTextColor,
+        fontWeight: FontWeight.bold,
+      );
 
   TextStyle get conflictedGuessingTextStyle => TextStyle(
-      fontSize: guessingTextSize,
-      color: conflictedTextColor,
-      fontWeight: FontWeight.bold);
+        fontSize: guessingTextSize,
+        color: conflictedTextColor,
+        fontWeight: FontWeight.bold,
+      );
 }

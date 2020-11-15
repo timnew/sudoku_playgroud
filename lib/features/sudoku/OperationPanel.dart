@@ -5,6 +5,7 @@ import 'package:sudoku_playground/features/sudoku/SudokuBorder.dart';
 import 'package:sudoku_playground/features/sudoku/SudokuGrid.dart';
 import 'package:sudoku_playground/features/sudoku/models/user_operations/UserOperation.dart';
 
+import 'SudokuButton.dart';
 import 'models/Sudoku.dart';
 
 class OperationPanel extends StatelessWidget {
@@ -66,62 +67,6 @@ class DigitPanel extends StatelessWidget with BuildValue<UserOperation> {
       );
 }
 
-class ToggleButton extends StatelessWidget {
-  final double aspectRatio;
-
-  final bool selected;
-  final Widget child;
-  final VoidCallback onPressed;
-
-  const ToggleButton({
-    Key key,
-    this.aspectRatio: 1,
-    @required this.selected,
-    @required this.child,
-    @required this.onPressed,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) => OperationButton(
-        aspectRatio: aspectRatio,
-        onPressed: this.onPressed,
-        child: child,
-        color: selected ? Colors.blue[100] : null,
-      );
-}
-
-class OperationButton extends StatelessWidget {
-  final double aspectRatio;
-  final Widget child;
-  final Color color;
-  final VoidCallback onPressed;
-
-  const OperationButton({
-    Key key,
-    this.aspectRatio: 1,
-    this.color,
-    this.child,
-    this.onPressed,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) => AspectRatio(
-        aspectRatio: aspectRatio,
-        child: OutlinedButton(
-          style: OutlinedButton.styleFrom(
-            side: BorderSide(),
-            primary: Colors.black87,
-            shape: ContinuousRectangleBorder(
-              borderRadius: BorderRadius.zero,
-            ),
-            backgroundColor: color,
-          ),
-          onPressed: this.onPressed,
-          child: child,
-        ),
-      );
-}
-
 class AltPanel extends StatelessWidget with BuildValue<UserOperation> {
   final ValueNotifier<UserOperation> operation;
 
@@ -146,7 +91,7 @@ class AltPanel extends StatelessWidget with BuildValue<UserOperation> {
             child: Icon(Icons.cancel),
             onPressed: () => operation.value = value.onEnrasePressed(),
           ),
-          OperationButton(
+          SudokuButton(
             key: Key("select"),
             child: Icon(Icons.touch_app),
             onPressed: () => operation.value = UserOperation.select(),
@@ -164,13 +109,13 @@ class HistoryPanel extends StatelessWidget {
   Widget build(BuildContext context) => Flex(
         direction: Axis.vertical,
         children: <Widget>[
-          OperationButton(
+          SudokuButton(
             key: Key("undo"),
             aspectRatio: 2 / 3,
             child: Icon(Icons.undo),
             onPressed: () => sudoku.undo(),
           ),
-          OperationButton(
+          SudokuButton(
             key: Key("redo"),
             aspectRatio: 2 / 3,
             child: Icon(Icons.redo),

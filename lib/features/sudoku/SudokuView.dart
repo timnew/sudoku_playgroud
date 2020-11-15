@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide ValueWidgetBuilder;
+import 'package:sudoku_playground/features/sudoku/SudokuButton.dart';
 import 'package:sudoku_playground/features/sudoku/SudokuTheme.dart';
 
 import 'models/Sudoku.dart';
@@ -55,8 +56,6 @@ class SudokuBlockView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SudokuGrid<SudokuPos>(
       border: TableBorder.symmetric(inside: theme.cellBroder),
-      containerBuilder: (context, child) =>
-          AspectRatio(aspectRatio: 1, child: child),
       selector: (int index) => block + index,
       builder: (BuildContext context, SudokuPos pos) => SudokuCellView(
         theme: theme,
@@ -90,21 +89,10 @@ class SudokuCellView extends StatelessWidget {
   SudokuValue get value => sudoku.cells[pos];
 
   @override
-  Widget build(BuildContext context) => Container(
-        decoration: BoxDecoration(color: _buildCellBackground()),
-        child: value.map(
-          blank: (_) => null,
-          given: (c) => Center(
-              child: Text(c.number.toString(), style: theme.givenTextStyle)),
-          filled: (c) => Center(
-              child: Text(c.number.toString(),
-                  style: isConflicted
-                      ? theme.conflictedFilledTextStyle
-                      : theme.filledTextStyle)),
-          guessing: (c) => Center(
-            child: GuessingViewView(c, theme, isConflicted),
-          ),
-        ),
+  Widget build(BuildContext context) => SudokuButton(
+        color: _buildCellBackground(),
+        onPressed: _onTapped,
+        child: _buildContent(),
       );
 
   Color _buildCellBackground() {
@@ -113,22 +101,86 @@ class SudokuCellView extends StatelessWidget {
     if (isHighlighted) return theme.highlightedCellBackgroundColor;
     return theme.normalCellBackgroundColor;
   }
+
+  void _onTapped() {}
+
+  Widget _buildContent() => value.map(
+        blank: (_) => null,
+        given: (v) => GivenNumberView(
+          value: v,
+          theme: theme,
+        ),
+        filled: (v) => FilledNumberView(
+          value: v,
+          isConflicted: isConflicted,
+          theme: theme,
+        ),
+        guessing: (v) => GuessingValueView(
+          value: v,
+          isConflicted: isConflicted,
+          theme: theme,
+        ),
+      );
 }
 
-class GuessingViewView extends StatelessWidget {
-  final GuessingValue value;
+class GivenNumberView extends StatelessWidget {
+  final SudokuValue value;
   final SudokuTheme theme;
-  final bool isConflicted;
 
-  GuessingViewView(this.value, this.theme, this.isConflicted);
+  const GivenNumberView({
+    Key key,
+    @required this.value,
+    @required this.theme,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(value.number.toString(), style: theme.givenTextStyle),
+    );
+  }
+}
+
+class FilledNumberView extends StatelessWidget {
+  final SudokuValue value;
+  final bool isConflicted;
+  final SudokuTheme theme;
+
+  const FilledNumberView({
+    Key key,
+    @required this.value,
+    @required this.isConflicted,
+    @required this.theme,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SudokuGrid<int>(
-      selector: (int index) => index,
-      builder: (context, index) => _buildMark(context, index),
+    final style =
+        isConflicted ? theme.conflictedFilledTextStyle : theme.filledTextStyle;
+
+    return Center(
+      child: Text(value.number.toString(), style: style),
     );
   }
+}
+
+class GuessingValueView extends StatelessWidget {
+  final SudokuValue value;
+  final SudokuTheme theme;
+  final bool isConflicted;
+
+  GuessingValueView({
+    @required this.value,
+    @required this.theme,
+    @required this.isConflicted,
+  });
+
+  @override
+  Widget build(BuildContext context) => Center(
+        child: SudokuGrid<int>(
+          selector: (int index) => index,
+          builder: (context, index) => _buildMark(context, index),
+        ),
+      );
 
   Widget _buildMark(BuildContext context, int index) {
     if (!value.marks[index]) return null;
